@@ -7,7 +7,7 @@ import CalendarPortal from "@/components/CalendarPortal";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-ethiopian-cream to-white">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-blue-50">
       <Header />
       <main className="container mx-auto py-8 px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">

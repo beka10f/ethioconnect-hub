@@ -11,12 +11,12 @@ const JobsPortal = () => {
     <Portal title="Recent Job Postings">
       <div className="space-y-4">
         {recentJobs.map((job, index) => (
-          <div key={index} className="group border-b last:border-0 pb-3 hover:bg-gray-50/50 rounded-lg transition-colors duration-200 -mx-2 px-2">
-            <h3 className="font-medium text-ethiopian-charcoal group-hover:text-ethiopian-coffee transition-colors">{job.title}</h3>
+          <div key={index} className="group border-b border-gray-100/50 last:border-0 pb-3 hover:bg-blue-50/50 rounded-lg transition-colors duration-200 -mx-2 px-2">
+            <h3 className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors">{job.title}</h3>
             <p className="text-sm text-gray-600">{job.location}</p>
           </div>
         ))}
-        <button className="w-full mt-4 bg-ethiopian-sage/90 backdrop-blur-sm text-white py-2.5 rounded-xl hover:bg-ethiopian-sage transition-colors duration-200">
+        <button className="w-full mt-4 bg-blue-600/90 backdrop-blur-sm text-white py-2.5 rounded-xl hover:bg-blue-700 transition-colors duration-200">
           View All Jobs
         </button>
       </div>

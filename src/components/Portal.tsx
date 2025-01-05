@@ -8,11 +8,11 @@ interface PortalProps {
 
 const Portal = ({ title, children }: PortalProps) => {
   return (
-    <Card className="bg-white/60 backdrop-blur-sm border border-gray-100 rounded-2xl hover:shadow-lg transition-all duration-300 ease-in-out">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-xl font-medium text-ethiopian-coffee tracking-tight">{title}</CardTitle>
+    <Card className="bg-white/80 backdrop-blur-md border border-gray-100/50 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out overflow-hidden">
+      <CardHeader className="pb-3 border-b border-gray-100/20">
+        <CardTitle className="text-xl font-medium text-gray-800 tracking-tight">{title}</CardTitle>
       </CardHeader>
-      <CardContent>{children}</CardContent>
+      <CardContent className="bg-gradient-to-b from-transparent to-blue-50/30">{children}</CardContent>
     </Card>
   );
 };
