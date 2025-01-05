@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Jobs from "./pages/Jobs";
 import PostJob from "./pages/PostJob";
+import Rentals from "./pages/Rentals";
+import PostRental from "./pages/PostRental";
 import { Toaster } from "./components/ui/sonner";
 
 function App() {
@@ -11,6 +13,8 @@ function App() {
         <Route path="/" element={<Index />} />
         <Route path="/jobs" element={<Jobs />} />
         <Route path="/post-job" element={<PostJob />} />
+        <Route path="/rentals" element={<Rentals />} />
+        <Route path="/post-rental" element={<PostRental />} />
       </Routes>
       <Toaster />
     </Router>

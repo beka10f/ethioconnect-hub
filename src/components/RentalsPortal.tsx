@@ -1,4 +1,5 @@
 import Portal from "./Portal";
+import { Link } from "react-router-dom";
 
 const RentalsPortal = () => {
   const rentals = [
@@ -17,9 +18,11 @@ const RentalsPortal = () => {
             <p className="text-sm font-medium text-blue-600">{rental.price}</p>
           </div>
         ))}
-        <button className="w-full mt-4 bg-blue-600/90 backdrop-blur-sm text-white py-2.5 rounded-xl hover:bg-blue-700 transition-colors duration-200">
-          View All Rentals
-        </button>
+        <Link to="/rentals">
+          <button className="w-full mt-4 bg-blue-600/90 backdrop-blur-sm text-white py-2.5 rounded-xl hover:bg-blue-700 transition-colors duration-200">
+            View All Rentals
+          </button>
+        </Link>
       </div>
     </Portal>
   );
