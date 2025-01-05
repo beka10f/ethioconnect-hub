@@ -2,8 +2,6 @@ import Header from "@/components/Header";
 import JobsPortal from "@/components/JobsPortal";
 import RentalsPortal from "@/components/RentalsPortal";
 import ExchangeRatePortal from "@/components/ExchangeRatePortal";
-import BusinessDirectoryPortal from "@/components/BusinessDirectoryPortal";
-import CalendarPortal from "@/components/CalendarPortal";
 
 const Index = () => {
   return (
@@ -14,8 +12,6 @@ const Index = () => {
           <JobsPortal />
           <RentalsPortal />
           <ExchangeRatePortal />
-          <BusinessDirectoryPortal />
-          <CalendarPortal />
         </div>
       </main>
     </div>
