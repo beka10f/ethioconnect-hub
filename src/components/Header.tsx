@@ -2,17 +2,21 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <header className="bg-ethiopian-coffee text-white py-4 px-6 shadow-md">
-      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
-        <h1 className="text-2xl font-bold mb-4 md:mb-0">Ethiopian DMV Hub</h1>
-        <nav className="flex flex-wrap gap-6 text-sm">
-          <Link to="/" className="hover:text-ethiopian-gold transition-colors">Jobs</Link>
-          <Link to="/" className="hover:text-ethiopian-gold transition-colors">Rentals</Link>
-          <Link to="/" className="hover:text-ethiopian-gold transition-colors">Business Directory</Link>
-          <Link to="/" className="hover:text-ethiopian-gold transition-colors">Exchange Rate</Link>
-          <Link to="/" className="hover:text-ethiopian-gold transition-colors">Calendar</Link>
-          <Link to="/" className="hover:text-ethiopian-gold transition-colors">Contact</Link>
-        </nav>
+    <header className="bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+          <h1 className="text-2xl font-medium text-ethiopian-charcoal tracking-tight">
+            Ethiopian DMV Hub
+          </h1>
+          <nav className="flex flex-wrap justify-center gap-8 text-sm font-medium text-gray-600">
+            <Link to="/" className="hover:text-ethiopian-coffee transition-colors duration-200">Jobs</Link>
+            <Link to="/" className="hover:text-ethiopian-coffee transition-colors duration-200">Rentals</Link>
+            <Link to="/" className="hover:text-ethiopian-coffee transition-colors duration-200">Business Directory</Link>
+            <Link to="/" className="hover:text-ethiopian-coffee transition-colors duration-200">Exchange Rate</Link>
+            <Link to="/" className="hover:text-ethiopian-coffee transition-colors duration-200">Calendar</Link>
+            <Link to="/" className="hover:text-ethiopian-coffee transition-colors duration-200">Contact</Link>
+          </nav>
+        </div>
       </div>
     </header>
   );

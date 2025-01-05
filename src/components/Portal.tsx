@@ -8,9 +8,9 @@ interface PortalProps {
 
 const Portal = ({ title, children }: PortalProps) => {
   return (
-    <Card className="bg-white shadow-lg hover:shadow-xl transition-shadow duration-300">
-      <CardHeader>
-        <CardTitle className="text-ethiopian-coffee text-xl font-semibold">{title}</CardTitle>
+    <Card className="bg-white/60 backdrop-blur-sm border border-gray-100 rounded-2xl hover:shadow-lg transition-all duration-300 ease-in-out">
+      <CardHeader className="pb-3">
+        <CardTitle className="text-xl font-medium text-ethiopian-coffee tracking-tight">{title}</CardTitle>
       </CardHeader>
       <CardContent>{children}</CardContent>
     </Card>
