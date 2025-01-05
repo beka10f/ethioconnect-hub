@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import Header from "@/components/Header";
 
 const Jobs = () => {
   const jobs = [
@@ -33,43 +34,46 @@ const Jobs = () => {
   ];
 
   return (
-    <div className="container mx-auto py-8 px-4">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Job Listings</h1>
-        <Link to="/post-job">
-          <Button className="bg-ethiopian-coffee text-white hover:bg-ethiopian-coffee/90">
-            Post a Job
-          </Button>
-        </Link>
-      </div>
-      
-      <div className="grid gap-6">
-        {jobs.map((job) => (
-          <div 
-            key={job.id} 
-            className="bg-white rounded-lg shadow-md p-6 border border-gray-100"
-          >
-            <div className="flex justify-between items-start mb-4">
-              <div>
-                <h2 className="text-xl font-semibold text-gray-900">{job.title}</h2>
-                <p className="text-ethiopian-coffee font-medium">{job.company}</p>
-                <p className="text-gray-600">{job.location}</p>
+    <div className="min-h-screen bg-ethiopian-cream">
+      <Header />
+      <div className="container mx-auto py-8 px-4">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-900">Job Listings</h1>
+          <Link to="/post-job">
+            <Button className="bg-ethiopian-coffee text-white hover:bg-ethiopian-coffee/90">
+              Post a Job
+            </Button>
+          </Link>
+        </div>
+        
+        <div className="grid gap-6">
+          {jobs.map((job) => (
+            <div 
+              key={job.id} 
+              className="bg-white rounded-lg shadow-md p-6 border border-gray-100"
+            >
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h2 className="text-xl font-semibold text-gray-900">{job.title}</h2>
+                  <p className="text-ethiopian-coffee font-medium">{job.company}</p>
+                  <p className="text-gray-600">{job.location}</p>
+                </div>
+                <span className="text-sm text-gray-500">{job.date}</span>
               </div>
-              <span className="text-sm text-gray-500">{job.date}</span>
+              
+              <p className="text-gray-700 mb-4">{job.description}</p>
+              
+              <div className="flex justify-between items-center">
+                <p className="text-sm text-gray-600">Contact: {job.contactInfo}</p>
+                <Link to={`/jobs/${job.id}`}>
+                  <Button variant="outline" className="border-ethiopian-coffee text-ethiopian-coffee hover:bg-ethiopian-coffee hover:text-white">
+                    View Details
+                  </Button>
+                </Link>
+              </div>
             </div>
-            
-            <p className="text-gray-700 mb-4">{job.description}</p>
-            
-            <div className="flex justify-between items-center">
-              <p className="text-sm text-gray-600">Contact: {job.contactInfo}</p>
-              <Link to={`/jobs/${job.id}`}>
-                <Button variant="outline" className="border-ethiopian-coffee text-ethiopian-coffee hover:bg-ethiopian-coffee hover:text-white">
-                  View Details
-                </Button>
-              </Link>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
