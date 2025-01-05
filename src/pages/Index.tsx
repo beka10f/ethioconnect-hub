@@ -1,12 +1,23 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import Header from "@/components/Header";
+import JobsPortal from "@/components/JobsPortal";
+import RentalsPortal from "@/components/RentalsPortal";
+import ExchangeRatePortal from "@/components/ExchangeRatePortal";
+import BusinessDirectoryPortal from "@/components/BusinessDirectoryPortal";
+import CalendarPortal from "@/components/CalendarPortal";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-ethiopian-cream">
+      <Header />
+      <main className="container mx-auto py-8 px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <JobsPortal />
+          <RentalsPortal />
+          <ExchangeRatePortal />
+          <BusinessDirectoryPortal />
+          <CalendarPortal />
+        </div>
+      </main>
     </div>
   );
 };
