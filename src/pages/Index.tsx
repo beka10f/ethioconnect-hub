@@ -2,7 +2,6 @@ import Header from "@/components/Header";
 import JobsPortal from "@/components/JobsPortal";
 import RentalsPortal from "@/components/RentalsPortal";
 import ExchangeRatePortal from "@/components/ExchangeRatePortal";
-import { ShippingInfo } from "@/components/ShippingInfo";
 
 const Index = () => {
   return (
@@ -14,7 +13,6 @@ const Index = () => {
           <RentalsPortal />
           <ExchangeRatePortal />
         </div>
-        <ShippingInfo />
       </main>
     </div>
   );
