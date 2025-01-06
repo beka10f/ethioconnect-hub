@@ -27,20 +27,26 @@ const ShippingCalculator = () => {
     
     setIsSubmitting(true);
     try {
+      const shippingData = {
+        customer_name: currentData.name,
+        phone: currentData.phoneNumber,
+        weight: parseFloat(currentData.weight),
+        weight_unit: currentData.unit,
+        cost: calculateShippingCost(currentData),
+        shipping_date: format(currentData.shippingDate, 'yyyy-MM-dd'),
+        status: 'pending',
+        created_by: null // Set to null by default for unauthenticated users
+      };
+
+      // Try to get the authenticated user, but don't require it
       const { data: userData } = await supabase.auth.getUser();
-      
+      if (userData.user) {
+        shippingData.created_by = userData.user.id;
+      }
+
       const { data, error } = await supabase
         .from('shipping_details')
-        .insert({
-          customer_name: currentData.name,
-          phone: currentData.phoneNumber,
-          weight: parseFloat(currentData.weight),
-          weight_unit: currentData.unit,
-          cost: calculateShippingCost(currentData),
-          shipping_date: format(currentData.shippingDate, 'yyyy-MM-dd'),
-          status: 'pending',
-          created_by: userData.user?.id || null
-        })
+        .insert(shippingData)
         .select()
         .single();
 
