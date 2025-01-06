@@ -3,7 +3,7 @@ import Portal from "./Portal";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { MapPin, Building2 } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { Button } from "./ui/button";
 
 type JobListing = {
@@ -91,7 +91,7 @@ const JobsPortal = () => {
                 </div>
               </div>
               <div className="flex justify-between items-center">
-                <div className="flex items-center text-sm text-gray-600 justify-start">
+                <div className="text-sm text-gray-600">
                   {job.company_name}
                 </div>
                 <Link to={`/jobs/${job.id}`}>
