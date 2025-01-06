@@ -32,11 +32,9 @@ interface JobsManagementTableProps {
 const JobsManagementTable = ({ jobs, onJobUpdate, status }: JobsManagementTableProps) => {
   const [selectedJob, setSelectedJob] = useState<JobListing | null>(null);
 
-  const handleApproval = async (e: React.MouseEvent, id: string, action: "approve" | "reject") => {
+  const handleApproval = async (id: string, action: "approve" | "reject") => {
     try {
       console.log('Starting approval process:', { id, action });
-      e.preventDefault();
-      e.stopPropagation();
       
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
@@ -94,6 +92,7 @@ const JobsManagementTable = ({ jobs, onJobUpdate, status }: JobsManagementTableP
                 <TableCell>
                   <div className="flex gap-2">
                     <Button
+                      type="button"
                       variant="outline"
                       className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
                       onClick={() => setSelectedJob(job)}
@@ -103,16 +102,18 @@ const JobsManagementTable = ({ jobs, onJobUpdate, status }: JobsManagementTableP
                     {status === 'pending' && (
                       <>
                         <Button
+                          type="button"
                           variant="outline"
                           className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white"
-                          onClick={(e) => handleApproval(e, job.id, "approve")}
+                          onClick={() => handleApproval(job.id, "approve")}
                         >
                           Approve
                         </Button>
                         <Button
+                          type="button"
                           variant="outline"
                           className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
-                          onClick={(e) => handleApproval(e, job.id, "reject")}
+                          onClick={() => handleApproval(job.id, "reject")}
                         >
                           Reject
                         </Button>
@@ -151,16 +152,18 @@ const JobsManagementTable = ({ jobs, onJobUpdate, status }: JobsManagementTableP
             {status === 'pending' && (
               <div className="flex justify-end gap-2 pt-4">
                 <Button
+                  type="button"
                   variant="outline"
                   className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white"
-                  onClick={(e) => selectedJob && handleApproval(e, selectedJob.id, "approve")}
+                  onClick={() => selectedJob && handleApproval(selectedJob.id, "approve")}
                 >
                   Approve
                 </Button>
                 <Button
+                  type="button"
                   variant="outline"
                   className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
-                  onClick={(e) => selectedJob && handleApproval(e, selectedJob.id, "reject")}
+                  onClick={() => selectedJob && handleApproval(selectedJob.id, "reject")}
                 >
                   Reject
                 </Button>
