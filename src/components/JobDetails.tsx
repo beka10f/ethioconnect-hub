@@ -58,46 +58,46 @@ const JobDetails = () => {
 
   return (
     <Dialog open={true} onOpenChange={() => navigate("/jobs")}>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle className="text-xl font-semibold text-gray-900">{job.title}</DialogTitle>
+          <DialogTitle className="text-lg font-semibold text-left">{job.title}</DialogTitle>
         </DialogHeader>
-        <div className="space-y-4">
+        <div className="space-y-3 text-left">
           <div>
-            <p className="text-blue-600 font-medium">{job.company_name}</p>
+            <p className="text-blue-600 font-medium text-sm">{job.company_name}</p>
           </div>
           
-          <div className="grid grid-cols-2 gap-3 text-sm text-gray-600">
+          <div className="grid grid-cols-1 gap-1.5 text-sm text-gray-600">
             <div className="flex items-center">
-              <MapPin className="w-4 h-4 mr-1.5 text-gray-400" />
+              <MapPin className="w-3.5 h-3.5 mr-1.5 text-gray-400" />
               {job.location}
             </div>
             <div className="flex items-center">
-              <Calendar className="w-4 h-4 mr-1.5 text-gray-400" />
+              <Calendar className="w-3.5 h-3.5 mr-1.5 text-gray-400" />
               {new Date(job.created_at).toLocaleDateString()}
             </div>
           </div>
 
           <div>
-            <h4 className="font-medium text-gray-900 mb-2">Description</h4>
+            <h4 className="font-medium text-sm text-gray-900 mb-1">Description</h4>
             <p className="text-gray-600 text-sm whitespace-pre-wrap">{job.description}</p>
           </div>
 
-          <div className="border-t pt-4">
-            <h4 className="font-medium text-gray-900 mb-2">Contact Information</h4>
-            <div className="grid grid-cols-1 gap-2 text-sm">
+          <div className="border-t pt-3">
+            <h4 className="font-medium text-sm text-gray-900 mb-1.5">Contact Information</h4>
+            <div className="grid grid-cols-1 gap-1.5 text-sm">
               <div className="flex items-center text-gray-600">
-                <Mail className="w-4 h-4 mr-1.5 text-gray-400" />
+                <Mail className="w-3.5 h-3.5 mr-1.5 text-gray-400" />
                 {job.contact_info}
               </div>
               <div className="flex items-center text-gray-600">
-                <Phone className="w-4 h-4 mr-1.5 text-gray-400" />
+                <Phone className="w-3.5 h-3.5 mr-1.5 text-gray-400" />
                 {job.phone_number}
               </div>
             </div>
           </div>
 
-          <div className="flex justify-end pt-4">
+          <div className="flex justify-end pt-2">
             <Button variant="outline" onClick={() => navigate("/jobs")}>
               Close
             </Button>
