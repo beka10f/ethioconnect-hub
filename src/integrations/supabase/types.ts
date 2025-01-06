@@ -122,7 +122,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      approve_job: {
+        Args: {
+          job_id: string
+          admin_id: string
+          action: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       user_role: "admin" | "user"

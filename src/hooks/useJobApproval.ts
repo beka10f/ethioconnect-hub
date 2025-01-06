@@ -20,7 +20,7 @@ export const useJobApproval = (onSuccess?: () => void) => {
       const { error } = await supabase.rpc('approve_job', {
         job_id: id,
         admin_id: user.id,
-        action: action
+        action: action as string // Type assertion to match the RPC function parameter
       });
 
       if (error) {
