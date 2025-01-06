@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Home, MapPin, DollarSign, Calendar, Mail, Phone, ArrowRight } from "lucide-react";
+import RentalDetails from "@/components/RentalDetails";
 
 type RentalListing = {
   id: string;
@@ -20,6 +21,7 @@ type RentalListing = {
 const Rentals = () => {
   const [rentalListings, setRentalListings] = useState<RentalListing[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedRentalId, setSelectedRentalId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchRentals = async () => {
@@ -99,10 +101,10 @@ const Rentals = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {rentalListings.map((rental) => (
-            <Link
-              to={`/rentals/${rental.id}`}
+            <div
               key={rental.id}
-              className="group bg-white rounded-xl shadow-sm active:shadow-lg transition-all duration-200 overflow-hidden border border-gray-200"
+              onClick={() => setSelectedRentalId(rental.id)}
+              className="group bg-white rounded-xl shadow-sm active:shadow-lg transition-all duration-200 overflow-hidden border border-gray-200 cursor-pointer"
             >
               <div className="p-6 space-y-4">
                 <div className="flex justify-between items-start gap-4">
@@ -159,10 +161,13 @@ const Rentals = () => {
                   </div>
                 </div>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </main>
+      {selectedRentalId && (
+        <RentalDetails id={selectedRentalId} onClose={() => setSelectedRentalId(null)} />
+      )}
     </div>
   );
 };
