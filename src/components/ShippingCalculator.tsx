@@ -28,51 +28,27 @@ const ShippingCalculator = () => {
   };
 
   const handleConfirm = () => {
-    if (!currentData) return;
-    
-    const cost = calculateShippingCost(currentData);
     setShowConfirmation(false);
     
-    // Small delay to ensure dialog animation completes
-    setTimeout(() => {
-      toast({
-        title: "Drop-off Location Confirmed",
-        description: (
-          <div className="space-y-4">
-            <div>
-              <span className="block font-semibold mb-1">Please bring your items to:</span>
-              <span className="block bg-slate-50 p-3 rounded-md">
-                ADOT International Market<br />
-                3111 Chillum Road<br />
-                Mount Rainer, MD
-              </span>
-            </div>
-            
-            <div>
-              <span className="block font-semibold mb-1">Shipping Details:</span>
-              <span className="block bg-slate-50 p-3 rounded-md">
-                Name: {currentData.name}<br />
-                Phone: {currentData.phoneNumber}<br />
-                Drop-off Date: {format(currentData.shippingDate, "MMMM do, yyyy")}<br />
-                Package Weight: {currentData.weight} {currentData.unit}<br />
-                <span className="font-medium text-green-600">Estimated Cost: ${cost}</span>
-              </span>
-            </div>
-            
-            <span className="block text-sm text-muted-foreground">
-              Note: The weight will be verified at drop-off and final pricing may adjust accordingly.
-            </span>
+    toast({
+      title: "Delivery Address",
+      description: (
+        <div className="space-y-2">
+          <p className="font-medium">Please deliver your items to:</p>
+          <div className="bg-slate-50 p-3 rounded-md">
+            ADOT International Market<br />
+            3111 Chillum Road<br />
+            Mount Rainer, MD
           </div>
-        ),
-        duration: 10000,
-      });
-      
-      // Reset form and clear current data
-      if (formRef.current) {
-        formRef.current.reset();
-      }
-      setCurrentData(null);
-    }, 300); // Delay matches the dialog's exit animation duration
+        </div>
+      ),
+      duration: 5000,
+    });
+    
+    if (formRef.current) {
+      formRef.current.reset();
+    }
+    setCurrentData(null);
   };
 
   const handleDialogClose = (open: boolean) => {
