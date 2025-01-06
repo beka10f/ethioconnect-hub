@@ -90,7 +90,7 @@ const Jobs = () => {
               <Link to={`/jobs/${job.id}`} key={job.id}>
                 <div className="bg-white border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors duration-200">
                   <div className="flex flex-col text-left">
-                    <h2 className="text-lg font-medium text-gray-900 mb-1">
+                    <h2 className="text-xl font-medium text-gray-900 mb-1">
                       {job.title}
                     </h2>
                     <p className="text-blue-600 text-sm font-medium mb-2">
