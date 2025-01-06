@@ -20,6 +20,7 @@ const ShippingCalculator = () => {
   const { toast } = useToast();
   const [showConfirmation, setShowConfirmation] = React.useState(false);
   const [currentData, setCurrentData] = React.useState<ShippingFormData | null>(null);
+  const formRef = React.useRef<{ reset: () => void }>(null);
 
   const handleSubmit = (data: ShippingFormData) => {
     setCurrentData(data);
@@ -30,35 +31,51 @@ const ShippingCalculator = () => {
     if (!currentData) return;
     
     const cost = calculateShippingCost(currentData);
-    
-    toast({
-      title: "Drop-off Location Confirmed",
-      description: (
-        <>
-          <span className="block font-semibold mb-1">Please bring your items to:</span>
-          <span className="block bg-slate-50 p-3 rounded-md">
-            ADOT International Market<br />
-            3111 Chillum Road<br />
-            Mount Rainer, MD
-          </span>
-          
-          <span className="block font-semibold mt-4 mb-1">Shipping Details:</span>
-          <span className="block bg-slate-50 p-3 rounded-md">
-            Name: {currentData.name}<br />
-            Phone: {currentData.phoneNumber}<br />
-            Drop-off Date: {format(currentData.shippingDate, "MMMM do, yyyy")}<br />
-            Package Weight: {currentData.weight} {currentData.unit}<br />
-            <span className="font-medium text-green-600">Estimated Cost: ${cost}</span>
-          </span>
-          
-          <span className="block text-sm text-muted-foreground mt-2">
-            Note: The weight will be verified at drop-off and final pricing may adjust accordingly.
-          </span>
-        </>
-      ),
-      duration: 10000,
-    });
     setShowConfirmation(false);
+    
+    // Small delay to ensure dialog animation completes
+    setTimeout(() => {
+      toast({
+        title: "Drop-off Location Confirmed",
+        description: (
+          <>
+            <span className="block font-semibold mb-1">Please bring your items to:</span>
+            <span className="block bg-slate-50 p-3 rounded-md">
+              ADOT International Market<br />
+              3111 Chillum Road<br />
+              Mount Rainer, MD
+            </span>
+            
+            <span className="block font-semibold mt-4 mb-1">Shipping Details:</span>
+            <span className="block bg-slate-50 p-3 rounded-md">
+              Name: {currentData.name}<br />
+              Phone: {currentData.phoneNumber}<br />
+              Drop-off Date: {format(currentData.shippingDate, "MMMM do, yyyy")}<br />
+              Package Weight: {currentData.weight} {currentData.unit}<br />
+              <span className="font-medium text-green-600">Estimated Cost: ${cost}</span>
+            </span>
+            
+            <span className="block text-sm text-muted-foreground mt-2">
+              Note: The weight will be verified at drop-off and final pricing may adjust accordingly.
+            </span>
+          </>
+        ),
+        duration: 10000,
+      });
+      
+      // Reset form and clear current data
+      if (formRef.current) {
+        formRef.current.reset();
+      }
+      setCurrentData(null);
+    }, 300); // Delay matches the dialog's exit animation duration
+  };
+
+  const handleDialogClose = (open: boolean) => {
+    setShowConfirmation(open);
+    if (!open) {
+      setCurrentData(null);
+    }
   };
 
   return (
@@ -70,12 +87,12 @@ const ShippingCalculator = () => {
             <p className="text-gray-600">Calculate your shipping costs based on package weight.</p>
           </div>
 
-          <ShippingForm onSubmit={handleSubmit} />
+          <ShippingForm onSubmit={handleSubmit} ref={formRef} />
           <PricingGuide />
         </div>
       </Card>
 
-      <AlertDialog open={showConfirmation} onOpenChange={setShowConfirmation}>
+      <AlertDialog open={showConfirmation} onOpenChange={handleDialogClose}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Confirm Shipping Details</AlertDialogTitle>
