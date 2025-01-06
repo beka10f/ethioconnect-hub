@@ -12,7 +12,6 @@ import { useToast } from "@/components/ui/use-toast";
 const formSchema = z.object({
   weight: z.string().min(1, "Weight is required"),
   unit: z.enum(["kg", "lbs"]),
-  location: z.string().min(1, "Pickup location is required"),
   speed: z.enum(["standard", "express", "priority"]),
 });
 
@@ -24,7 +23,6 @@ const ShippingCalculator = () => {
     defaultValues: {
       weight: "",
       unit: "kg",
-      location: "",
       speed: "standard",
     },
   });
@@ -70,11 +68,11 @@ const ShippingCalculator = () => {
   };
 
   return (
-    <Card className="p-6 bg-ethiopian-cream">
+    <Card className="p-6 bg-white">
       <div className="space-y-6">
         <div>
-          <h2 className="text-2xl font-bold text-ethiopian-coffee mb-2">Ship to Ethiopia</h2>
-          <p className="text-ethiopian-charcoal mb-4">Calculate your shipping costs based on package details.</p>
+          <h2 className="text-2xl font-bold text-black mb-2">Ship to Ethiopia</h2>
+          <p className="text-gray-700 mb-4">Calculate your shipping costs based on package details.</p>
         </div>
 
         <Form {...form}>
@@ -118,20 +116,6 @@ const ShippingCalculator = () => {
 
               <FormField
                 control={form.control}
-                name="location"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Pickup Location</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter pickup location" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
                 name="speed"
                 render={({ field }) => (
                   <FormItem>
@@ -154,7 +138,7 @@ const ShippingCalculator = () => {
               />
             </div>
 
-            <Button type="submit" className="w-full bg-ethiopian-coffee hover:bg-ethiopian-charcoal">
+            <Button type="submit" className="w-full bg-[#0EA5E9] hover:bg-[#0891CE] text-white">
               Calculate Shipping Cost
             </Button>
           </form>
