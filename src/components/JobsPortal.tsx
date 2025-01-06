@@ -73,21 +73,21 @@ const JobsPortal = () => {
 
   return (
     <Portal title="Recent Job Postings">
-      <div className="grid grid-cols-2 gap-3">
+      <div className="flex flex-col space-y-2">
         {jobs.map((job) => (
-          <Link to={`/jobs/${job.id}`} key={job.id} className="block">
-            <div className="group bg-white border border-gray-200 rounded-lg p-2 hover:border-blue-200 transition-all duration-200 hover:shadow-sm">
-              <h3 className="text-sm font-medium text-gray-900 mb-1">
+          <Link to={`/jobs/${job.id}`} key={job.id} className="block w-full">
+            <div className="group bg-white border border-gray-200 rounded-lg p-3 hover:border-blue-200 transition-all duration-200 hover:shadow-sm w-full">
+              <h3 className="text-sm font-medium text-gray-900 truncate">
                 {job.title}
               </h3>
-              <div className="flex flex-col gap-0.5 text-xs">
-                <div className="flex items-center gap-1 text-gray-600">
+              <div className="flex items-center gap-4 mt-1 text-xs text-gray-600">
+                <div className="flex items-center gap-1">
                   <Building2 className="w-3 h-3" />
-                  <span className="truncate">{job.company_name}</span>
+                  <span>{job.company_name}</span>
                 </div>
-                <div className="flex items-center gap-1 text-gray-600">
+                <div className="flex items-center gap-1">
                   <MapPin className="w-3 h-3" />
-                  <span className="truncate">{job.location}</span>
+                  <span>{job.location}</span>
                 </div>
               </div>
             </div>

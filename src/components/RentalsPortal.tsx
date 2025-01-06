@@ -73,21 +73,21 @@ const RentalsPortal = () => {
 
   return (
     <Portal title="Featured Rentals">
-      <div className="grid grid-cols-2 gap-3">
+      <div className="flex flex-col space-y-2">
         {rentals.map((rental) => (
-          <Link to={`/rentals/${rental.id}`} key={rental.id} className="block">
-            <div className="group bg-white border border-gray-200 rounded-lg p-2 hover:border-blue-200 transition-all duration-200 hover:shadow-sm">
-              <h3 className="text-sm font-medium text-gray-900 mb-1">
+          <Link to={`/rentals/${rental.id}`} key={rental.id} className="block w-full">
+            <div className="group bg-white border border-gray-200 rounded-lg p-3 hover:border-blue-200 transition-all duration-200 hover:shadow-sm w-full">
+              <h3 className="text-sm font-medium text-gray-900 truncate">
                 {rental.title}
               </h3>
-              <div className="flex flex-col gap-0.5 text-xs">
-                <div className="flex items-center gap-1 text-gray-600">
+              <div className="flex items-center gap-4 mt-1 text-xs text-gray-600">
+                <div className="flex items-center gap-1">
                   <DollarSign className="w-3 h-3" />
-                  <span className="truncate">${rental.price}/mo</span>
+                  <span>${rental.price}/mo</span>
                 </div>
-                <div className="flex items-center gap-1 text-gray-600">
+                <div className="flex items-center gap-1">
                   <MapPin className="w-3 h-3" />
-                  <span className="truncate">{rental.address}</span>
+                  <span>{rental.address}</span>
                 </div>
               </div>
             </div>
