@@ -48,7 +48,7 @@ const ShippingCalculator = () => {
             <div className="bg-slate-50 p-3 rounded-md">
               <p>Name: {currentData.name}</p>
               <p>Phone: {currentData.phoneNumber}</p>
-              <p>Drop-off Date: {format(currentData.shippingDate, 'MMMM do, yyyy')}</p>
+              <p>Drop-off Date: {format(currentData.shippingDate, "MMMM do, yyyy")}</p>
               <p>Package Weight: {currentData.weight} {currentData.unit}</p>
               <p className="font-medium text-green-600">Estimated Cost: ${cost}</p>
             </div>
@@ -89,7 +89,7 @@ const ShippingCalculator = () => {
                     <p><span className="font-medium">Name:</span> {currentData.name}</p>
                     <p><span className="font-medium">Phone:</span> {currentData.phoneNumber}</p>
                     <p><span className="font-medium">Weight:</span> {currentData.weight} {currentData.unit}</p>
-                    <p><span className="font-medium">Drop-off Date:</span> {format(currentData.shippingDate, 'MMMM do, yyyy')}</p>
+                    <p><span className="font-medium">Drop-off Date:</span> {format(currentData.shippingDate, "MMMM do, yyyy")}</p>
                     <p><span className="font-medium">Estimated Cost:</span> ${calculateShippingCost(currentData)}</p>
                   </div>
                 </div>
