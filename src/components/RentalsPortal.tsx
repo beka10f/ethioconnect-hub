@@ -65,7 +65,7 @@ const RentalsPortal = () => {
     return (
       <Portal title="Featured Rentals">
         <div className="flex justify-start items-center h-32">
-          <p className="text-ethiopian-charcoal">Loading rentals...</p>
+          <p className="text-gray-600">Loading rentals...</p>
         </div>
       </Portal>
     );
@@ -76,27 +76,27 @@ const RentalsPortal = () => {
       <div className="space-y-6 text-left">
         {rentals.map((rental) => (
           <Link to={`/rentals/${rental.id}`} key={rental.id}>
-            <div className="group p-4 border border-gray-100 rounded-xl hover:border-ethiopian-sage/30 hover:bg-ethiopian-cream/5 transition-all duration-200">
-              <h3 className="text-xl font-semibold text-ethiopian-coffee group-hover:text-ethiopian-gold transition-colors mb-2">
+            <div className="group p-6 bg-white border border-gray-200 rounded-lg hover:border-blue-200 transition-all duration-200 hover:shadow-md">
+              <h3 className="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors mb-3">
                 {rental.title}
               </h3>
-              <div className="space-y-2">
-                <div className="flex items-center gap-2 text-ethiopian-charcoal">
-                  <MapPin className="w-4 h-4" />
-                  <span className="text-sm">{rental.address}</span>
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 text-gray-700">
+                  <MapPin className="w-4 h-4 text-blue-500" />
+                  <span>{rental.address}</span>
                 </div>
-                <div className="flex items-center gap-2 text-ethiopian-coffee font-medium">
-                  <DollarSign className="w-4 h-4" />
+                <div className="flex items-center gap-2 text-gray-900 font-medium">
+                  <DollarSign className="w-4 h-4 text-blue-500" />
                   <span>${rental.price}/mo</span>
                 </div>
-                <div className="flex items-center gap-2 text-ethiopian-charcoal/80">
+                <div className="flex items-center gap-2 text-gray-500">
                   <Clock className="w-4 h-4" />
-                  <span className="text-sm">
+                  <span>
                     {new Date(rental.created_at).toLocaleDateString()}
                   </span>
                 </div>
                 {rental.description && (
-                  <p className="text-sm text-ethiopian-charcoal/70 line-clamp-2 mt-2">
+                  <p className="text-gray-600 line-clamp-2 mt-2">
                     {rental.description}
                   </p>
                 )}
@@ -105,7 +105,7 @@ const RentalsPortal = () => {
           </Link>
         ))}
         <Link to="/rentals" className="block mt-8">
-          <button className="w-full bg-ethiopian-coffee text-white py-3 rounded-xl hover:bg-ethiopian-coffee/90 transition-colors duration-200">
+          <button className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition-colors duration-200 font-medium">
             View All Rentals
           </button>
         </Link>
