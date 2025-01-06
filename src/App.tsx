@@ -5,6 +5,7 @@ import PostJob from "./pages/PostJob";
 import Rentals from "./pages/Rentals";
 import PostRental from "./pages/PostRental";
 import Login from "./pages/Login";
+import Admin from "./pages/Admin";
 import { Toaster } from "./components/ui/sonner";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/rentals" element={<Rentals />} />
         <Route path="/post-rental" element={<PostRental />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
       <Toaster />
     </Router>
