@@ -81,21 +81,19 @@ const JobsPortal = () => {
             className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100"
           >
             <div className="space-y-2">
-              <div className="flex justify-between items-start">
-                <div className="space-y-1">
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    {job.title}
-                  </h3>
-                  <div className="text-sm text-gray-600">
-                    {job.company_name}
-                  </div>
-                </div>
+              <div className="flex justify-between items-center">
+                <h3 className="text-lg font-semibold text-gray-900">
+                  {job.title}
+                </h3>
                 <div className="flex items-center text-sm text-gray-600">
                   <MapPin className="w-4 h-4 mr-1" />
                   {job.location}
                 </div>
               </div>
-              <div className="flex justify-end">
+              <div className="flex justify-between items-center">
+                <div className="text-sm text-gray-600">
+                  {job.company_name}
+                </div>
                 <Link to={`/jobs/${job.id}`}>
                   <Button 
                     variant="outline" 
