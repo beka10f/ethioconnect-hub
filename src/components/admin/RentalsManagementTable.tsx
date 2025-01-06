@@ -1,6 +1,7 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useRentalApproval } from "@/hooks/useRentalApproval";
 import { Button } from "@/components/ui/button";
+import { DollarSign, MapPin, Calendar } from "lucide-react";
 
 type RentalListing = {
   id: string;
@@ -31,19 +32,19 @@ const RentalsManagementTable = ({ rentals, onRentalUpdate, status, isLoading }: 
 
   if (rentals.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-6 text-center">
+      <div className="bg-white rounded-lg shadow-sm p-6 text-center border border-gray-200">
         <p className="text-gray-600">No {status} rentals found</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+    <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200">
       <Table>
         <TableHeader className="bg-gray-50">
           <TableRow>
             <TableHead className="text-gray-900">Title</TableHead>
-            <TableHead className="text-gray-900">Address</TableHead>
+            <TableHead className="text-gray-900">Location</TableHead>
             <TableHead className="text-gray-900">Price</TableHead>
             <TableHead className="text-gray-900">Date</TableHead>
             {status === 'pending' && <TableHead className="text-gray-900">Actions</TableHead>}
@@ -53,10 +54,23 @@ const RentalsManagementTable = ({ rentals, onRentalUpdate, status, isLoading }: 
           {rentals.map((rental) => (
             <TableRow key={rental.id} className="hover:bg-blue-50/50">
               <TableCell className="font-medium text-gray-900">{rental.title}</TableCell>
-              <TableCell className="text-gray-700">{rental.address}</TableCell>
-              <TableCell className="text-gray-700">${rental.price}</TableCell>
-              <TableCell className="text-gray-700">
-                {new Date(rental.created_at).toLocaleDateString()}
+              <TableCell>
+                <div className="flex items-center gap-1.5 text-gray-700">
+                  <MapPin className="w-4 h-4 text-blue-600" />
+                  {rental.address}
+                </div>
+              </TableCell>
+              <TableCell>
+                <div className="flex items-center gap-1 text-gray-700">
+                  <DollarSign className="w-4 h-4 text-blue-600" />
+                  {rental.price}
+                </div>
+              </TableCell>
+              <TableCell>
+                <div className="flex items-center gap-1.5 text-gray-600">
+                  <Calendar className="w-4 h-4" />
+                  {new Date(rental.created_at).toLocaleDateString()}
+                </div>
               </TableCell>
               {status === 'pending' && (
                 <TableCell>

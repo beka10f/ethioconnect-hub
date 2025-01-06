@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { DollarSign, MapPin, Mail, Phone, Calendar } from "lucide-react";
 
 type Rental = {
   id: string;
@@ -57,30 +58,55 @@ const RentalDetails = () => {
 
   return (
     <Dialog open={true} onOpenChange={() => navigate("/rentals")}>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="sm:max-w-[600px] text-left">
         <DialogHeader>
-          <DialogTitle className="text-xl font-semibold">{rental.title}</DialogTitle>
+          <DialogTitle className="text-2xl font-semibold text-gray-900">{rental.title}</DialogTitle>
         </DialogHeader>
-        <div className="space-y-4">
-          <div>
-            <h4 className="font-medium text-gray-900">Price</h4>
-            <p className="text-gray-700 mt-1">${rental.price}/month</p>
+        <div className="space-y-6">
+          <div className="flex items-center gap-2">
+            <DollarSign className="w-5 h-5 text-blue-600" />
+            <span className="text-xl font-semibold text-gray-900">${rental.price}/month</span>
           </div>
-          <div>
+          
+          <div className="space-y-2">
             <h4 className="font-medium text-gray-900">Description</h4>
-            <p className="text-gray-700 mt-1">{rental.description}</p>
+            <p className="text-gray-700">{rental.description}</p>
           </div>
-          <div>
-            <h4 className="font-medium text-gray-900">Address</h4>
-            <p className="text-gray-700 mt-1">{rental.address}</p>
+
+          <div className="flex items-start gap-2">
+            <MapPin className="w-5 h-5 text-blue-600 mt-1" />
+            <div>
+              <h4 className="font-medium text-gray-900">Address</h4>
+              <p className="text-gray-700">{rental.address}</p>
+            </div>
           </div>
-          <div>
+
+          <div className="space-y-3">
             <h4 className="font-medium text-gray-900">Contact Information</h4>
-            <p className="text-gray-700 mt-1">Email: {rental.contact_info}</p>
-            <p className="text-gray-700">Phone: {rental.phone_number}</p>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <Mail className="w-4 h-4 text-blue-600" />
+                <span className="text-gray-700">{rental.contact_info}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Phone className="w-4 h-4 text-blue-600" />
+                <span className="text-gray-700">{rental.phone_number}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Calendar className="w-4 h-4 text-blue-600" />
+                <span className="text-gray-500 text-sm">
+                  Listed on {new Date(rental.created_at).toLocaleDateString()}
+                </span>
+              </div>
+            </div>
           </div>
+
           <div className="flex justify-end pt-4">
-            <Button variant="outline" onClick={() => navigate("/rentals")}>
+            <Button 
+              variant="outline" 
+              onClick={() => navigate("/rentals")}
+              className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
+            >
               Close
             </Button>
           </div>

@@ -3,6 +3,7 @@ import Portal from "./Portal";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { DollarSign, MapPin } from "lucide-react";
 
 type RentalListing = {
   id: string;
@@ -37,7 +38,6 @@ const RentalsPortal = () => {
 
     fetchRentals();
 
-    // Set up real-time subscription for approved rentals
     const channel = supabase
       .channel("portal-rentals")
       .on(
@@ -73,20 +73,26 @@ const RentalsPortal = () => {
     <Portal title="Featured Rentals">
       <div className="space-y-4 text-left">
         {rentals.map((rental) => (
-          <Link to="/rentals" key={rental.id}>
-            <div className="group border-b border-gray-100/50 last:border-0 pb-4 hover:bg-blue-50/50 rounded-lg transition-colors duration-200">
-              <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors mb-1">
+          <Link to={`/rentals/${rental.id}`} key={rental.id}>
+            <div className="group border border-gray-100 rounded-lg p-4 hover:border-blue-100 hover:bg-blue-50/30 transition-all duration-200">
+              <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
                 {rental.title}
               </h3>
-              <p className="text-sm text-gray-400">{rental.address}</p>
-              <p className="text-base font-medium text-blue-600">
-                ${rental.price}/mo
-              </p>
+              <div className="mt-2 space-y-2">
+                <div className="flex items-center gap-2 text-gray-600">
+                  <MapPin className="w-4 h-4" />
+                  <span className="text-sm">{rental.address}</span>
+                </div>
+                <div className="flex items-center gap-1 text-blue-600 font-medium">
+                  <DollarSign className="w-4 h-4" />
+                  <span>${rental.price}/mo</span>
+                </div>
+              </div>
             </div>
           </Link>
         ))}
-        <Link to="/rentals" className="block mt-4">
-          <button className="w-full bg-blue-600/90 backdrop-blur-sm text-white py-2.5 rounded-xl hover:bg-blue-700 transition-colors duration-200">
+        <Link to="/rentals" className="block mt-6">
+          <button className="w-full bg-blue-600 text-white py-2.5 rounded-lg hover:bg-blue-700 transition-colors duration-200">
             View All Rentals
           </button>
         </Link>
