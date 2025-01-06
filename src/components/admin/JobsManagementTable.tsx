@@ -31,18 +31,20 @@ interface JobsManagementTableProps {
 
 const JobsManagementTable = ({ jobs, onJobUpdate, status }: JobsManagementTableProps) => {
   const [selectedJob, setSelectedJob] = useState<JobListing | null>(null);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const handleApproval = async (id: string, action: "approve" | "reject") => {
+    if (isUpdating) return;
+    
     try {
-      console.log('Starting approval process:', { id, action });
+      setIsUpdating(true);
       
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        console.log('No user found');
+        toast.error('You must be logged in to perform this action');
         return;
       }
 
-      console.log('Updating job status in Supabase');
       const { error } = await supabase
         .from("jobs")
         .update({
@@ -52,18 +54,19 @@ const JobsManagementTable = ({ jobs, onJobUpdate, status }: JobsManagementTableP
         .eq("id", id);
 
       if (error) {
-        console.error('Supabase update error:', error);
+        console.error('Update error:', error);
         toast.error(`Failed to ${action} job`);
         return;
       }
 
-      console.log('Job status updated successfully');
       toast.success(`Job ${action}d successfully`);
-      setSelectedJob(null);
       onJobUpdate();
+      setSelectedJob(null);
     } catch (error) {
       console.error('Unexpected error:', error);
       toast.error('An unexpected error occurred');
+    } finally {
+      setIsUpdating(false);
     }
   };
 
@@ -104,18 +107,20 @@ const JobsManagementTable = ({ jobs, onJobUpdate, status }: JobsManagementTableP
                         <Button
                           type="button"
                           variant="outline"
-                          className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white"
+                          disabled={isUpdating}
+                          className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white disabled:opacity-50"
                           onClick={() => handleApproval(job.id, "approve")}
                         >
-                          Approve
+                          {isUpdating ? 'Processing...' : 'Approve'}
                         </Button>
                         <Button
                           type="button"
                           variant="outline"
-                          className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
+                          disabled={isUpdating}
+                          className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white disabled:opacity-50"
                           onClick={() => handleApproval(job.id, "reject")}
                         >
-                          Reject
+                          {isUpdating ? 'Processing...' : 'Reject'}
                         </Button>
                       </>
                     )}
@@ -127,7 +132,7 @@ const JobsManagementTable = ({ jobs, onJobUpdate, status }: JobsManagementTableP
         </Table>
       </div>
 
-      <Dialog open={!!selectedJob} onOpenChange={() => setSelectedJob(null)}>
+      <Dialog open={!!selectedJob} onOpenChange={(open) => !open && setSelectedJob(null)}>
         <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
             <DialogTitle className="text-xl font-semibold">{selectedJob?.title}</DialogTitle>
@@ -154,18 +159,20 @@ const JobsManagementTable = ({ jobs, onJobUpdate, status }: JobsManagementTableP
                 <Button
                   type="button"
                   variant="outline"
-                  className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white"
+                  disabled={isUpdating}
+                  className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white disabled:opacity-50"
                   onClick={() => selectedJob && handleApproval(selectedJob.id, "approve")}
                 >
-                  Approve
+                  {isUpdating ? 'Processing...' : 'Approve'}
                 </Button>
                 <Button
                   type="button"
                   variant="outline"
-                  className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
+                  disabled={isUpdating}
+                  className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white disabled:opacity-50"
                   onClick={() => selectedJob && handleApproval(selectedJob.id, "reject")}
                 >
-                  Reject
+                  {isUpdating ? 'Processing...' : 'Reject'}
                 </Button>
               </div>
             )}
