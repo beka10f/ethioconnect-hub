@@ -32,7 +32,10 @@ interface JobsManagementTableProps {
 const JobsManagementTable = ({ jobs, onJobUpdate, status }: JobsManagementTableProps) => {
   const [selectedJob, setSelectedJob] = useState<JobListing | null>(null);
 
-  const handleApproval = async (id: string, action: "approve" | "reject") => {
+  const handleApproval = async (e: React.MouseEvent, id: string, action: "approve" | "reject") => {
+    e.preventDefault(); // Prevent any form submission
+    e.stopPropagation(); // Stop event bubbling
+    
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
 
@@ -90,14 +93,14 @@ const JobsManagementTable = ({ jobs, onJobUpdate, status }: JobsManagementTableP
                         <Button
                           variant="outline"
                           className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white"
-                          onClick={() => handleApproval(job.id, "approve")}
+                          onClick={(e) => handleApproval(e, job.id, "approve")}
                         >
                           Approve
                         </Button>
                         <Button
                           variant="outline"
                           className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
-                          onClick={() => handleApproval(job.id, "reject")}
+                          onClick={(e) => handleApproval(e, job.id, "reject")}
                         >
                           Reject
                         </Button>
@@ -138,14 +141,14 @@ const JobsManagementTable = ({ jobs, onJobUpdate, status }: JobsManagementTableP
                 <Button
                   variant="outline"
                   className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white"
-                  onClick={() => selectedJob && handleApproval(selectedJob.id, "approve")}
+                  onClick={(e) => selectedJob && handleApproval(e, selectedJob.id, "approve")}
                 >
                   Approve
                 </Button>
                 <Button
                   variant="outline"
                   className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
-                  onClick={() => selectedJob && handleApproval(selectedJob.id, "reject")}
+                  onClick={(e) => selectedJob && handleApproval(e, selectedJob.id, "reject")}
                 >
                   Reject
                 </Button>
