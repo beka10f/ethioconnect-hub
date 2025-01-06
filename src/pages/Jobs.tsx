@@ -67,19 +67,20 @@ const Jobs = () => {
   return (
     <div className="min-h-screen bg-white">
       <Header />
-      <div className="max-w-6xl mx-auto py-6 px-4 sm:px-6">
-        <div className="flex justify-between items-center mb-6">
+      <div className="max-w-6xl mx-auto py-8 px-4 sm:px-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
           <div>
             <h1 className="text-3xl font-bold text-black">Job Listings</h1>
-            <p className="text-sm text-gray-600 mt-1">Find your next opportunity in our community</p>
+            <p className="text-sm text-gray-600 mt-2">Find your next opportunity in our community</p>
           </div>
           <Link to="/post-job">
             <Button 
               size="lg"
               className={cn(
-                "bg-blue-600 hover:bg-blue-700 text-white shadow-md",
+                "bg-blue-600 hover:bg-blue-700 text-white",
+                "shadow-md hover:shadow-lg",
                 "transition-all duration-200 ease-in-out",
-                "flex items-center gap-2 rounded-lg"
+                "flex items-center gap-2"
               )}
             >
               <Briefcase className="w-4 h-4" />
@@ -93,24 +94,24 @@ const Jobs = () => {
             <div className="animate-pulse text-blue-600">Loading jobs...</div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+          <div className="grid grid-cols-1 gap-6">
             {jobs.map((job) => (
               <div 
                 key={job.id}
                 className={cn(
-                  "bg-white border border-gray-200 rounded-lg p-4",
+                  "bg-white border border-gray-200 rounded-lg p-6",
                   "hover:border-blue-200 transition-colors duration-200",
                   "shadow-sm hover:shadow-md"
                 )}
               >
-                <div className="flex flex-col space-y-3">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h2 className="text-xl font-bold text-black leading-tight">
+                <div className="space-y-4">
+                  <div className="flex justify-between items-start gap-4">
+                    <div className="flex-1">
+                      <h2 className="text-2xl font-bold text-black">
                         {job.title}
                       </h2>
-                      <div className="flex items-center text-blue-600 hover:text-blue-700 mt-1">
-                        <Building2 className="w-4 h-4 mr-1.5" />
+                      <div className="flex items-center mt-2 text-blue-600">
+                        <Building2 className="w-5 h-5 mr-2" />
                         <span className="font-medium">{job.company_name}</span>
                       </div>
                     </div>
@@ -118,7 +119,7 @@ const Jobs = () => {
                       to={`/jobs/${job.id}`}
                       className={cn(
                         "text-blue-600 hover:text-blue-700",
-                        "flex items-center gap-1 font-medium text-sm",
+                        "flex items-center gap-1.5 font-medium",
                         "transition-colors duration-200"
                       )}
                     >
@@ -127,29 +128,29 @@ const Jobs = () => {
                     </Link>
                   </div>
                   
-                  <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+                  <div className="flex flex-wrap gap-6 text-sm text-gray-600">
                     <div className="flex items-center">
-                      <MapPin className="w-4 h-4 mr-1.5 text-blue-400" />
+                      <MapPin className="w-5 h-5 mr-2 text-blue-500" />
                       {job.location}
                     </div>
                     <div className="flex items-center">
-                      <Calendar className="w-4 h-4 mr-1.5 text-blue-400" />
+                      <Calendar className="w-5 h-5 mr-2 text-blue-500" />
                       {new Date(job.created_at).toLocaleDateString()}
                     </div>
                   </div>
 
-                  <p className="text-gray-600 text-sm line-clamp-2">
+                  <p className="text-gray-600 text-base leading-relaxed">
                     {job.description}
                   </p>
 
-                  <div className="border-t border-gray-100 pt-3 mt-2">
-                    <div className="flex flex-wrap gap-4 text-sm">
+                  <div className="border-t border-gray-100 pt-4">
+                    <div className="flex flex-wrap gap-6 text-sm">
                       <div className="flex items-center text-gray-600">
-                        <Mail className="w-4 h-4 mr-1.5 text-blue-400" />
+                        <Mail className="w-5 h-5 mr-2 text-blue-500" />
                         {job.contact_info}
                       </div>
                       <div className="flex items-center text-gray-600">
-                        <Phone className="w-4 h-4 mr-1.5 text-blue-400" />
+                        <Phone className="w-5 h-5 mr-2 text-blue-500" />
                         {job.phone_number}
                       </div>
                     </div>
