@@ -26,7 +26,7 @@ const RentalsPortal = () => {
           .select("id, title, price, address, description, created_at")
           .eq("status", "approved")
           .order("created_at", { ascending: false })
-          .limit(3);
+          .limit(4);
 
         if (error) throw error;
         setRentals(data || []);
@@ -64,7 +64,7 @@ const RentalsPortal = () => {
   if (isLoading) {
     return (
       <Portal title="Featured Rentals">
-        <div className="flex justify-start items-center h-32">
+        <div className="flex justify-start items-center h-24">
           <p className="text-gray-600">Loading rentals...</p>
         </div>
       </Portal>
@@ -73,42 +73,44 @@ const RentalsPortal = () => {
 
   return (
     <Portal title="Featured Rentals">
-      <div className="space-y-6 text-left">
-        {rentals.map((rental) => (
-          <Link to={`/rentals/${rental.id}`} key={rental.id}>
-            <div className="group p-6 bg-white border border-gray-200 rounded-lg hover:border-blue-200 transition-all duration-200 hover:shadow-md">
-              <h3 className="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors mb-3">
-                {rental.title}
-              </h3>
-              <div className="space-y-3">
-                <div className="flex items-center gap-2 text-gray-700">
-                  <MapPin className="w-4 h-4 text-blue-500" />
-                  <span>{rental.address}</span>
-                </div>
-                <div className="flex items-center gap-2 text-gray-900 font-medium">
-                  <DollarSign className="w-4 h-4 text-blue-500" />
-                  <span>${rental.price}/mo</span>
-                </div>
-                <div className="flex items-center gap-2 text-gray-500">
-                  <Clock className="w-4 h-4" />
-                  <span>
-                    {new Date(rental.created_at).toLocaleDateString()}
-                  </span>
-                </div>
-                {rental.description && (
-                  <p className="text-gray-600 line-clamp-2 mt-2">
-                    {rental.description}
-                  </p>
-                )}
-              </div>
-            </div>
-          </Link>
-        ))}
-        <Link to="/rentals" className="block mt-8">
-          <button className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition-colors duration-200 font-medium">
+      <div className="space-y-4">
+        <Link to="/rentals" className="inline-block mb-2">
+          <button className="bg-blue-600 text-white px-4 py-1.5 text-sm rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium">
             View All Rentals
           </button>
         </Link>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {rentals.map((rental) => (
+            <Link to={`/rentals/${rental.id}`} key={rental.id}>
+              <div className="group p-3 bg-white border border-gray-200 rounded-lg hover:border-blue-200 transition-all duration-200 hover:shadow-md h-full">
+                <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-600 transition-colors mb-2 line-clamp-1">
+                  {rental.title}
+                </h3>
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-1.5 text-sm text-gray-700">
+                    <MapPin className="w-3.5 h-3.5 text-blue-500" />
+                    <span className="line-clamp-1">{rental.address}</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 text-sm text-gray-900 font-medium">
+                    <DollarSign className="w-3.5 h-3.5 text-blue-500" />
+                    <span>${rental.price}/mo</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 text-xs text-gray-500">
+                    <Clock className="w-3.5 h-3.5" />
+                    <span>
+                      {new Date(rental.created_at).toLocaleDateString()}
+                    </span>
+                  </div>
+                  {rental.description && (
+                    <p className="text-sm text-gray-600 line-clamp-1 mt-1">
+                      {rental.description}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </Portal>
   );

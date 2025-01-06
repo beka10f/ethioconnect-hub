@@ -9,12 +9,12 @@ interface PortalProps {
 const Portal = ({ title, children }: PortalProps) => {
   return (
     <Card className="bg-white shadow-md hover:shadow-lg transition-all duration-300 ease-in-out overflow-hidden rounded-xl border border-gray-100">
-      <CardHeader className="pb-3 border-b border-gray-100">
-        <CardTitle className="text-2xl font-bold text-gray-900 tracking-tight">
+      <CardHeader className="pb-2 border-b border-gray-100">
+        <CardTitle className="text-xl font-bold text-gray-900 tracking-tight">
           {title}
         </CardTitle>
       </CardHeader>
-      <CardContent className="pt-6">
+      <CardContent className="pt-4">
         {children}
       </CardContent>
     </Card>
