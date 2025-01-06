@@ -46,91 +46,82 @@ const ShippingCalculator = () => {
       </Card>
 
       <Dialog open={showSummary} onOpenChange={setShowSummary}>
-        <DialogContent className="sm:max-w-[500px]">
+        <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-center text-blue-900">
-              Shipping Details Summary
+            <DialogTitle className="text-xl font-semibold text-blue-900">
+              Shipping Details
             </DialogTitle>
-            <DialogDescription>
-              {currentData && (
-                <div className="mt-6 space-y-6">
-                  <div className="grid gap-4">
-                    <div className="bg-gradient-to-r from-blue-50/50 to-blue-50/30 p-4 rounded-lg flex items-center gap-3">
-                      <User className="w-5 h-5 text-blue-600 shrink-0" />
-                      <div>
-                        <p className="text-sm text-blue-600 font-medium">Name</p>
-                        <p className="text-blue-900 font-semibold">{currentData.name}</p>
-                      </div>
-                    </div>
-
-                    <div className="bg-gradient-to-r from-blue-50/50 to-blue-50/30 p-4 rounded-lg flex items-center gap-3">
-                      <Phone className="w-5 h-5 text-blue-600 shrink-0" />
-                      <div>
-                        <p className="text-sm text-blue-600 font-medium">Phone Number</p>
-                        <p className="text-blue-900 font-semibold">{currentData.phoneNumber}</p>
-                      </div>
-                    </div>
-
-                    <div className="bg-gradient-to-r from-blue-50/50 to-blue-50/30 p-4 rounded-lg flex items-center gap-3">
-                      <Package className="w-5 h-5 text-blue-600 shrink-0" />
-                      <div>
-                        <p className="text-sm text-blue-600 font-medium">Package Weight</p>
-                        <p className="text-blue-900 font-semibold">
-                          {currentData.weight} {currentData.unit}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="bg-gradient-to-r from-blue-50/50 to-blue-50/30 p-4 rounded-lg flex items-center gap-3">
-                      <Calendar className="w-5 h-5 text-blue-600 shrink-0" />
-                      <div>
-                        <p className="text-sm text-blue-600 font-medium">Drop-off Date</p>
-                        <p className="text-blue-900 font-semibold">
-                          {format(currentData.shippingDate, "MMMM do, yyyy")}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="bg-gradient-to-r from-blue-50/50 to-blue-50/30 p-4 rounded-lg flex items-center gap-3">
-                      <DollarSign className="w-5 h-5 text-blue-600 shrink-0" />
-                      <div>
-                        <p className="text-sm text-blue-600 font-medium">Estimated Cost</p>
-                        <p className="text-blue-900 font-semibold">
-                          ${calculateShippingCost(currentData)}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div 
-                    className="bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-xl cursor-pointer 
-                             hover:from-blue-100 hover:to-blue-200 transition-all duration-300 shadow-sm 
-                             border border-blue-200 group"
-                    onClick={handleLocationClick}
-                  >
-                    <div className="flex items-start gap-3">
-                      <MapPin className="w-6 h-6 text-blue-600 mt-1 group-hover:animate-bounce" />
-                      <div>
-                        <h4 className="text-blue-800 font-medium mb-2">
-                          Drop-off Location
-                        </h4>
-                        <p className="text-blue-900 font-semibold leading-relaxed">
-                          ADOT International Market<br />
-                          3111 Chillum Road<br />
-                          Mount Rainer, MD
-                        </p>
-                        <p className="text-blue-600 mt-3 font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
-                          Click here for directions 
-                          <span className="group-hover:translate-x-1 transition-transform">→</span>
-                        </p>
-                      </div>
-                    </div>
+          </DialogHeader>
+          {currentData && (
+            <div className="space-y-3">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-blue-50/50 p-3 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <User className="w-4 h-4 text-blue-600" />
+                    <p className="text-sm text-blue-900 font-medium">{currentData.name}</p>
                   </div>
                 </div>
-              )}
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
+
+                <div className="bg-blue-50/50 p-3 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <Phone className="w-4 h-4 text-blue-600" />
+                    <p className="text-sm text-blue-900 font-medium">{currentData.phoneNumber}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-blue-50/50 p-3 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <Package className="w-4 h-4 text-blue-600" />
+                    <p className="text-sm text-blue-900 font-medium">
+                      {currentData.weight} {currentData.unit}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="bg-blue-50/50 p-3 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <DollarSign className="w-4 h-4 text-blue-600" />
+                    <p className="text-sm text-blue-900 font-medium">
+                      ${calculateShippingCost(currentData)}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-blue-50/50 p-3 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-4 h-4 text-blue-600" />
+                  <p className="text-sm text-blue-900 font-medium">
+                    {format(currentData.shippingDate, "MMM do, yyyy")}
+                  </p>
+                </div>
+              </div>
+
+              <div 
+                className="bg-gradient-to-r from-blue-50 to-blue-100 p-3 rounded-lg cursor-pointer 
+                         hover:from-blue-100 hover:to-blue-200 transition-all duration-300
+                         border border-blue-200 group"
+                onClick={handleLocationClick}
+              >
+                <div className="flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-blue-600 group-hover:animate-bounce" />
+                  <div>
+                    <p className="text-sm text-blue-900 font-medium">
+                      ADOT International Market<br />
+                      3111 Chillum Road, Mount Rainer, MD
+                    </p>
+                    <p className="text-xs text-blue-600 mt-1 flex items-center gap-1 group-hover:gap-2 transition-all">
+                      Click for directions 
+                      <span className="group-hover:translate-x-1 transition-transform">→</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          <DialogFooter className="mt-2">
             <Button 
               variant="outline" 
               onClick={() => setShowSummary(false)}
