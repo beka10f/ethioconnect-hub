@@ -139,25 +139,57 @@ const ShippingCalculator = () => {
           </form>
         </Form>
 
-        <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-          <h3 className="font-semibold text-gray-900 mb-2">Pricing Guide</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600">
-            <div>
-              <p className="font-medium">Kilograms (kg):</p>
-              <ul className="list-disc list-inside space-y-1">
-                <li>Up to 3kg: $45 flat rate</li>
-                <li>3-10kg: $18 per kg</li>
-                <li>Over 10kg: $15 per kg</li>
-              </ul>
+        <div className="mt-6 space-y-4">
+          <h3 className="text-lg font-semibold text-gray-900">Shipping Rates Guide</h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <h4 className="font-medium text-gray-900 mb-3 flex items-center">
+                <span className="bg-primary/10 text-primary px-2 py-1 rounded text-sm mr-2">KG</span>
+                Kilogram Rates
+              </h4>
+              <div className="space-y-2">
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-gray-600">Up to 3 kg</span>
+                  <span className="font-medium text-gray-900">$45 flat rate</span>
+                </div>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-gray-600">3 - 10 kg</span>
+                  <span className="font-medium text-gray-900">$18 per kg</span>
+                </div>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-gray-600">Over 10 kg</span>
+                  <span className="font-medium text-gray-900">$15 per kg</span>
+                </div>
+              </div>
             </div>
-            <div>
-              <p className="font-medium">Pounds (lbs):</p>
-              <ul className="list-disc list-inside space-y-1">
-                <li>Up to 6lbs: $45 flat rate</li>
-                <li>6-22lbs: $8.16 per lb</li>
-                <li>Over 22lbs: $6.8 per lb</li>
-              </ul>
+
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <h4 className="font-medium text-gray-900 mb-3 flex items-center">
+                <span className="bg-primary/10 text-primary px-2 py-1 rounded text-sm mr-2">LB</span>
+                Pound Rates
+              </h4>
+              <div className="space-y-2">
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-gray-600">Up to 6 lbs</span>
+                  <span className="font-medium text-gray-900">$45 flat rate</span>
+                </div>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-gray-600">6 - 22 lbs</span>
+                  <span className="font-medium text-gray-900">$8.16 per lb</span>
+                </div>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-gray-600">Over 22 lbs</span>
+                  <span className="font-medium text-gray-900">$6.80 per lb</span>
+                </div>
+              </div>
             </div>
+          </div>
+
+          <div className="bg-blue-50 p-4 rounded-lg mt-4">
+            <p className="text-sm text-blue-700">
+              <strong>Example:</strong> A 8 kg package would cost $144 (8 kg × $18/kg), while a 20 lb package would cost $163.20 (20 lb × $8.16/lb).
+            </p>
           </div>
         </div>
       </div>
