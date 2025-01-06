@@ -35,7 +35,7 @@ const ShippingCalculator = () => {
     <>
       <Card className="p-6 bg-white shadow-lg">
         <div className="space-y-6">
-          <div>
+          <div className="text-left">
             <h2 className="text-2xl font-bold text-gray-900 mb-2">Ship to Ethiopia</h2>
             <p className="text-gray-600">Calculate your shipping costs based on package weight.</p>
           </div>
@@ -48,7 +48,7 @@ const ShippingCalculator = () => {
       <Dialog open={showSummary} onOpenChange={setShowSummary}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle className="text-xl font-semibold text-site-blue">
+            <DialogTitle className="text-xl font-semibold text-site-blue text-left">
               Shipping Details
             </DialogTitle>
           </DialogHeader>
@@ -58,14 +58,14 @@ const ShippingCalculator = () => {
                 <div className="bg-site-blue/5 p-3 rounded-lg">
                   <div className="flex items-center gap-2">
                     <User className="w-4 h-4 text-site-blue" />
-                    <p className="text-sm text-gray-900 font-medium">{currentData.name}</p>
+                    <p className="text-sm text-gray-900 font-medium text-left">{currentData.name}</p>
                   </div>
                 </div>
 
                 <div className="bg-site-blue/5 p-3 rounded-lg">
                   <div className="flex items-center gap-2">
                     <Phone className="w-4 h-4 text-site-blue" />
-                    <p className="text-sm text-gray-900 font-medium">{currentData.phoneNumber}</p>
+                    <p className="text-sm text-gray-900 font-medium text-left">{currentData.phoneNumber}</p>
                   </div>
                 </div>
               </div>
@@ -74,7 +74,7 @@ const ShippingCalculator = () => {
                 <div className="bg-site-blue/5 p-3 rounded-lg">
                   <div className="flex items-center gap-2">
                     <Package className="w-4 h-4 text-site-blue" />
-                    <p className="text-sm text-gray-900 font-medium">
+                    <p className="text-sm text-gray-900 font-medium text-left">
                       {currentData.weight} {currentData.unit}
                     </p>
                   </div>
@@ -83,7 +83,7 @@ const ShippingCalculator = () => {
                 <div className="bg-site-blue/5 p-3 rounded-lg">
                   <div className="flex items-center gap-2">
                     <DollarSign className="w-4 h-4 text-site-blue" />
-                    <p className="text-sm text-gray-900 font-medium">
+                    <p className="text-sm text-gray-900 font-medium text-left">
                       ${calculateShippingCost(currentData)}
                     </p>
                   </div>
@@ -93,7 +93,7 @@ const ShippingCalculator = () => {
               <div className="bg-site-blue/5 p-3 rounded-lg">
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4 text-site-blue" />
-                  <p className="text-sm text-gray-900 font-medium">
+                  <p className="text-sm text-gray-900 font-medium text-left">
                     {format(currentData.shippingDate, "MMM do, yyyy")}
                   </p>
                 </div>
@@ -107,7 +107,7 @@ const ShippingCalculator = () => {
               >
                 <div className="flex items-center gap-2">
                   <MapPin className="w-4 h-4 text-site-blue group-hover:animate-bounce" />
-                  <div>
+                  <div className="text-left">
                     <p className="text-sm text-gray-900 font-medium">
                       ADOT International Market<br />
                       3111 Chillum Road, Mount Rainer, MD
