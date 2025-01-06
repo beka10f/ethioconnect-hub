@@ -14,7 +14,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import type { Database } from "@/integrations/supabase/types";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -68,12 +67,12 @@ export function ContactForm() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-ethiopian-coffee font-medium">Name</FormLabel>
+              <FormLabel className="text-site-black font-medium">Name</FormLabel>
               <FormControl>
                 <Input 
                   placeholder="Your name" 
                   {...field} 
-                  className="border-ethiopian-sage/30 focus:border-ethiopian-gold focus:ring-ethiopian-gold/20"
+                  className="border-gray-200 focus:border-site-blue focus:ring-site-blue/20"
                 />
               </FormControl>
               <FormMessage className="text-red-600" />
@@ -85,13 +84,13 @@ export function ContactForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-ethiopian-coffee font-medium">Email</FormLabel>
+              <FormLabel className="text-site-black font-medium">Email</FormLabel>
               <FormControl>
                 <Input 
                   placeholder="your.email@example.com" 
                   type="email" 
                   {...field} 
-                  className="border-ethiopian-sage/30 focus:border-ethiopian-gold focus:ring-ethiopian-gold/20"
+                  className="border-gray-200 focus:border-site-blue focus:ring-site-blue/20"
                 />
               </FormControl>
               <FormMessage className="text-red-600" />
@@ -103,11 +102,11 @@ export function ContactForm() {
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-ethiopian-coffee font-medium">Message</FormLabel>
+              <FormLabel className="text-site-black font-medium">Message</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Type your message here..."
-                  className="min-h-[150px] border-ethiopian-sage/30 focus:border-ethiopian-gold focus:ring-ethiopian-gold/20"
+                  className="min-h-[150px] border-gray-200 focus:border-site-blue focus:ring-site-blue/20"
                   {...field}
                 />
               </FormControl>
@@ -117,7 +116,7 @@ export function ContactForm() {
         />
         <Button 
           type="submit" 
-          className="w-full bg-ethiopian-coffee hover:bg-ethiopian-coffee/90 text-white font-medium py-2.5"
+          className="w-full bg-site-blue hover:bg-site-blue/90 text-white font-medium py-2.5"
         >
           Send Message
         </Button>

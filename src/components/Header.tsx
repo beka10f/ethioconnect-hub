@@ -35,14 +35,14 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-white/80 backdrop-blur-md border-b border-gray-100/50 sticky top-0 z-50">
+    <header className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
       <div className="container mx-auto px-4 py-3">
         <div className="flex justify-between items-center">
-          <Link to="/" className="text-2xl font-medium text-gray-900 tracking-tight">
+          <Link to="/" className="text-2xl font-medium text-site-black tracking-tight">
             Ethiopian DMV Hub
           </Link>
           <div className="flex items-center space-x-8">
-            <nav className="flex items-center gap-8 text-sm font-medium text-gray-600">
+            <nav className="flex items-center gap-8 text-sm font-medium text-site-black/70">
               {[
                 { to: "/jobs", label: "Jobs" },
                 { to: "/rentals", label: "Rentals" },
@@ -52,7 +52,7 @@ const Header = () => {
                 <Link
                   key={link.label}
                   to={link.to}
-                  className="hover:text-blue-600 transition-colors duration-200 relative after:content-[''] after:absolute after:left-0 after:bottom-[-2px] after:h-[2px] after:w-0 after:bg-blue-600 after:transition-all hover:after:w-full"
+                  className="hover:text-site-blue transition-colors duration-200 relative after:content-[''] after:absolute after:left-0 after:bottom-[-2px] after:h-[2px] after:w-0 after:bg-site-blue after:transition-all hover:after:w-full"
                 >
                   {link.label}
                 </Link>
@@ -61,7 +61,7 @@ const Header = () => {
             {isLoggedIn ? (
               <Button 
                 variant="outline"
-                className="border-ethiopian-coffee text-ethiopian-coffee hover:bg-ethiopian-coffee hover:text-white transition-colors duration-200 shadow-sm"
+                className="border-site-blue text-site-blue hover:bg-site-blue hover:text-white transition-colors duration-200 shadow-sm"
                 onClick={handleLogout}
               >
                 <LogOut className="w-4 h-4 mr-2" />
@@ -70,7 +70,7 @@ const Header = () => {
             ) : (
               <Button 
                 variant="outline"
-                className="border-ethiopian-coffee text-ethiopian-coffee hover:bg-ethiopian-coffee hover:text-white transition-colors duration-200 shadow-sm"
+                className="border-site-blue text-site-blue hover:bg-site-blue hover:text-white transition-colors duration-200 shadow-sm"
                 onClick={() => navigate("/login")}
               >
                 Login

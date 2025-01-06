@@ -24,12 +24,10 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        ethiopian: {
-          coffee: "#4A3428",
-          gold: "#C4A484",
-          sage: "#8B9D83",
-          cream: "#FDF8F5",
-          charcoal: "#2D2D2D"
+        site: {
+          blue: "#0EA5E9",
+          black: "#222222",
+          white: "#FFFFFF"
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",

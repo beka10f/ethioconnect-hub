@@ -10,7 +10,7 @@ const Portal = ({ title, children }: PortalProps) => {
   return (
     <Card className="bg-white shadow-sm hover:shadow-md transition-all duration-300 ease-in-out overflow-hidden rounded-lg border border-gray-100">
       <CardHeader className="pb-2 border-b border-gray-100 px-4 py-3">
-        <CardTitle className="text-lg font-semibold text-gray-900 text-left">
+        <CardTitle className="text-lg font-semibold text-site-black text-left">
           {title}
         </CardTitle>
       </CardHeader>
