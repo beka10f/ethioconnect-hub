@@ -71,47 +71,49 @@ const ShippingForm = ({ onSubmit }: ShippingFormProps) => {
             )}
           />
 
-          <FormField
-            control={form.control}
-            name="weight"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Package Weight</FormLabel>
-                <FormControl>
-                  <Input type="number" step="0.1" placeholder="Enter weight" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="unit"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Unit</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+          <div className="flex gap-2 md:col-span-2">
+            <FormField
+              control={form.control}
+              name="weight"
+              render={({ field }) => (
+                <FormItem className="flex-1">
+                  <FormLabel>Package Weight</FormLabel>
                   <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select unit" />
-                    </SelectTrigger>
+                    <Input type="number" step="0.1" placeholder="Enter weight" {...field} />
                   </FormControl>
-                  <SelectContent>
-                    <SelectItem value="kg">Kilograms (kg)</SelectItem>
-                    <SelectItem value="lbs">Pounds (lbs)</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="unit"
+              render={({ field }) => (
+                <FormItem className="w-32">
+                  <FormLabel>Unit</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select unit" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="kg">Kilograms (kg)</SelectItem>
+                      <SelectItem value="lbs">Pounds (lbs)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
           <FormField
             control={form.control}
             name="shippingDate"
             render={({ field }) => (
-              <FormItem className="flex flex-col">
+              <FormItem className="flex flex-col md:col-span-2">
                 <FormLabel>Planned Drop-off Date</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
