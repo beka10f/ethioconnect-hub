@@ -80,10 +80,14 @@ const Rentals = () => {
     <div className="min-h-screen bg-white">
       <Header />
       <main className="container mx-auto py-8 px-4">
-        <div className="flex justify-between items-center mb-8">
-          <div className="text-left">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Rental Listings</h1>
-            <p className="text-gray-600">Find your perfect home in our community</p>
+        <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8">
+          <div className="space-y-2 text-left">
+            <h1 className="text-4xl font-bold text-gray-900 tracking-tight">
+              Rental Listings
+            </h1>
+            <p className="text-lg text-gray-600">
+              Find your perfect home in our community
+            </p>
           </div>
           <Link to="/post-rental">
             <Button className="bg-blue-600 hover:bg-blue-700 text-white">
@@ -120,7 +124,7 @@ const Rentals = () => {
                     <p className="text-gray-700 line-clamp-2">{rental.address}</p>
                   </div>
                   
-                  <p className="text-gray-600 line-clamp-3 text-sm">
+                  <p className="text-gray-600 line-clamp-3 text-sm text-left">
                     {rental.description}
                   </p>
 
