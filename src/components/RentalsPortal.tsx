@@ -74,7 +74,7 @@ const RentalsPortal = () => {
       <div className="space-y-4 text-left">
         {rentals.map((rental) => (
           <Link to={`/rentals/${rental.id}`} key={rental.id}>
-            <div className="group border border-gray-100 rounded-lg p-4 hover:border-blue-100 hover:bg-blue-50/30 transition-all duration-200">
+            <div className="group border border-gray-200 rounded-lg p-4 hover:border-blue-100 hover:bg-blue-50/30 transition-all duration-200">
               <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
                 {rental.title}
               </h3>

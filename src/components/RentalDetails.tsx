@@ -48,17 +48,13 @@ const RentalDetails = () => {
     fetchRental();
   }, [id, navigate]);
 
-  if (isLoading) {
-    return null;
-  }
-
-  if (!rental) {
+  if (isLoading || !rental) {
     return null;
   }
 
   return (
     <Dialog open={true} onOpenChange={() => navigate("/rentals")}>
-      <DialogContent className="sm:max-w-[600px] text-left">
+      <DialogContent className="sm:max-w-[600px] text-left bg-white">
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold text-gray-900">{rental.title}</DialogTitle>
         </DialogHeader>

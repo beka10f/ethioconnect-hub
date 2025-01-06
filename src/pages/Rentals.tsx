@@ -65,11 +65,11 @@ const Rentals = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-ethiopian-cream">
+      <div className="min-h-screen bg-white">
         <Header />
         <main className="container mx-auto py-8 px-4">
           <div className="flex justify-center items-center h-64">
-            <div className="animate-pulse text-ethiopian-coffee">Loading rentals...</div>
+            <div className="text-blue-600">Loading rentals...</div>
           </div>
         </main>
       </div>
@@ -77,16 +77,16 @@ const Rentals = () => {
   }
 
   return (
-    <div className="min-h-screen bg-ethiopian-cream">
+    <div className="min-h-screen bg-white">
       <Header />
       <main className="container mx-auto py-8 px-4">
         <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-ethiopian-coffee mb-2">Rental Listings</h1>
-            <p className="text-ethiopian-charcoal/60">Find your perfect home in our community</p>
+          <div className="text-left">
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Rental Listings</h1>
+            <p className="text-gray-600">Find your perfect home in our community</p>
           </div>
           <Link to="/post-rental">
-            <Button className="bg-ethiopian-coffee hover:bg-ethiopian-coffee/90 text-white">
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white">
               <Home className="w-4 h-4 mr-2" />
               Post a Rental
             </Button>
@@ -98,43 +98,43 @@ const Rentals = () => {
             <Link
               to={`/rentals/${rental.id}`}
               key={rental.id}
-              className="group bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden border border-ethiopian-coffee/10"
+              className="group bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden border border-gray-200"
             >
               <div className="p-6 space-y-4">
-                <div className="flex justify-between items-start">
-                  <h3 className="text-xl font-semibold text-ethiopian-coffee group-hover:text-ethiopian-coffee/80 transition-colors line-clamp-2">
+                <div className="flex justify-between items-start gap-4">
+                  <h3 className="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
                     {rental.title}
                   </h3>
-                  <div className="flex items-center bg-ethiopian-cream px-3 py-1.5 rounded-full">
-                    <DollarSign className="w-4 h-4 text-ethiopian-coffee/70" />
-                    <span className="font-semibold text-ethiopian-coffee">
+                  <div className="flex items-center bg-blue-50 px-3 py-1.5 rounded-full whitespace-nowrap">
+                    <DollarSign className="w-4 h-4 text-blue-600" />
+                    <span className="font-semibold text-blue-600">
                       ${rental.price}
-                      <span className="text-sm text-ethiopian-coffee/70">/mo</span>
+                      <span className="text-sm text-blue-500">/mo</span>
                     </span>
                   </div>
                 </div>
 
                 <div className="space-y-3">
                   <div className="flex items-start gap-2">
-                    <MapPin className="w-4 h-4 mt-1 flex-shrink-0 text-ethiopian-coffee/60" />
-                    <p className="text-ethiopian-coffee/80 line-clamp-2">{rental.address}</p>
+                    <MapPin className="w-4 h-4 mt-1 flex-shrink-0 text-gray-500" />
+                    <p className="text-gray-700 line-clamp-2">{rental.address}</p>
                   </div>
                   
-                  <p className="text-ethiopian-coffee/70 line-clamp-3 text-sm text-left">
+                  <p className="text-gray-600 line-clamp-3 text-sm">
                     {rental.description}
                   </p>
 
-                  <div className="pt-4 border-t border-ethiopian-coffee/10">
+                  <div className="pt-4 border-t border-gray-100">
                     <div className="grid grid-cols-2 gap-3 text-sm">
                       <div className="flex items-center gap-1.5">
-                        <Mail className="w-4 h-4 text-ethiopian-coffee/60" />
-                        <span className="text-ethiopian-coffee/70 truncate">
+                        <Mail className="w-4 h-4 text-gray-500" />
+                        <span className="text-gray-600 truncate">
                           {rental.contact_info}
                         </span>
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <Phone className="w-4 h-4 text-ethiopian-coffee/60" />
-                        <span className="text-ethiopian-coffee/70 truncate">
+                        <Phone className="w-4 h-4 text-gray-500" />
+                        <span className="text-gray-600 truncate">
                           {rental.phone_number}
                         </span>
                       </div>
@@ -142,14 +142,14 @@ const Rentals = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between text-sm text-ethiopian-coffee/60">
+                <div className="flex items-center justify-between text-sm text-gray-500">
                   <div className="flex items-center gap-1.5">
                     <Calendar className="w-4 h-4" />
                     <span>
                       Posted {new Date(rental.created_at).toLocaleDateString()}
                     </span>
                   </div>
-                  <span className="text-ethiopian-coffee underline opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="text-blue-600 underline opacity-0 group-hover:opacity-100 transition-opacity">
                     View Details →
                   </span>
                 </div>
