@@ -2,10 +2,11 @@ import Header from "@/components/Header";
 import JobsManagement from "@/components/admin/JobsManagement";
 import RentalsManagement from "@/components/admin/RentalsManagement";
 import ExchangeRateManagement from "@/components/admin/ExchangeRateManagement";
+import ShippingManagement from "@/components/admin/ShippingManagement";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { DollarSign, Briefcase, Home } from "lucide-react";
+import { DollarSign, Briefcase, Home, Package } from "lucide-react";
 
 const Admin = () => {
   const { isAuthChecked } = useAdminAuth();
@@ -60,6 +61,13 @@ const Admin = () => {
                 <Home className="mr-2 h-4 w-4" />
                 Rentals
               </TabsTrigger>
+              <TabsTrigger 
+                value="shipping"
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md px-6 py-3.5 text-sm font-medium ring-offset-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-site-blue focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-site-blue data-[state=active]:text-white data-[state=active]:shadow-sm hover:bg-site-blue/10"
+              >
+                <Package className="mr-2 h-4 w-4" />
+                Shipping
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="exchange">
@@ -89,6 +97,14 @@ const Admin = () => {
               <Card className="bg-white shadow-md border-gray-200/50">
                 <CardContent className="p-6">
                   <RentalsManagement />
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="shipping">
+              <Card className="bg-white shadow-md border-gray-200/50">
+                <CardContent className="p-6">
+                  <ShippingManagement />
                 </CardContent>
               </Card>
             </TabsContent>
