@@ -98,7 +98,9 @@ const ShippingCalculator = () => {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleConfirm}>Confirm Details</AlertDialogAction>
+            <AlertDialogAction type="button" onClick={handleConfirm}>
+              Confirm Details
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
