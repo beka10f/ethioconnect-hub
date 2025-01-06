@@ -138,7 +138,7 @@ const ShippingCalculator = () => {
               />
             </div>
 
-            <Button type="submit" className="w-full bg-[#0EA5E9] hover:bg-[#0891CE] text-white">
+            <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-white">
               Calculate Shipping Cost
             </Button>
           </form>
