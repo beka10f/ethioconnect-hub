@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import JobsManagement from "@/components/admin/JobsManagement";
 import RentalsManagement from "@/components/admin/RentalsManagement";
+import ExchangeRateManagement from "@/components/admin/ExchangeRateManagement";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 
 const Admin = () => {
@@ -22,6 +23,8 @@ const Admin = () => {
       <Header />
       <div className="container mx-auto py-8 px-4">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Admin Dashboard</h1>
+        
+        <ExchangeRateManagement />
         
         <div className="space-y-8">
           <JobsManagement />
