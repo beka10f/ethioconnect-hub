@@ -36,13 +36,13 @@ const Header = () => {
 
   return (
     <header className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-3">
+      <div className="max-w-7xl mx-auto px-6 py-4 md:px-8 lg:px-12">
         <div className="flex justify-between items-center">
           <Link to="/" className="text-2xl font-medium text-site-black tracking-tight">
             Ethiopian DMV Hub
           </Link>
           <div className="flex items-center space-x-8">
-            <nav className="flex items-center gap-8 text-sm font-medium text-site-black/70">
+            <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-site-black/70">
               {[
                 { to: "/jobs", label: "Jobs" },
                 { to: "/rentals", label: "Rentals" },
