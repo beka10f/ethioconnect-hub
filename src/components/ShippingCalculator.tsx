@@ -33,12 +33,12 @@ const ShippingCalculator = () => {
 
   return (
     <>
-      <div className="max-w-2xl mx-auto w-full px-4">
-        <Card className="p-6 bg-white shadow-lg">
-          <div className="space-y-6">
+      <div className="w-full max-w-2xl mx-auto px-4 sm:px-6">
+        <Card className="p-4 sm:p-6 bg-white shadow-lg">
+          <div className="space-y-4 sm:space-y-6">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Ship to Ethiopia</h2>
-              <p className="text-gray-600">Calculate your shipping costs based on package weight.</p>
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Ship to Ethiopia</h2>
+              <p className="text-sm sm:text-base text-gray-600">Calculate your shipping costs based on package weight.</p>
             </div>
 
             <ShippingForm onSubmit={handleSubmit} />
@@ -48,34 +48,34 @@ const ShippingCalculator = () => {
       </div>
 
       <Dialog open={showSummary} onOpenChange={setShowSummary}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="w-[95vw] max-w-[425px] p-4 sm:p-6">
           <DialogHeader>
-            <DialogTitle className="text-xl font-semibold text-site-blue">
+            <DialogTitle className="text-lg sm:text-xl font-semibold text-site-blue">
               Shipping Details
             </DialogTitle>
           </DialogHeader>
           {currentData && (
             <div className="space-y-3">
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-site-blue/5 p-3 rounded-lg">
                   <div className="flex items-center gap-2">
-                    <User className="w-4 h-4 text-site-blue" />
-                    <p className="text-sm text-gray-900 font-medium">{currentData.name}</p>
+                    <User className="w-4 h-4 text-site-blue flex-shrink-0" />
+                    <p className="text-sm text-gray-900 font-medium truncate">{currentData.name}</p>
                   </div>
                 </div>
 
                 <div className="bg-site-blue/5 p-3 rounded-lg">
                   <div className="flex items-center gap-2">
-                    <Phone className="w-4 h-4 text-site-blue" />
-                    <p className="text-sm text-gray-900 font-medium">{currentData.phoneNumber}</p>
+                    <Phone className="w-4 h-4 text-site-blue flex-shrink-0" />
+                    <p className="text-sm text-gray-900 font-medium truncate">{currentData.phoneNumber}</p>
                   </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-site-blue/5 p-3 rounded-lg">
                   <div className="flex items-center gap-2">
-                    <Package className="w-4 h-4 text-site-blue" />
+                    <Package className="w-4 h-4 text-site-blue flex-shrink-0" />
                     <p className="text-sm text-gray-900 font-medium">
                       {currentData.weight} {currentData.unit}
                     </p>
@@ -84,7 +84,7 @@ const ShippingCalculator = () => {
 
                 <div className="bg-site-blue/5 p-3 rounded-lg">
                   <div className="flex items-center gap-2">
-                    <DollarSign className="w-4 h-4 text-site-blue" />
+                    <DollarSign className="w-4 h-4 text-site-blue flex-shrink-0" />
                     <p className="text-sm text-gray-900 font-medium">
                       ${calculateShippingCost(currentData)}
                     </p>
@@ -94,7 +94,7 @@ const ShippingCalculator = () => {
 
               <div className="bg-site-blue/5 p-3 rounded-lg">
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-site-blue" />
+                  <Calendar className="w-4 h-4 text-site-blue flex-shrink-0" />
                   <p className="text-sm text-gray-900 font-medium">
                     {format(currentData.shippingDate, "MMM do, yyyy")}
                   </p>
@@ -108,7 +108,7 @@ const ShippingCalculator = () => {
                 onClick={handleLocationClick}
               >
                 <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-site-blue group-hover:animate-bounce" />
+                  <MapPin className="w-4 h-4 text-site-blue flex-shrink-0 group-hover:animate-bounce" />
                   <div>
                     <p className="text-sm text-gray-900 font-medium">
                       ADOT International Market<br />
