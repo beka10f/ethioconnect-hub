@@ -67,19 +67,23 @@ const Jobs = () => {
   return (
     <div className="min-h-screen bg-white">
       <Header />
-      <div className="max-w-6xl mx-auto py-6 px-4 sm:px-6">
-        <div className="flex justify-between items-center mb-6">
-          <div>
-            <h1 className="text-3xl font-bold text-black">Job Listings</h1>
-            <p className="text-sm text-gray-600 mt-1">Find your next opportunity in our community</p>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+          <div className="space-y-2">
+            <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
+              Job Listings
+            </h1>
+            <p className="text-gray-600">
+              Find your next opportunity in our community
+            </p>
           </div>
           <Link to="/post-job">
             <Button 
               size="lg"
               className={cn(
-                "bg-blue-600 hover:bg-blue-700 text-white shadow-md",
-                "transition-all duration-200 ease-in-out",
-                "flex items-center gap-2 rounded-lg"
+                "bg-blue-600 hover:bg-blue-700 text-white",
+                "shadow-md hover:shadow-lg transition-all duration-200",
+                "flex items-center gap-2 px-6 py-2.5 rounded-xl"
               )}
             >
               <Briefcase className="w-4 h-4" />
@@ -87,7 +91,7 @@ const Jobs = () => {
             </Button>
           </Link>
         </div>
-        
+
         {isLoading ? (
           <div className="flex justify-center items-center h-32">
             <div className="animate-pulse text-blue-600">Loading jobs...</div>
