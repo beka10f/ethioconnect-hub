@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { Briefcase, MapPin, Calendar, Mail, Phone } from "lucide-react";
 
 type Job = {
   id: string;
@@ -13,6 +14,7 @@ type Job = {
   description: string;
   contact_info: string;
   created_at: string;
+  phone_number: string;
 };
 
 const Jobs = () => {
@@ -40,7 +42,6 @@ const Jobs = () => {
 
     fetchJobs();
 
-    // Set up real-time subscription for approved jobs
     const channel = supabase
       .channel("jobs-listing")
       .on(
@@ -67,9 +68,13 @@ const Jobs = () => {
       <Header />
       <div className="container mx-auto py-8 px-4">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-ethiopian-coffee">Job Listings</h1>
+          <div>
+            <h1 className="text-3xl font-bold text-ethiopian-coffee mb-2">Job Listings</h1>
+            <p className="text-ethiopian-charcoal/60">Find your next opportunity in our community</p>
+          </div>
           <Link to="/post-job">
-            <Button className="bg-ethiopian-coffee text-white hover:bg-ethiopian-coffee/90">
+            <Button className="bg-ethiopian-coffee hover:bg-ethiopian-coffee/90 text-white">
+              <Briefcase className="w-4 h-4 mr-2" />
               Post a Job
             </Button>
           </Link>
@@ -77,38 +82,59 @@ const Jobs = () => {
         
         {isLoading ? (
           <div className="flex justify-center items-center h-32">
-            <p className="text-gray-600">Loading jobs...</p>
+            <div className="animate-pulse text-ethiopian-coffee">Loading jobs...</div>
           </div>
         ) : (
           <div className="grid gap-6">
             {jobs.map((job) => (
               <div 
                 key={job.id} 
-                className="bg-white rounded-lg shadow-md p-6 border border-ethiopian-sage/20 hover:border-ethiopian-sage/40 transition-colors duration-200"
+                className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-200 p-6 border border-ethiopian-sage/10"
               >
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h2 className="text-xl font-semibold text-ethiopian-coffee">{job.title}</h2>
-                    <p className="text-ethiopian-gold font-medium">{job.company_name}</p>
-                    <p className="text-ethiopian-charcoal/70">{job.location}</p>
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                  <div className="flex-1 space-y-4">
+                    <div>
+                      <h2 className="text-xl font-semibold text-ethiopian-coffee group-hover:text-ethiopian-gold transition-colors">
+                        {job.title}
+                      </h2>
+                      <p className="text-ethiopian-gold font-medium mt-1">{job.company_name}</p>
+                    </div>
+                    
+                    <div className="flex flex-wrap gap-4 text-sm text-ethiopian-charcoal/70">
+                      <div className="flex items-center">
+                        <MapPin className="w-4 h-4 mr-1.5 text-ethiopian-sage" />
+                        {job.location}
+                      </div>
+                      <div className="flex items-center">
+                        <Calendar className="w-4 h-4 mr-1.5 text-ethiopian-sage" />
+                        {new Date(job.created_at).toLocaleDateString()}
+                      </div>
+                    </div>
+                    
+                    <p className="text-ethiopian-charcoal/80 line-clamp-3">{job.description}</p>
+                    
+                    <div className="flex flex-wrap gap-4 text-sm">
+                      <div className="flex items-center text-ethiopian-charcoal/70">
+                        <Mail className="w-4 h-4 mr-1.5 text-ethiopian-sage" />
+                        {job.contact_info}
+                      </div>
+                      <div className="flex items-center text-ethiopian-charcoal/70">
+                        <Phone className="w-4 h-4 mr-1.5 text-ethiopian-sage" />
+                        {job.phone_number}
+                      </div>
+                    </div>
                   </div>
-                  <span className="text-sm text-ethiopian-charcoal/60">
-                    {new Date(job.created_at).toLocaleDateString()}
-                  </span>
-                </div>
-                
-                <p className="text-ethiopian-charcoal/80 mb-4">{job.description}</p>
-                
-                <div className="flex justify-between items-center">
-                  <p className="text-sm text-ethiopian-charcoal/70">Contact: {job.contact_info}</p>
-                  <Link to={`/jobs/${job.id}`}>
-                    <Button 
-                      variant="outline" 
-                      className="border-ethiopian-coffee text-ethiopian-coffee hover:bg-ethiopian-coffee hover:text-white transition-colors duration-200"
-                    >
-                      View Details
-                    </Button>
-                  </Link>
+                  
+                  <div className="flex md:flex-col gap-4 md:ml-6">
+                    <Link to={`/jobs/${job.id}`}>
+                      <Button 
+                        variant="outline" 
+                        className="w-full border-ethiopian-coffee text-ethiopian-coffee hover:bg-ethiopian-coffee hover:text-white transition-colors duration-200"
+                      >
+                        View Details
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}
