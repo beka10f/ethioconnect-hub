@@ -79,7 +79,7 @@ const Header = () => {
                   <button
                     key={link.label}
                     onClick={link.onClick}
-                    className="hover:text-site-blue transition-colors duration-200 relative after:content-[''] after:absolute after:left-0 after:bottom-[-2px] after:h-[2px] after:w-0 after:bg-site-blue after:transition-all hover:after:w-full"
+                    className="relative text-site-black/70 active:text-site-blue transition-colors duration-200 after:content-[''] after:absolute after:left-0 after:bottom-[-2px] after:h-[2px] after:w-0 after:bg-site-blue after:transition-all active:after:w-full md:hover:text-site-blue md:hover:after:w-full"
                   >
                     {link.label}
                   </button>
@@ -87,7 +87,7 @@ const Header = () => {
                   <Link
                     key={link.label}
                     to={link.to}
-                    className="hover:text-site-blue transition-colors duration-200 relative after:content-[''] after:absolute after:left-0 after:bottom-[-2px] after:h-[2px] after:w-0 after:bg-site-blue after:transition-all hover:after:w-full"
+                    className="relative text-site-black/70 active:text-site-blue transition-colors duration-200 after:content-[''] after:absolute after:left-0 after:bottom-[-2px] after:h-[2px] after:w-0 after:bg-site-blue after:transition-all active:after:w-full md:hover:text-site-blue md:hover:after:w-full"
                   >
                     {link.label}
                   </Link>
@@ -114,7 +114,7 @@ const Header = () => {
                         <button
                           key={link.label}
                           onClick={link.onClick}
-                          className="text-lg font-medium text-site-black/70 hover:text-site-blue transition-colors px-2 py-1 text-left"
+                          className="text-lg font-medium text-site-black/70 active:text-site-blue transition-colors px-2 py-1 text-left"
                         >
                           {link.label}
                         </button>
@@ -122,7 +122,7 @@ const Header = () => {
                         <Link
                           key={link.label}
                           to={link.to}
-                          className="text-lg font-medium text-site-black/70 hover:text-site-blue transition-colors px-2 py-1"
+                          className="text-lg font-medium text-site-black/70 active:text-site-blue transition-colors px-2 py-1"
                           onClick={() => setIsOpen(false)}
                         >
                           {link.label}
@@ -137,7 +137,7 @@ const Header = () => {
             {isLoggedIn ? (
               <Button 
                 variant="outline"
-                className="border-site-blue text-site-blue hover:bg-site-blue hover:text-white transition-colors duration-200 shadow-sm"
+                className="border-site-blue text-site-blue active:bg-site-blue active:text-white md:hover:bg-site-blue md:hover:text-white transition-colors duration-200 shadow-sm"
                 onClick={handleLogout}
               >
                 <LogOut className="w-4 h-4 mr-2" />
@@ -146,7 +146,7 @@ const Header = () => {
             ) : (
               <Button 
                 variant="outline"
-                className="border-site-blue text-site-blue hover:bg-site-blue hover:text-white transition-colors duration-200 shadow-sm"
+                className="border-site-blue text-site-blue active:bg-site-blue active:text-white md:hover:bg-site-blue md:hover:text-white transition-colors duration-200 shadow-sm"
                 onClick={() => navigate("/login")}
               >
                 <span className="hidden sm:inline">Login</span>

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Home, MapPin, DollarSign, Calendar, Mail, Phone } from "lucide-react";
+import { Home, MapPin, DollarSign, Calendar, Mail, Phone, ArrowRight } from "lucide-react";
 
 type RentalListing = {
   id: string;
@@ -90,7 +90,7 @@ const Rentals = () => {
             </p>
           </div>
           <Link to="/post-rental">
-            <Button className="bg-site-blue hover:bg-site-blue/90 text-white">
+            <Button className="bg-site-blue hover:bg-site-blue/90 text-white active:bg-site-blue/80 transition-colors">
               <Home className="w-4 h-4 mr-2" />
               Post a Rental
             </Button>
@@ -102,11 +102,11 @@ const Rentals = () => {
             <Link
               to={`/rentals/${rental.id}`}
               key={rental.id}
-              className="group bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden border border-gray-200"
+              className="group bg-white rounded-xl shadow-sm active:shadow-lg transition-all duration-200 overflow-hidden border border-gray-200"
             >
               <div className="p-6 space-y-4">
                 <div className="flex justify-between items-start gap-4">
-                  <h3 className="text-xl font-semibold text-gray-900 group-hover:text-site-blue transition-colors line-clamp-2">
+                  <h3 className="text-xl font-semibold text-gray-900 group-active:text-site-blue md:group-hover:text-site-blue transition-colors line-clamp-2">
                     {rental.title}
                   </h3>
                   <div className="flex items-center bg-site-blue/10 px-3 py-1.5 rounded-full whitespace-nowrap">
@@ -153,9 +153,10 @@ const Rentals = () => {
                       Posted {new Date(rental.created_at).toLocaleDateString()}
                     </span>
                   </div>
-                  <span className="text-site-blue underline opacity-0 group-hover:opacity-100 transition-opacity">
-                    View Details →
-                  </span>
+                  <div className="flex items-center gap-1 text-site-blue font-medium">
+                    View Details
+                    <ArrowRight className="w-4 h-4 transition-transform group-active:translate-x-1 md:group-hover:translate-x-1" />
+                  </div>
                 </div>
               </div>
             </Link>

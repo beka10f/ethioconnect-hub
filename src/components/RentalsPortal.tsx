@@ -3,7 +3,7 @@ import Portal from "./Portal";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { MapPin, DollarSign } from "lucide-react";
+import { MapPin, DollarSign, ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
 import RentalDetails from "./RentalDetails";
 
@@ -82,7 +82,7 @@ const RentalsPortal = () => {
         {rentals.map((rental) => (
           <div 
             key={rental.id} 
-            className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100"
+            className="bg-white p-4 rounded-lg shadow-sm active:shadow-md md:hover:shadow-md transition-shadow duration-200 border border-gray-100"
           >
             <div className="space-y-2">
               <div className="flex justify-between items-center">
@@ -102,10 +102,11 @@ const RentalsPortal = () => {
                 <Button 
                   variant="outline" 
                   size="sm"
-                  className="text-xs px-3 py-1 h-7 border-site-blue text-site-blue hover:bg-site-blue hover:text-white"
+                  className="text-xs px-3 py-1 h-7 border-site-blue text-site-blue active:bg-site-blue active:text-white md:hover:bg-site-blue md:hover:text-white group"
                   onClick={() => setSelectedRentalId(rental.id)}
                 >
                   View Details
+                  <ArrowRight className="w-3 h-3 ml-1 transition-transform group-active:translate-x-1 md:group-hover:translate-x-1" />
                 </Button>
               </div>
             </div>
@@ -114,10 +115,11 @@ const RentalsPortal = () => {
       </div>
       <Link to="/rentals" className="block mt-4">
         <Button 
-          className="w-full bg-site-blue hover:bg-site-blue/90 text-white"
+          className="w-full bg-site-blue active:bg-site-blue/90 md:hover:bg-site-blue/90 text-white"
           variant="default"
         >
           View All Rentals
+          <ArrowRight className="w-4 h-4 ml-2" />
         </Button>
       </Link>
       {selectedRentalId && (
