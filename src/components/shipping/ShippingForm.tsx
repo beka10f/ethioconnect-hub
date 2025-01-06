@@ -161,7 +161,10 @@ const ShippingForm = React.forwardRef<ShippingFormRef, ShippingFormProps>(
             />
           </div>
 
-          <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-white">
+          <Button 
+            type="submit" 
+            className="w-full bg-site-blue hover:bg-site-blue/90 text-white"
+          >
             Calculate Shipping Cost
           </Button>
         </form>
