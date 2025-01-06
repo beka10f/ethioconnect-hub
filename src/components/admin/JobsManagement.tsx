@@ -2,22 +2,25 @@ import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import JobsManagementTable from "./JobsManagementTable";
 import { useJobsData, JobStatus } from "@/hooks/useJobsData";
+import { Separator } from "@/components/ui/separator";
 
 const JobsManagement = () => {
   const [selectedStatus, setSelectedStatus] = useState<JobStatus>('pending');
   const { jobs, isLoading, refetch } = useJobsData(selectedStatus);
 
   return (
-    <section className="space-y-4">
-      <h2 className="text-2xl font-semibold text-gray-900">Jobs Management</h2>
+    <div className="space-y-4">
+      <h2 className="text-2xl font-semibold text-ethiopian-coffee">Jobs Management</h2>
+      <Separator className="bg-ethiopian-sage/20" />
+      
       <Tabs defaultValue="pending" className="w-full">
-        <TabsList className="w-full sm:w-auto grid grid-cols-3 sm:inline-flex gap-1">
+        <TabsList className="w-full sm:w-auto grid grid-cols-3 sm:inline-flex gap-1 bg-ethiopian-cream/50">
           <TabsTrigger 
             value="pending" 
             onClick={() => setSelectedStatus('pending')}
             className="data-[state=active]:bg-ethiopian-coffee data-[state=active]:text-white"
           >
-            Pending Approval
+            Pending
           </TabsTrigger>
           <TabsTrigger 
             value="approved" 
@@ -60,7 +63,7 @@ const JobsManagement = () => {
           />
         </TabsContent>
       </Tabs>
-    </section>
+    </div>
   );
 };
 

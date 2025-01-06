@@ -11,7 +11,7 @@ const Admin = () => {
 
   if (!isAuthChecked) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-ethiopian-cream">
         <Header />
         <div className="container mx-auto py-8 px-4">
           <div className="flex items-center justify-center min-h-[400px]">
@@ -26,34 +26,41 @@ const Admin = () => {
     <div className="min-h-screen bg-ethiopian-cream">
       <Header />
       <main className="container mx-auto py-8 px-4">
-        <div className="max-w-6xl mx-auto space-y-8">
-          <div className="flex items-center">
+        <div className="max-w-6xl mx-auto space-y-6">
+          <div className="flex items-center mb-8">
             <h1 className="text-3xl font-bold text-ethiopian-coffee">Admin Dashboard</h1>
           </div>
-          
-          <Card className="bg-white shadow-sm border-none">
-            <CardContent className="p-6">
-              <h2 className="text-xl font-semibold text-ethiopian-coffee mb-4">Exchange Rate Management</h2>
-              <Separator className="mb-4" />
-              <ExchangeRateManagement />
-            </CardContent>
-          </Card>
 
-          <Card className="bg-white shadow-sm border-none">
-            <CardContent className="p-6">
-              <h2 className="text-xl font-semibold text-ethiopian-coffee mb-4">Jobs Management</h2>
-              <Separator className="mb-4" />
-              <JobsManagement />
-            </CardContent>
-          </Card>
+          <div className="grid gap-8">
+            {/* Exchange Rate Section */}
+            <Card className="bg-white shadow-sm border-ethiopian-sage/20">
+              <CardContent className="p-6">
+                <div className="space-y-4">
+                  <h2 className="text-xl font-semibold text-ethiopian-coffee">Exchange Rate Management</h2>
+                  <Separator className="bg-ethiopian-sage/20" />
+                  <div className="max-w-md">
+                    <ExchangeRateManagement />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
 
-          <Card className="bg-white shadow-sm border-none">
-            <CardContent className="p-6">
-              <h2 className="text-xl font-semibold text-ethiopian-coffee mb-4">Rentals Management</h2>
-              <Separator className="mb-4" />
-              <RentalsManagement />
-            </CardContent>
-          </Card>
+            {/* Jobs Management Section */}
+            <Card className="bg-white shadow-sm border-ethiopian-sage/20">
+              <CardContent className="p-6">
+                <JobsManagement />
+              </CardContent>
+            </Card>
+
+            {/* Rentals Management Section */}
+            <Card className="bg-white shadow-sm border-ethiopian-sage/20">
+              <CardContent className="p-6">
+                <h2 className="text-2xl font-semibold text-ethiopian-coffee mb-4">Rentals Management</h2>
+                <Separator className="mb-4 bg-ethiopian-sage/20" />
+                <RentalsManagement />
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </main>
     </div>

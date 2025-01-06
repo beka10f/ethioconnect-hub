@@ -35,27 +35,25 @@ const ExchangeRateManagement = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md">
-      <div className="flex flex-col space-y-4">
-        <div className="relative">
-          <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 h-4 w-4" />
-          <Input
-            type="number"
-            step="0.01"
-            placeholder="Enter new rate (ETB per 1 USD)"
-            value={rate}
-            onChange={(e) => setRate(e.target.value)}
-            className="pl-10"
-          />
-        </div>
-        <Button 
-          type="submit" 
-          disabled={isSubmitting}
-          className="w-full bg-ethiopian-coffee hover:bg-ethiopian-coffee/90"
-        >
-          {isSubmitting ? "Updating..." : "Update Exchange Rate"}
-        </Button>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="relative">
+        <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 text-ethiopian-coffee/60 h-4 w-4" />
+        <Input
+          type="number"
+          step="0.01"
+          placeholder="Enter new rate (ETB per 1 USD)"
+          value={rate}
+          onChange={(e) => setRate(e.target.value)}
+          className="pl-10 border-ethiopian-sage/20 focus:ring-ethiopian-coffee/30"
+        />
       </div>
+      <Button 
+        type="submit" 
+        disabled={isSubmitting}
+        className="w-full bg-ethiopian-coffee hover:bg-ethiopian-coffee/90 text-white"
+      >
+        {isSubmitting ? "Updating..." : "Update Exchange Rate"}
+      </Button>
     </form>
   );
 };

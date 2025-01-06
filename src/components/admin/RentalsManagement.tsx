@@ -10,7 +10,7 @@ const RentalsManagement = () => {
   return (
     <div className="space-y-4">
       <Tabs defaultValue="pending" className="w-full">
-        <TabsList className="w-full sm:w-auto grid grid-cols-3 sm:inline-flex gap-1 bg-ethiopian-cream">
+        <TabsList className="w-full sm:w-auto grid grid-cols-3 sm:inline-flex gap-1 bg-ethiopian-cream/50">
           <TabsTrigger 
             value="pending" 
             onClick={() => setSelectedStatus('pending')}
