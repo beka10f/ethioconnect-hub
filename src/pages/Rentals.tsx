@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Home, MapPin, DollarSign, Calendar, Mail, Phone, ArrowRight } from "lucide-react";
+import RentalDetails from "@/components/RentalDetails";
 
 type RentalListing = {
   id: string;
@@ -20,6 +21,7 @@ type RentalListing = {
 const Rentals = () => {
   const [rentalListings, setRentalListings] = useState<RentalListing[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedRentalId, setSelectedRentalId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchRentals = async () => {
@@ -63,19 +65,6 @@ const Rentals = () => {
     };
   }, []);
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-white">
-        <Header />
-        <main className="container mx-auto py-8 px-4">
-          <div className="flex justify-center items-center h-64">
-            <div className="text-site-blue">Loading rentals...</div>
-          </div>
-        </main>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -90,79 +79,84 @@ const Rentals = () => {
             </p>
           </div>
           <Link to="/post-rental">
-            <Button className="bg-site-blue hover:bg-site-blue/90 text-white active:bg-site-blue/80 transition-colors">
+            <Button className="bg-site-blue active:bg-site-blue/90 md:hover:bg-site-blue/90 text-white transition-colors">
               <Home className="w-4 h-4 mr-2" />
               Post a Rental
             </Button>
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {rentalListings.map((rental) => (
-            <Link
-              to={`/rentals/${rental.id}`}
-              key={rental.id}
-              className="group bg-white rounded-xl shadow-sm active:shadow-lg transition-all duration-200 overflow-hidden border border-gray-200"
-            >
-              <div className="p-6 space-y-4">
-                <div className="flex justify-between items-start gap-4">
-                  <h3 className="text-xl font-semibold text-gray-900 group-active:text-site-blue md:group-hover:text-site-blue transition-colors line-clamp-2">
-                    {rental.title}
-                  </h3>
-                  <div className="flex items-center bg-site-blue/10 px-3 py-1.5 rounded-full whitespace-nowrap">
-                    <DollarSign className="w-4 h-4 text-site-blue" />
-                    <span className="font-semibold text-site-blue">
-                      ${rental.price}
-                      <span className="text-sm text-site-blue/80">/mo</span>
-                    </span>
+        {isLoading ? (
+          <div className="flex justify-center items-center h-64">
+            <div className="text-site-blue">Loading rentals...</div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {rentalListings.map((rental) => (
+              <div
+                key={rental.id}
+                onClick={() => setSelectedRentalId(rental.id)}
+                className="group bg-white rounded-xl shadow-sm active:shadow-lg md:hover:shadow-lg transition-all duration-200 overflow-hidden border border-gray-200 cursor-pointer"
+              >
+                <div className="p-6 space-y-4">
+                  <div className="flex justify-between items-start gap-4">
+                    <h3 className="text-xl font-semibold text-gray-900 group-active:text-site-blue md:group-hover:text-site-blue transition-colors line-clamp-2">
+                      {rental.title}
+                    </h3>
+                    <div className="flex items-center bg-site-blue/10 px-3 py-1.5 rounded-full whitespace-nowrap">
+                      <DollarSign className="w-4 h-4 text-site-blue" />
+                      <span className="font-semibold text-site-blue">
+                        ${rental.price}
+                        <span className="text-sm text-site-blue/80">/mo</span>
+                      </span>
+                    </div>
                   </div>
-                </div>
 
-                <div className="space-y-3">
-                  <div className="flex items-start gap-2">
-                    <MapPin className="w-4 h-4 mt-1 flex-shrink-0 text-site-blue" />
-                    <p className="text-gray-700 line-clamp-2">{rental.address}</p>
-                  </div>
-                  
-                  <p className="text-gray-600 line-clamp-3 text-sm text-left">
-                    {rental.description}
-                  </p>
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-2">
+                      <MapPin className="w-4 h-4 mt-1 flex-shrink-0 text-site-blue" />
+                      <p className="text-gray-700 line-clamp-2">{rental.address}</p>
+                    </div>
+                    
+                    <p className="text-gray-600 line-clamp-3 text-sm text-left">
+                      {rental.description}
+                    </p>
 
-                  <div className="pt-4 border-t border-gray-100">
-                    <div className="grid grid-cols-2 gap-3 text-sm">
-                      <div className="flex items-center gap-1.5">
-                        <Mail className="w-4 h-4 text-site-blue" />
-                        <span className="text-gray-600 truncate">
-                          {rental.contact_info}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <Phone className="w-4 h-4 text-site-blue" />
-                        <span className="text-gray-600 truncate">
-                          {rental.phone_number}
-                        </span>
+                    <div className="pt-4 border-t border-gray-100">
+                      <div className="grid grid-cols-2 gap-3 text-sm">
+                        <div className="flex items-center gap-1.5">
+                          <Mail className="w-4 h-4 text-site-blue" />
+                          <span className="text-gray-600 truncate">
+                            {rental.contact_info}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <Phone className="w-4 h-4 text-site-blue" />
+                          <span className="text-gray-600 truncate">
+                            {rental.phone_number}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="flex items-center justify-between text-sm text-gray-500">
-                  <div className="flex items-center gap-1.5">
-                    <Calendar className="w-4 h-4 text-site-blue" />
-                    <span>
-                      Posted {new Date(rental.created_at).toLocaleDateString()}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-1 text-site-blue font-medium">
-                    View Details
-                    <ArrowRight className="w-4 h-4 transition-transform group-active:translate-x-1 md:group-hover:translate-x-1" />
+                  <div className="flex items-center justify-between text-sm text-gray-500">
+                    <div className="flex items-center gap-1.5">
+                      <Calendar className="w-4 h-4 text-site-blue" />
+                      <span>
+                        Posted {new Date(rental.created_at).toLocaleDateString()}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </Link>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </main>
+      {selectedRentalId && (
+        <RentalDetails id={selectedRentalId} onClose={() => setSelectedRentalId(null)} />
+      )}
     </div>
   );
 };
