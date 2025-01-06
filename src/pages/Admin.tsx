@@ -4,7 +4,7 @@ import RentalsManagement from "@/components/admin/RentalsManagement";
 import ExchangeRateManagement from "@/components/admin/ExchangeRateManagement";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Admin = () => {
   const { isAuthChecked } = useAdminAuth();
@@ -26,41 +26,59 @@ const Admin = () => {
     <div className="min-h-screen bg-ethiopian-cream">
       <Header />
       <main className="container mx-auto py-8 px-4">
-        <div className="max-w-6xl mx-auto space-y-6">
+        <div className="max-w-7xl mx-auto">
           <div className="flex items-center mb-8">
             <h1 className="text-3xl font-bold text-ethiopian-coffee">Admin Dashboard</h1>
           </div>
 
-          <div className="grid gap-8">
-            {/* Exchange Rate Section */}
-            <Card className="bg-white shadow-sm border-ethiopian-sage/20">
-              <CardContent className="p-6">
-                <div className="space-y-4">
-                  <h2 className="text-xl font-semibold text-ethiopian-coffee">Exchange Rate Management</h2>
-                  <Separator className="bg-ethiopian-sage/20" />
-                  <div className="max-w-md">
+          <Tabs defaultValue="exchange" className="space-y-8">
+            <TabsList className="w-full border-b border-ethiopian-sage/20 bg-transparent">
+              <TabsTrigger 
+                value="exchange" 
+                className="data-[state=active]:border-b-2 data-[state=active]:border-ethiopian-coffee data-[state=active]:text-ethiopian-coffee px-6 py-3"
+              >
+                Exchange Rate
+              </TabsTrigger>
+              <TabsTrigger 
+                value="jobs" 
+                className="data-[state=active]:border-b-2 data-[state=active]:border-ethiopian-coffee data-[state=active]:text-ethiopian-coffee px-6 py-3"
+              >
+                Jobs
+              </TabsTrigger>
+              <TabsTrigger 
+                value="rentals" 
+                className="data-[state=active]:border-b-2 data-[state=active]:border-ethiopian-coffee data-[state=active]:text-ethiopian-coffee px-6 py-3"
+              >
+                Rentals
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="exchange" className="space-y-4">
+              <Card className="bg-white shadow-sm border-ethiopian-sage/20">
+                <CardContent className="p-6">
+                  <div className="max-w-md mx-auto">
                     <ExchangeRateManagement />
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </TabsContent>
 
-            {/* Jobs Management Section */}
-            <Card className="bg-white shadow-sm border-ethiopian-sage/20">
-              <CardContent className="p-6">
-                <JobsManagement />
-              </CardContent>
-            </Card>
+            <TabsContent value="jobs">
+              <Card className="bg-white shadow-sm border-ethiopian-sage/20">
+                <CardContent className="p-6">
+                  <JobsManagement />
+                </CardContent>
+              </Card>
+            </TabsContent>
 
-            {/* Rentals Management Section */}
-            <Card className="bg-white shadow-sm border-ethiopian-sage/20">
-              <CardContent className="p-6">
-                <h2 className="text-2xl font-semibold text-ethiopian-coffee mb-4">Rentals Management</h2>
-                <Separator className="mb-4 bg-ethiopian-sage/20" />
-                <RentalsManagement />
-              </CardContent>
-            </Card>
-          </div>
+            <TabsContent value="rentals">
+              <Card className="bg-white shadow-sm border-ethiopian-sage/20">
+                <CardContent className="p-6">
+                  <RentalsManagement />
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
         </div>
       </main>
     </div>
