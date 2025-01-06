@@ -33,8 +33,8 @@ const ShippingCalculator = () => {
 
   return (
     <>
-      <div className="w-full max-w-2xl mx-auto px-4 sm:px-6">
-        <Card className="p-4 sm:p-6 bg-white shadow-lg">
+      <div className="w-full mx-auto px-0 sm:px-4">
+        <Card className="w-full p-4 sm:p-6 bg-white shadow-lg">
           <div className="space-y-4 sm:space-y-6">
             <div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Ship to Ethiopia</h2>

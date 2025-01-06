@@ -10,12 +10,18 @@ const Index = () => {
       <Header />
       <main className="w-full px-3 py-4 sm:px-6 sm:py-8 lg:px-8">
         <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 auto-rows-fr">
-            <JobsPortal />
-            <RentalsPortal />
-            <ExchangeRatePortal />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
+            <div className="w-full">
+              <JobsPortal />
+            </div>
+            <div className="w-full">
+              <RentalsPortal />
+            </div>
+            <div className="w-full">
+              <ExchangeRatePortal />
+            </div>
           </div>
-          <div className="mt-6 sm:mt-8">
+          <div className="w-full">
             <ShippingCalculator />
           </div>
         </div>
