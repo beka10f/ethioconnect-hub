@@ -3,12 +3,14 @@ import Portal from "./Portal";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { Building2, MapPin, Clock } from "lucide-react";
 
 type JobListing = {
   id: string;
   title: string;
   company_name: string;
   location: string;
+  description: string;
   created_at: string;
 };
 
@@ -21,7 +23,7 @@ const JobsPortal = () => {
       try {
         const { data, error } = await supabase
           .from("jobs")
-          .select("id, title, company_name, location, created_at")
+          .select("id, title, company_name, location, description, created_at")
           .eq("status", "approved")
           .order("created_at", { ascending: false })
           .limit(3);
@@ -38,7 +40,6 @@ const JobsPortal = () => {
 
     fetchJobs();
 
-    // Set up real-time subscription for approved jobs
     const channel = supabase
       .channel("portal-jobs")
       .on(
@@ -64,7 +65,7 @@ const JobsPortal = () => {
     return (
       <Portal title="Recent Job Postings">
         <div className="flex justify-start items-center h-32">
-          <p className="text-gray-500">Loading jobs...</p>
+          <p className="text-ethiopian-charcoal">Loading jobs...</p>
         </div>
       </Portal>
     );
@@ -72,20 +73,39 @@ const JobsPortal = () => {
 
   return (
     <Portal title="Recent Job Postings">
-      <div className="space-y-4 text-left">
+      <div className="space-y-6 text-left">
         {jobs.map((job) => (
-          <Link to="/jobs" key={job.id}>
-            <div className="group border-b border-gray-100/50 last:border-0 pb-4 hover:bg-blue-50/50 rounded-lg transition-colors duration-200">
-              <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors mb-1">
+          <Link to={`/jobs/${job.id}`} key={job.id}>
+            <div className="group p-4 border border-gray-100 rounded-xl hover:border-ethiopian-sage/30 hover:bg-ethiopian-cream/5 transition-all duration-200">
+              <h3 className="text-xl font-semibold text-ethiopian-coffee group-hover:text-ethiopian-gold transition-colors mb-2">
                 {job.title}
               </h3>
-              <p className="text-sm text-gray-500">{job.company_name}</p>
-              <p className="text-sm text-gray-400">{job.location}</p>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-ethiopian-charcoal">
+                  <Building2 className="w-4 h-4" />
+                  <span className="text-sm">{job.company_name}</span>
+                </div>
+                <div className="flex items-center gap-2 text-ethiopian-charcoal">
+                  <MapPin className="w-4 h-4" />
+                  <span className="text-sm">{job.location}</span>
+                </div>
+                <div className="flex items-center gap-2 text-ethiopian-charcoal/80">
+                  <Clock className="w-4 h-4" />
+                  <span className="text-sm">
+                    {new Date(job.created_at).toLocaleDateString()}
+                  </span>
+                </div>
+                {job.description && (
+                  <p className="text-sm text-ethiopian-charcoal/70 line-clamp-2 mt-2">
+                    {job.description}
+                  </p>
+                )}
+              </div>
             </div>
           </Link>
         ))}
-        <Link to="/jobs" className="block mt-4">
-          <button className="w-full bg-blue-600/90 backdrop-blur-sm text-white py-2.5 rounded-xl hover:bg-blue-700 transition-colors duration-200">
+        <Link to="/jobs" className="block mt-8">
+          <button className="w-full bg-ethiopian-coffee text-white py-3 rounded-xl hover:bg-ethiopian-coffee/90 transition-colors duration-200">
             View All Jobs
           </button>
         </Link>
