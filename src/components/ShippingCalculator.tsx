@@ -2,7 +2,7 @@ import React from "react";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
-import ShippingForm, { ShippingFormData } from "./shipping/ShippingForm";
+import ShippingForm, { ShippingFormData, ShippingFormRef } from "./shipping/ShippingForm";
 import PricingGuide from "./shipping/PricingGuide";
 import { calculateShippingCost } from "@/utils/shipping";
 import {
@@ -20,7 +20,7 @@ const ShippingCalculator = () => {
   const { toast } = useToast();
   const [showConfirmation, setShowConfirmation] = React.useState(false);
   const [currentData, setCurrentData] = React.useState<ShippingFormData | null>(null);
-  const formRef = React.useRef<{ reset: () => void }>(null);
+  const formRef = React.useRef<ShippingFormRef>(null);
 
   const handleSubmit = (data: ShippingFormData) => {
     setCurrentData(data);
@@ -38,27 +38,31 @@ const ShippingCalculator = () => {
       toast({
         title: "Drop-off Location Confirmed",
         description: (
-          <>
-            <span className="block font-semibold mb-1">Please bring your items to:</span>
-            <span className="block bg-slate-50 p-3 rounded-md">
-              ADOT International Market<br />
-              3111 Chillum Road<br />
-              Mount Rainer, MD
-            </span>
+          <div className="space-y-4">
+            <div>
+              <span className="block font-semibold mb-1">Please bring your items to:</span>
+              <span className="block bg-slate-50 p-3 rounded-md">
+                ADOT International Market<br />
+                3111 Chillum Road<br />
+                Mount Rainer, MD
+              </span>
+            </div>
             
-            <span className="block font-semibold mt-4 mb-1">Shipping Details:</span>
-            <span className="block bg-slate-50 p-3 rounded-md">
-              Name: {currentData.name}<br />
-              Phone: {currentData.phoneNumber}<br />
-              Drop-off Date: {format(currentData.shippingDate, "MMMM do, yyyy")}<br />
-              Package Weight: {currentData.weight} {currentData.unit}<br />
-              <span className="font-medium text-green-600">Estimated Cost: ${cost}</span>
-            </span>
+            <div>
+              <span className="block font-semibold mb-1">Shipping Details:</span>
+              <span className="block bg-slate-50 p-3 rounded-md">
+                Name: {currentData.name}<br />
+                Phone: {currentData.phoneNumber}<br />
+                Drop-off Date: {format(currentData.shippingDate, "MMMM do, yyyy")}<br />
+                Package Weight: {currentData.weight} {currentData.unit}<br />
+                <span className="font-medium text-green-600">Estimated Cost: ${cost}</span>
+              </span>
+            </div>
             
-            <span className="block text-sm text-muted-foreground mt-2">
+            <span className="block text-sm text-muted-foreground">
               Note: The weight will be verified at drop-off and final pricing may adjust accordingly.
             </span>
-          </>
+          </div>
         ),
         duration: 10000,
       });

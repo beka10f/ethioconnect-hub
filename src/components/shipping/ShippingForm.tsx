@@ -24,11 +24,15 @@ const formSchema = z.object({
 
 export type ShippingFormData = z.infer<typeof formSchema>;
 
-interface ShippingFormProps {
+export interface ShippingFormProps {
   onSubmit: (data: ShippingFormData) => void;
 }
 
-const ShippingForm = React.forwardRef<{ reset: () => void }, ShippingFormProps>(
+export interface ShippingFormRef {
+  reset: () => void;
+}
+
+const ShippingForm = React.forwardRef<ShippingFormRef, ShippingFormProps>(
   ({ onSubmit }, ref) => {
     const form = useForm<ShippingFormData>({
       resolver: zodResolver(formSchema),
@@ -40,7 +44,6 @@ const ShippingForm = React.forwardRef<{ reset: () => void }, ShippingFormProps>(
       },
     });
 
-    // Expose the reset method to the parent component
     React.useImperativeHandle(ref, () => ({
       reset: () => form.reset(),
     }));
