@@ -15,10 +15,10 @@ const PricingGuide = () => {
       onOpenChange={setIsOpen}
       className="mt-6 space-y-4"
     >
-      <CollapsibleTrigger className="flex items-center justify-between w-full p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
-        <h3 className="text-lg font-semibold text-gray-900">Shipping Rates Guide</h3>
+      <CollapsibleTrigger className="flex items-center justify-between w-full p-2 sm:p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
+        <h3 className="text-base sm:text-lg font-semibold text-gray-900">Shipping Rates Guide</h3>
         <ChevronDown
-          className={`w-5 h-5 text-gray-600 transition-transform duration-200 ${
+          className={`w-4 h-4 sm:w-5 sm:h-5 text-gray-600 transition-transform duration-200 ${
             isOpen ? "transform rotate-180" : ""
           }`}
         />
