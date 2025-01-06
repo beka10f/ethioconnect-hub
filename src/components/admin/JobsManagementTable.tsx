@@ -33,28 +33,40 @@ const JobsManagementTable = ({ jobs, onJobUpdate, status }: JobsManagementTableP
   const [selectedJob, setSelectedJob] = useState<JobListing | null>(null);
 
   const handleApproval = async (e: React.MouseEvent, id: string, action: "approve" | "reject") => {
-    e.preventDefault(); // Prevent any form submission
-    e.stopPropagation(); // Stop event bubbling
-    
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
+    try {
+      console.log('Starting approval process:', { id, action });
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        console.log('No user found');
+        return;
+      }
 
-    const { error } = await supabase
-      .from("jobs")
-      .update({
-        status: action === "approve" ? "approved" : "rejected",
-        approved_by: action === "approve" ? user.id : null
-      })
-      .eq("id", id);
+      console.log('Updating job status in Supabase');
+      const { error } = await supabase
+        .from("jobs")
+        .update({
+          status: action === "approve" ? "approved" : "rejected",
+          approved_by: action === "approve" ? user.id : null
+        })
+        .eq("id", id);
 
-    if (error) {
-      toast.error(`Failed to ${action} job`);
-      return;
+      if (error) {
+        console.error('Supabase update error:', error);
+        toast.error(`Failed to ${action} job`);
+        return;
+      }
+
+      console.log('Job status updated successfully');
+      toast.success(`Job ${action}d successfully`);
+      setSelectedJob(null);
+      onJobUpdate();
+    } catch (error) {
+      console.error('Unexpected error:', error);
+      toast.error('An unexpected error occurred');
     }
-
-    toast.success(`Job ${action}d successfully`);
-    onJobUpdate();
-    setSelectedJob(null);
   };
 
   return (
