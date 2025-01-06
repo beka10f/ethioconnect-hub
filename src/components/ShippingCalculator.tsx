@@ -8,11 +8,20 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { CalendarIcon } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
+  phoneNumber: z.string().min(10, "Please enter a valid phone number"),
   weight: z.string().min(1, "Weight is required"),
   unit: z.enum(["kg", "lbs"]),
+  shippingDate: z.date({
+    required_error: "Please select a shipping date",
+  }),
 });
 
 const ShippingCalculator = () => {
@@ -22,6 +31,7 @@ const ShippingCalculator = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
+      phoneNumber: "",
       weight: "",
       unit: "kg",
     },
@@ -33,41 +43,48 @@ const ShippingCalculator = () => {
 
     if (data.unit === "kg") {
       if (weight <= 3) {
-        cost = 45; // Flat rate for packages under 3kg
+        cost = 45;
       } else if (weight <= 10) {
-        cost = weight * 18; // $18 per kg for 3-10kg
+        cost = weight * 18;
       } else {
-        cost = weight * 15; // $15 per kg for over 10kg
+        cost = weight * 15;
       }
     } else {
       if (weight <= 6) {
-        cost = 45; // Flat rate for packages under 6lbs
+        cost = 45;
       } else if (weight <= 22) {
-        cost = weight * 8.16; // $8.16 per lb for 6-22lbs
+        cost = weight * 8.16;
       } else {
-        cost = weight * 6.8; // $6.8 per lb for over 22lbs
+        cost = weight * 6.8;
       }
     }
 
-    return Math.round(cost * 100) / 100; // Round to 2 decimal places
+    return Math.round(cost * 100) / 100;
   };
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     const cost = calculateShippingCost(data);
     toast({
-      title: "Shipping Cost Calculation",
+      title: "Shipping Details Confirmed",
       description: (
         <div className="space-y-2">
           <p>Hello {data.name}, your estimated shipping cost is ${cost}.</p>
-          <p className="font-semibold">Drop-off Location:</p>
-          <p>3111 Chillum Road</p>
-          <p>Mount Rainer, MD</p>
+          <div className="mt-2">
+            <p className="font-semibold">Your Details:</p>
+            <p>Phone: {data.phoneNumber}</p>
+            <p>Planned Drop-off: {format(data.shippingDate, 'MMMM do, yyyy')}</p>
+          </div>
+          <div className="mt-2">
+            <p className="font-semibold">Drop-off Location:</p>
+            <p>3111 Chillum Road</p>
+            <p>Mount Rainer, MD</p>
+          </div>
           <p className="text-sm text-muted-foreground mt-2">
             Please note: The weight will be verified at drop-off and final pricing may adjust if discrepancies arise.
           </p>
         </div>
       ),
-      duration: 10000, // Show for 10 seconds so user can read the address
+      duration: 10000,
     });
   };
 
@@ -90,6 +107,20 @@ const ShippingCalculator = () => {
                     <FormLabel>Your Name</FormLabel>
                     <FormControl>
                       <Input placeholder="Enter your name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="phoneNumber"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Phone Number</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter your phone number" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -127,6 +158,48 @@ const ShippingCalculator = () => {
                         <SelectItem value="lbs">Pounds (lbs)</SelectItem>
                       </SelectContent>
                     </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="shippingDate"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Planned Drop-off Date</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "w-full pl-3 text-left font-normal",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, "PPP")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          disabled={(date) =>
+                            date < new Date() || date < new Date("1900-01-01")
+                          }
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
                     <FormMessage />
                   </FormItem>
                 )}
