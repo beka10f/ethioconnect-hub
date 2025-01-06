@@ -72,22 +72,25 @@ const ShippingCalculator = () => {
                   </div>
 
                   <div 
-                    className="bg-blue-50 p-4 rounded-lg mt-4 cursor-pointer hover:bg-blue-100 transition-colors group"
+                    className="bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-xl mt-6 cursor-pointer 
+                             hover:from-blue-100 hover:to-blue-200 transition-all duration-300 shadow-sm 
+                             border border-blue-200 group"
                     onClick={handleLocationClick}
                   >
-                    <div className="flex items-start gap-2">
-                      <MapPin className="w-5 h-5 text-blue-700 mt-0.5 group-hover:animate-bounce" />
-                      <div className="text-sm">
-                        <p className="text-blue-700 mb-1">
-                          Please drop off your package at:
-                        </p>
-                        <p className="text-blue-700 font-semibold">
+                    <div className="flex items-start gap-3">
+                      <MapPin className="w-6 h-6 text-blue-600 mt-1 group-hover:animate-bounce" />
+                      <div>
+                        <h4 className="text-blue-800 font-medium mb-2">
+                          Drop-off Location
+                        </h4>
+                        <p className="text-blue-900 font-semibold leading-relaxed">
                           ADOT International Market<br />
                           3111 Chillum Road<br />
                           Mount Rainer, MD
                         </p>
-                        <p className="text-blue-500 mt-2 font-medium underline">
-                          Click here for directions →
+                        <p className="text-blue-600 mt-3 font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
+                          Click here for directions 
+                          <span className="group-hover:translate-x-1 transition-transform">→</span>
                         </p>
                       </div>
                     </div>
