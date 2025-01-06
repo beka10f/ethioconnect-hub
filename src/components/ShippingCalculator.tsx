@@ -77,12 +77,19 @@ const ShippingCalculator = () => {
                   >
                     <div className="flex items-start gap-2">
                       <MapPin className="w-5 h-5 text-blue-700 mt-0.5 group-hover:animate-bounce" />
-                      <p className="text-sm text-blue-700">
-                        Please drop off your package at:<br />
-                        <strong>ADOT International Market</strong><br />
-                        3111 Chillum Road<br />
-                        Mount Rainer, MD
-                      </p>
+                      <div className="text-sm">
+                        <p className="text-blue-700 mb-1">
+                          Please drop off your package at:
+                        </p>
+                        <p className="text-blue-700 font-semibold">
+                          ADOT International Market<br />
+                          3111 Chillum Road<br />
+                          Mount Rainer, MD
+                        </p>
+                        <p className="text-blue-500 mt-2 font-medium underline">
+                          Click here for directions →
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
