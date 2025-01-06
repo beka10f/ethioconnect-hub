@@ -25,7 +25,7 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         site: {
-          blue: "#0EA5E9",
+          blue: "#1EAEDB",
           black: "#222222",
           white: "#FFFFFF"
         },
