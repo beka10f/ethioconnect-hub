@@ -25,7 +25,7 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         site: {
-          blue: "#1EAEDB",
+          blue: "#2563EB", // Updated to match the new blue from the image
           black: "#222222",
           white: "#FFFFFF"
         },
