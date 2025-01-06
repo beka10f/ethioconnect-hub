@@ -69,7 +69,7 @@ const Rentals = () => {
         <Header />
         <main className="container mx-auto py-8 px-4">
           <div className="flex justify-center items-center h-64">
-            <div className="text-blue-600">Loading rentals...</div>
+            <div className="text-site-blue">Loading rentals...</div>
           </div>
         </main>
       </div>
@@ -90,7 +90,7 @@ const Rentals = () => {
             </p>
           </div>
           <Link to="/post-rental">
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+            <Button className="bg-site-blue hover:bg-site-blue/90 text-white">
               <Home className="w-4 h-4 mr-2" />
               Post a Rental
             </Button>
@@ -106,21 +106,21 @@ const Rentals = () => {
             >
               <div className="p-6 space-y-4">
                 <div className="flex justify-between items-start gap-4">
-                  <h3 className="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
+                  <h3 className="text-xl font-semibold text-gray-900 group-hover:text-site-blue transition-colors line-clamp-2">
                     {rental.title}
                   </h3>
-                  <div className="flex items-center bg-blue-50 px-3 py-1.5 rounded-full whitespace-nowrap">
-                    <DollarSign className="w-4 h-4 text-blue-600" />
-                    <span className="font-semibold text-blue-600">
+                  <div className="flex items-center bg-site-blue/10 px-3 py-1.5 rounded-full whitespace-nowrap">
+                    <DollarSign className="w-4 h-4 text-site-blue" />
+                    <span className="font-semibold text-site-blue">
                       ${rental.price}
-                      <span className="text-sm text-blue-500">/mo</span>
+                      <span className="text-sm text-site-blue/80">/mo</span>
                     </span>
                   </div>
                 </div>
 
                 <div className="space-y-3">
                   <div className="flex items-start gap-2">
-                    <MapPin className="w-4 h-4 mt-1 flex-shrink-0 text-gray-500" />
+                    <MapPin className="w-4 h-4 mt-1 flex-shrink-0 text-site-blue" />
                     <p className="text-gray-700 line-clamp-2">{rental.address}</p>
                   </div>
                   
@@ -131,13 +131,13 @@ const Rentals = () => {
                   <div className="pt-4 border-t border-gray-100">
                     <div className="grid grid-cols-2 gap-3 text-sm">
                       <div className="flex items-center gap-1.5">
-                        <Mail className="w-4 h-4 text-gray-500" />
+                        <Mail className="w-4 h-4 text-site-blue" />
                         <span className="text-gray-600 truncate">
                           {rental.contact_info}
                         </span>
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <Phone className="w-4 h-4 text-gray-500" />
+                        <Phone className="w-4 h-4 text-site-blue" />
                         <span className="text-gray-600 truncate">
                           {rental.phone_number}
                         </span>
@@ -148,12 +148,12 @@ const Rentals = () => {
 
                 <div className="flex items-center justify-between text-sm text-gray-500">
                   <div className="flex items-center gap-1.5">
-                    <Calendar className="w-4 h-4" />
+                    <Calendar className="w-4 h-4 text-site-blue" />
                     <span>
                       Posted {new Date(rental.created_at).toLocaleDateString()}
                     </span>
                   </div>
-                  <span className="text-blue-600 underline opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="text-site-blue underline opacity-0 group-hover:opacity-100 transition-opacity">
                     View Details →
                   </span>
                 </div>

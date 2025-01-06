@@ -70,7 +70,7 @@ const RentalDetails = () => {
         </DialogHeader>
         <div className="space-y-6">
           <div className="flex items-center gap-2">
-            <DollarSign className="w-5 h-5 text-blue-600" />
+            <DollarSign className="w-5 h-5 text-site-blue" />
             <span className="text-xl font-semibold text-gray-900">${rental.price}/month</span>
           </div>
           
@@ -80,7 +80,7 @@ const RentalDetails = () => {
           </div>
 
           <div className="flex items-start gap-2">
-            <MapPin className="w-5 h-5 text-blue-600 mt-1" />
+            <MapPin className="w-5 h-5 text-site-blue mt-1" />
             <div>
               <h4 className="font-medium text-gray-900">Address</h4>
               <p className="text-gray-700">{rental.address}</p>
@@ -91,15 +91,15 @@ const RentalDetails = () => {
             <h4 className="font-medium text-gray-900">Contact Information</h4>
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-blue-600" />
+                <Mail className="w-4 h-4 text-site-blue" />
                 <span className="text-gray-700">{rental.contact_info}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-blue-600" />
+                <Phone className="w-4 h-4 text-site-blue" />
                 <span className="text-gray-700">{rental.phone_number}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-blue-600" />
+                <Calendar className="w-4 h-4 text-site-blue" />
                 <span className="text-gray-500 text-sm">
                   Listed on {new Date(rental.created_at).toLocaleDateString()}
                 </span>
@@ -111,7 +111,7 @@ const RentalDetails = () => {
             <Button 
               variant="outline" 
               onClick={() => navigate("/rentals")}
-              className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
+              className="border-site-blue text-site-blue hover:bg-site-blue hover:text-white"
             >
               Close
             </Button>

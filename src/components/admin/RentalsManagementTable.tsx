@@ -52,23 +52,23 @@ const RentalsManagementTable = ({ rentals, onRentalUpdate, status, isLoading }: 
         </TableHeader>
         <TableBody>
           {rentals.map((rental) => (
-            <TableRow key={rental.id} className="hover:bg-blue-50/50">
+            <TableRow key={rental.id} className="hover:bg-site-blue/5">
               <TableCell className="font-medium text-gray-900">{rental.title}</TableCell>
               <TableCell>
                 <div className="flex items-center gap-1.5 text-gray-700">
-                  <MapPin className="w-4 h-4 text-blue-600" />
+                  <MapPin className="w-4 h-4 text-site-blue" />
                   {rental.address}
                 </div>
               </TableCell>
               <TableCell>
                 <div className="flex items-center gap-1 text-gray-700">
-                  <DollarSign className="w-4 h-4 text-blue-600" />
+                  <DollarSign className="w-4 h-4 text-site-blue" />
                   {rental.price}
                 </div>
               </TableCell>
               <TableCell>
                 <div className="flex items-center gap-1.5 text-gray-600">
-                  <Calendar className="w-4 h-4" />
+                  <Calendar className="w-4 h-4 text-site-blue" />
                   {new Date(rental.created_at).toLocaleDateString()}
                 </div>
               </TableCell>
@@ -77,7 +77,7 @@ const RentalsManagementTable = ({ rentals, onRentalUpdate, status, isLoading }: 
                   <div className="flex gap-2">
                     <Button
                       variant="outline"
-                      className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
+                      className="border-site-blue text-site-blue hover:bg-site-blue hover:text-white"
                       onClick={() => handleApproval(rental.id, "approve")}
                       disabled={isUpdating}
                     >
