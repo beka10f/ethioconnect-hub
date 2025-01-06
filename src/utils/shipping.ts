@@ -5,21 +5,12 @@ export const calculateShippingCost = (data: ShippingFormData) => {
   let cost = 0;
 
   if (data.unit === "kg") {
-    if (weight <= 3) {
-      cost = 45;
-    } else if (weight <= 10) {
-      cost = weight * 18;
-    } else {
-      cost = weight * 15;
-    }
+    // Convert kg to lbs for calculation (1 kg ≈ 2.20462 lbs)
+    const weightInLbs = weight * 2.20462;
+    cost = weightInLbs * 5;
   } else {
-    if (weight <= 6) {
-      cost = 45;
-    } else if (weight <= 22) {
-      cost = weight * 8.16;
-    } else {
-      cost = weight * 6.8;
-    }
+    // Direct calculation for pounds
+    cost = weight * 5;
   }
 
   return Math.round(cost * 100) / 100;

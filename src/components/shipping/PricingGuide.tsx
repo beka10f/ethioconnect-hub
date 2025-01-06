@@ -33,17 +33,12 @@ const PricingGuide = () => {
             </h4>
             <div className="space-y-2">
               <div className="flex justify-between items-center text-sm">
-                <span className="text-gray-600">Up to 3 kg</span>
-                <span className="font-medium text-gray-900">$45 flat rate</span>
+                <span className="text-gray-600">All weights</span>
+                <span className="font-medium text-gray-900">$11 per kg</span>
               </div>
-              <div className="flex justify-between items-center text-sm">
-                <span className="text-gray-600">3 - 10 kg</span>
-                <span className="font-medium text-gray-900">$18 per kg</span>
-              </div>
-              <div className="flex justify-between items-center text-sm">
-                <span className="text-gray-600">Over 10 kg</span>
-                <span className="font-medium text-gray-900">$15 per kg</span>
-              </div>
+              <p className="text-xs text-gray-500 mt-2">
+                (Converted from $5/lb rate)
+              </p>
             </div>
           </div>
 
@@ -54,16 +49,8 @@ const PricingGuide = () => {
             </h4>
             <div className="space-y-2">
               <div className="flex justify-between items-center text-sm">
-                <span className="text-gray-600">Up to 6 lbs</span>
-                <span className="font-medium text-gray-900">$45 flat rate</span>
-              </div>
-              <div className="flex justify-between items-center text-sm">
-                <span className="text-gray-600">6 - 22 lbs</span>
-                <span className="font-medium text-gray-900">$8.16 per lb</span>
-              </div>
-              <div className="flex justify-between items-center text-sm">
-                <span className="text-gray-600">Over 22 lbs</span>
-                <span className="font-medium text-gray-900">$6.80 per lb</span>
+                <span className="text-gray-600">All weights</span>
+                <span className="font-medium text-gray-900">$5 per lb</span>
               </div>
             </div>
           </div>
@@ -71,7 +58,7 @@ const PricingGuide = () => {
 
         <div className="bg-blue-50 p-4 rounded-lg mt-4">
           <p className="text-sm text-blue-700">
-            <strong>Example:</strong> A 8 kg package would cost $144 (8 kg × $18/kg), while a 20 lb package would cost $163.20 (20 lb × $8.16/lb).
+            <strong>Example:</strong> A 10 lb package would cost $50 (10 lb × $5/lb), while a 5 kg package would cost $55 (5 kg × $11/kg).
           </p>
         </div>
       </CollapsibleContent>
