@@ -1,37 +1,78 @@
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+
+type RentalListing = {
+  id: string;
+  title: string;
+  price: number;
+  address: string;
+  description: string;
+  created_at: string;
+};
 
 const Rentals = () => {
-  const rentalListings = [
-    {
-      id: 1,
-      title: "Modern 2 Bedroom Apartment",
-      price: "$1,800/month",
-      location: "Silver Spring, MD",
-      rooms: "2 Bedrooms, 2 Baths",
-      thumbnail: "https://images.unsplash.com/photo-1487958449943-2429e8be8625",
-      description: "Newly renovated apartment with modern amenities",
-    },
-    {
-      id: 2,
-      title: "Cozy Studio Near Metro",
-      price: "$1,200/month",
-      location: "Arlington, VA",
-      rooms: "Studio, 1 Bath",
-      thumbnail: "https://images.unsplash.com/photo-1524230572899-a752b3835840",
-      description: "Perfect for young professionals, walking distance to metro",
-    },
-    {
-      id: 3,
-      title: "Spacious Family Home",
-      price: "$2,500/month",
-      location: "Alexandria, VA",
-      rooms: "3 Bedrooms, 2.5 Baths",
-      thumbnail: "https://images.unsplash.com/photo-1486718448742-163732cd1544",
-      description: "Beautiful single-family home in quiet neighborhood",
-    },
-  ];
+  const [rentalListings, setRentalListings] = useState<RentalListing[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchRentals = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("rentals")
+          .select("*")
+          .eq("status", "approved")
+          .order("created_at", { ascending: false });
+
+        if (error) throw error;
+        setRentalListings(data || []);
+      } catch (error) {
+        console.error("Error fetching rentals:", error);
+        toast.error("Failed to load rental listings");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchRentals();
+
+    // Set up real-time subscription for approved rentals
+    const channel = supabase
+      .channel("approved-rentals")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "rentals",
+          filter: "status=eq.approved",
+        },
+        () => {
+          fetchRentals();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-blue-50">
+        <Header />
+        <main className="container mx-auto py-8 px-4">
+          <div className="flex justify-center items-center h-64">
+            <p className="text-gray-600">Loading rentals...</p>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-blue-50">
@@ -51,18 +92,12 @@ const Rentals = () => {
               key={rental.id}
               className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
             >
-              <img
-                src={rental.thumbnail}
-                alt={rental.title}
-                className="w-full h-48 object-cover"
-              />
               <div className="p-4">
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   {rental.title}
                 </h3>
-                <p className="text-blue-600 font-bold mb-2">{rental.price}</p>
-                <p className="text-gray-600 mb-1">{rental.location}</p>
-                <p className="text-gray-600 mb-3">{rental.rooms}</p>
+                <p className="text-blue-600 font-bold mb-2">${rental.price}/month</p>
+                <p className="text-gray-600 mb-1">{rental.address}</p>
                 <p className="text-gray-700 mb-4 line-clamp-2">
                   {rental.description}
                 </p>
