@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
-import { MapPin, Mail, Phone, Calendar } from "lucide-react";
+import { MapPin, Mail, Phone, Calendar, Building2 } from "lucide-react";
 
 type Job = {
   id: string;
@@ -58,41 +58,42 @@ const JobDetails = () => {
 
   return (
     <Dialog open={true} onOpenChange={() => navigate("/jobs")}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-[450px]">
         <DialogHeader>
-          <DialogTitle className="text-lg font-semibold text-left">{job.title}</DialogTitle>
+          <DialogTitle className="text-xl font-semibold text-left">{job.title}</DialogTitle>
         </DialogHeader>
-        <div className="space-y-3 text-left">
-          <div>
-            <p className="text-blue-600 font-medium text-sm">{job.company_name}</p>
+        <div className="space-y-4 text-left">
+          <div className="flex items-center text-blue-600">
+            <Building2 className="w-4 h-4 mr-1.5" />
+            <span className="font-medium">{job.company_name}</span>
           </div>
           
-          <div className="grid grid-cols-1 gap-1.5 text-sm text-gray-600">
+          <div className="grid gap-2 text-sm text-gray-600">
             <div className="flex items-center">
-              <MapPin className="w-3.5 h-3.5 mr-1.5 text-gray-400" />
-              {job.location}
+              <MapPin className="w-3.5 h-3.5 mr-1.5 text-gray-400 flex-shrink-0" />
+              <span>{job.location}</span>
             </div>
             <div className="flex items-center">
-              <Calendar className="w-3.5 h-3.5 mr-1.5 text-gray-400" />
-              {new Date(job.created_at).toLocaleDateString()}
+              <Calendar className="w-3.5 h-3.5 mr-1.5 text-gray-400 flex-shrink-0" />
+              <span>{new Date(job.created_at).toLocaleDateString()}</span>
             </div>
           </div>
 
-          <div>
-            <h4 className="font-medium text-sm text-gray-900 mb-1">Description</h4>
-            <p className="text-gray-600 text-sm whitespace-pre-wrap">{job.description}</p>
+          <div className="pt-2">
+            <h4 className="font-medium text-sm text-gray-900 mb-2">Description</h4>
+            <p className="text-sm text-gray-600 whitespace-pre-wrap">{job.description}</p>
           </div>
 
-          <div className="border-t pt-3">
-            <h4 className="font-medium text-sm text-gray-900 mb-1.5">Contact Information</h4>
-            <div className="grid grid-cols-1 gap-1.5 text-sm">
+          <div className="border-t pt-4">
+            <h4 className="font-medium text-sm text-gray-900 mb-2">Contact Information</h4>
+            <div className="grid gap-2 text-sm">
               <div className="flex items-center text-gray-600">
-                <Mail className="w-3.5 h-3.5 mr-1.5 text-gray-400" />
-                {job.contact_info}
+                <Mail className="w-3.5 h-3.5 mr-1.5 text-gray-400 flex-shrink-0" />
+                <span>{job.contact_info}</span>
               </div>
               <div className="flex items-center text-gray-600">
-                <Phone className="w-3.5 h-3.5 mr-1.5 text-gray-400" />
-                {job.phone_number}
+                <Phone className="w-3.5 h-3.5 mr-1.5 text-gray-400 flex-shrink-0" />
+                <span>{job.phone_number}</span>
               </div>
             </div>
           </div>

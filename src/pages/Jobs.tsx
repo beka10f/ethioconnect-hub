@@ -64,13 +64,13 @@ const Jobs = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-50">
       <Header />
-      <div className="max-w-3xl mx-auto py-6 px-4">
-        <div className="flex justify-between items-center mb-4">
+      <div className="max-w-4xl mx-auto py-6 px-4 sm:px-6">
+        <div className="flex justify-between items-center mb-6">
           <div>
-            <h1 className="text-xl font-semibold text-gray-900">Job Listings</h1>
-            <p className="text-sm text-gray-600">Find your next opportunity in our community</p>
+            <h1 className="text-2xl font-semibold text-gray-900">Job Listings</h1>
+            <p className="text-sm text-gray-600 mt-1">Find your next opportunity in our community</p>
           </div>
           <Link to="/post-job">
             <Button className="bg-blue-600 hover:bg-blue-700">
@@ -85,54 +85,39 @@ const Jobs = () => {
             <div className="animate-pulse text-blue-600">Loading jobs...</div>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-4">
             {jobs.map((job) => (
-              <div 
-                key={job.id} 
-                className="bg-white border border-gray-200 rounded-lg p-3 hover:shadow-sm transition-shadow duration-200"
-              >
-                <div className="flex justify-between items-start gap-4">
-                  <div className="flex-1 min-w-0 text-left">
-                    <h2 className="text-base font-semibold text-gray-900 mb-0.5">
+              <Link to={`/jobs/${job.id}`} key={job.id}>
+                <div className="bg-white border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors duration-200">
+                  <div className="flex flex-col text-left">
+                    <h2 className="text-lg font-medium text-gray-900 mb-1">
                       {job.title}
                     </h2>
-                    <p className="text-blue-600 text-sm font-medium mb-1">{job.company_name}</p>
+                    <p className="text-blue-600 text-sm font-medium mb-2">
+                      {job.company_name}
+                    </p>
                     
-                    <div className="grid grid-cols-1 gap-1 text-sm text-gray-600 mb-2">
+                    <div className="grid grid-cols-1 gap-2 text-sm text-gray-600">
                       <div className="flex items-center">
-                        <MapPin className="w-3.5 h-3.5 mr-1 text-gray-400" />
+                        <MapPin className="w-3.5 h-3.5 mr-1.5 text-gray-400" />
                         {job.location}
                       </div>
                       <div className="flex items-center">
-                        <Calendar className="w-3.5 h-3.5 mr-1 text-gray-400" />
+                        <Calendar className="w-3.5 h-3.5 mr-1.5 text-gray-400" />
                         {new Date(job.created_at).toLocaleDateString()}
                       </div>
-                    </div>
-                    
-                    <p className="text-gray-600 text-sm mb-2 line-clamp-2">{job.description}</p>
-                    
-                    <div className="grid grid-cols-1 gap-1 text-sm text-gray-600">
                       <div className="flex items-center">
-                        <Mail className="w-3.5 h-3.5 mr-1 text-gray-400" />
+                        <Mail className="w-3.5 h-3.5 mr-1.5 text-gray-400" />
                         {job.contact_info}
                       </div>
                       <div className="flex items-center">
-                        <Phone className="w-3.5 h-3.5 mr-1 text-gray-400" />
+                        <Phone className="w-3.5 h-3.5 mr-1.5 text-gray-400" />
                         {job.phone_number}
                       </div>
                     </div>
                   </div>
-                  
-                  <Link to={`/jobs/${job.id}`}>
-                    <Button 
-                      variant="outline"
-                      className="whitespace-nowrap border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
-                    >
-                      View Details
-                    </Button>
-                  </Link>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}
