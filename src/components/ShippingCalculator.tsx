@@ -8,6 +8,9 @@ import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import ShippingSummaryDialog from "./shipping/ShippingSummaryDialog";
 import ShippingReceiptDialog from "./shipping/ShippingReceiptDialog";
+import type { Database } from "@/integrations/supabase/types";
+
+type ShippingStatus = Database["public"]["Enums"]["shipping_status"];
 
 const ShippingCalculator = () => {
   const [showSummary, setShowSummary] = React.useState(false);
@@ -34,7 +37,7 @@ const ShippingCalculator = () => {
         weight_unit: currentData.unit,
         cost: calculateShippingCost(currentData),
         shipping_date: format(currentData.shippingDate, 'yyyy-MM-dd'),
-        status: 'pending',
+        status: 'pending' as ShippingStatus,
         created_by: null // Set to null by default for unauthenticated users
       };
 
