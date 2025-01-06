@@ -10,27 +10,17 @@ import {
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
-
-type JobListing = {
-  id: string;
-  title: string;
-  company_name: string;
-  location: string;
-  description: string;
-  contact_info: string;
-  phone_number: string;
-  status: string;
-  created_at: string;
-};
+import type { Job } from "@/hooks/useJobsData";
 
 interface JobsManagementTableProps {
-  jobs: JobListing[];
+  jobs: Job[];
   onJobUpdate: () => void;
   status: 'pending' | 'approved' | 'rejected';
+  isLoading: boolean;
 }
 
-const JobsManagementTable = ({ jobs, onJobUpdate, status }: JobsManagementTableProps) => {
-  const [selectedJob, setSelectedJob] = useState<JobListing | null>(null);
+const JobsManagementTable = ({ jobs, onJobUpdate, status, isLoading }: JobsManagementTableProps) => {
+  const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
 
   const handleApproval = async (id: string, action: "approve" | "reject") => {
@@ -69,6 +59,22 @@ const JobsManagementTable = ({ jobs, onJobUpdate, status }: JobsManagementTableP
       setIsUpdating(false);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 p-4">
+        <p className="text-center text-gray-500">Loading jobs...</p>
+      </div>
+    );
+  }
+
+  if (jobs.length === 0) {
+    return (
+      <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 p-4">
+        <p className="text-center text-gray-500">No jobs found</p>
+      </div>
+    );
+  }
 
   return (
     <>
