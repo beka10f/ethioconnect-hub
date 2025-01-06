@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
-import { MapPin, Package, Calendar, Phone, User, DollarSign, AlignLeft } from "lucide-react";
+import { MapPin, Package, Calendar, Phone, User, DollarSign } from "lucide-react";
 
 const ShippingCalculator = () => {
   const [showSummary, setShowSummary] = React.useState(false);
@@ -35,12 +35,9 @@ const ShippingCalculator = () => {
     <>
       <Card className="p-6 bg-white shadow-lg">
         <div className="space-y-6">
-          <div className="flex items-center gap-2">
-            <AlignLeft className="w-5 h-5 text-site-blue" />
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 text-left">Ship to Ethiopia</h2>
-              <p className="text-gray-600 text-left mt-1">Calculate your shipping costs based on package weight.</p>
-            </div>
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Ship to Ethiopia</h2>
+            <p className="text-gray-600">Calculate your shipping costs based on package weight.</p>
           </div>
 
           <ShippingForm onSubmit={handleSubmit} />
@@ -51,8 +48,7 @@ const ShippingCalculator = () => {
       <Dialog open={showSummary} onOpenChange={setShowSummary}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle className="text-xl font-semibold text-site-blue text-left flex items-center gap-2">
-              <AlignLeft className="w-4 h-4" />
+            <DialogTitle className="text-xl font-semibold text-site-blue">
               Shipping Details
             </DialogTitle>
           </DialogHeader>
@@ -62,14 +58,14 @@ const ShippingCalculator = () => {
                 <div className="bg-site-blue/5 p-3 rounded-lg">
                   <div className="flex items-center gap-2">
                     <User className="w-4 h-4 text-site-blue" />
-                    <p className="text-sm text-gray-900 font-medium text-left">{currentData.name}</p>
+                    <p className="text-sm text-gray-900 font-medium">{currentData.name}</p>
                   </div>
                 </div>
 
                 <div className="bg-site-blue/5 p-3 rounded-lg">
                   <div className="flex items-center gap-2">
                     <Phone className="w-4 h-4 text-site-blue" />
-                    <p className="text-sm text-gray-900 font-medium text-left">{currentData.phoneNumber}</p>
+                    <p className="text-sm text-gray-900 font-medium">{currentData.phoneNumber}</p>
                   </div>
                 </div>
               </div>
@@ -78,7 +74,7 @@ const ShippingCalculator = () => {
                 <div className="bg-site-blue/5 p-3 rounded-lg">
                   <div className="flex items-center gap-2">
                     <Package className="w-4 h-4 text-site-blue" />
-                    <p className="text-sm text-gray-900 font-medium text-left">
+                    <p className="text-sm text-gray-900 font-medium">
                       {currentData.weight} {currentData.unit}
                     </p>
                   </div>
@@ -87,7 +83,7 @@ const ShippingCalculator = () => {
                 <div className="bg-site-blue/5 p-3 rounded-lg">
                   <div className="flex items-center gap-2">
                     <DollarSign className="w-4 h-4 text-site-blue" />
-                    <p className="text-sm text-gray-900 font-medium text-left">
+                    <p className="text-sm text-gray-900 font-medium">
                       ${calculateShippingCost(currentData)}
                     </p>
                   </div>
@@ -97,7 +93,7 @@ const ShippingCalculator = () => {
               <div className="bg-site-blue/5 p-3 rounded-lg">
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4 text-site-blue" />
-                  <p className="text-sm text-gray-900 font-medium text-left">
+                  <p className="text-sm text-gray-900 font-medium">
                     {format(currentData.shippingDate, "MMM do, yyyy")}
                   </p>
                 </div>
@@ -112,7 +108,7 @@ const ShippingCalculator = () => {
                 <div className="flex items-center gap-2">
                   <MapPin className="w-4 h-4 text-site-blue group-hover:animate-bounce" />
                   <div>
-                    <p className="text-sm text-gray-900 font-medium text-left">
+                    <p className="text-sm text-gray-900 font-medium">
                       ADOT International Market<br />
                       3111 Chillum Road, Mount Rainer, MD
                     </p>
