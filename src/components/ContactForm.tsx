@@ -14,7 +14,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import type { Database } from "@/integrations/supabase/types";
 
+// Define the form schema to match the database types
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "Name must be at least 2 characters.",
@@ -27,8 +29,10 @@ const formSchema = z.object({
   }),
 });
 
+type ContactFormValues = z.infer<typeof formSchema>;
+
 export function ContactForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<ContactFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
@@ -37,11 +41,16 @@ export function ContactForm() {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: ContactFormValues) {
     try {
+      // Insert a single object instead of an array
       const { error } = await supabase
         .from('contact_submissions')
-        .insert([values]);
+        .insert({
+          name: values.name,
+          email: values.email,
+          message: values.message,
+        });
 
       if (error) throw error;
 
