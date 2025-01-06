@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
-import { LogOut, Menu, X } from "lucide-react";
+import { LogOut, Menu } from "lucide-react";
 import { toast } from "sonner";
 import {
   Sheet,
@@ -46,6 +46,7 @@ const Header = () => {
     { to: "/jobs", label: "Jobs" },
     { to: "/rentals", label: "Rentals" },
     { to: "/", label: "Exchange Rate" },
+    { to: "/", label: "Ship to Ethiopia" },
     { to: "/contact", label: "Contact" },
   ];
 
