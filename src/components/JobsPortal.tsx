@@ -74,37 +74,30 @@ const JobsPortal = () => {
 
   return (
     <Portal title="Recent Job Postings">
-      <div className="flex flex-col space-y-3">
+      <div className="flex flex-col divide-y divide-gray-100">
         {jobs.map((job) => (
           <div 
             key={job.id} 
-            className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100"
+            className="py-3 px-1 flex items-center justify-between hover:bg-gray-50 transition-colors duration-200"
           >
-            <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <h3 className="text-lg font-semibold text-gray-900">
-                  {job.title}
-                </h3>
-                <div className="flex items-center text-sm text-gray-600">
-                  <MapPin className="w-4 h-4 mr-1" />
-                  {job.location}
-                </div>
-              </div>
-              <div className="flex justify-between items-center">
-                <div className="text-sm text-gray-600">
-                  {job.company_name}
-                </div>
-                <Link to={`/jobs/${job.id}`}>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    className="text-xs px-3 py-1 h-7 border-site-blue text-site-blue hover:bg-site-blue hover:text-white"
-                  >
-                    View Details
-                  </Button>
-                </Link>
+            <div className="space-y-0.5">
+              <h3 className="text-base font-medium text-gray-900">
+                {job.title}
+              </h3>
+              <div className="flex items-center text-sm text-gray-500">
+                <MapPin className="w-4 h-4 mr-1" />
+                {job.location}
               </div>
             </div>
+            <Link to={`/jobs/${job.id}`}>
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="text-blue-600 border-blue-600 hover:bg-blue-50 hover:text-blue-700"
+              >
+                View Details
+              </Button>
+            </Link>
           </div>
         ))}
       </div>
