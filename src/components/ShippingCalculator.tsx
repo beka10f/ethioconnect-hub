@@ -42,12 +42,6 @@ const ShippingCalculator = () => {
     }
   };
 
-  const handleDialogClose = (open: boolean) => {
-    if (!open) {
-      handleClose();
-    }
-  };
-
   return (
     <>
       <Card className="p-6 bg-white shadow-lg">
@@ -62,7 +56,7 @@ const ShippingCalculator = () => {
         </div>
       </Card>
 
-      <AlertDialog open={showConfirmation} onOpenChange={handleDialogClose}>
+      <AlertDialog open={showConfirmation} onOpenChange={(open) => !open && handleClose()}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
