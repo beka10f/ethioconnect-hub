@@ -19,7 +19,7 @@ type Rental = {
 };
 
 const RentalDetails = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [rental, setRental] = useState<Rental | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -27,14 +27,24 @@ const RentalDetails = () => {
   useEffect(() => {
     const fetchRental = async () => {
       try {
+        if (!id) {
+          throw new Error("No rental ID provided");
+        }
+
         const { data, error } = await supabase
           .from("rentals")
           .select("*")
           .eq("id", id)
           .eq("status", "approved")
-          .single();
+          .maybeSingle();
 
         if (error) throw error;
+        if (!data) {
+          toast.error("Rental not found");
+          navigate("/rentals");
+          return;
+        }
+        
         setRental(data);
       } catch (error) {
         console.error("Error fetching rental:", error);
