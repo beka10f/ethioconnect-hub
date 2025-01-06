@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
+import { MapPin } from "lucide-react";
 
 const ShippingCalculator = () => {
   const [showSummary, setShowSummary] = React.useState(false);
@@ -21,6 +22,13 @@ const ShippingCalculator = () => {
   const handleSubmit = (data: ShippingFormData) => {
     setCurrentData(data);
     setShowSummary(true);
+  };
+
+  const handleLocationClick = () => {
+    window.open(
+      "https://www.google.com/maps/search/?api=1&query=ADOT+International+Market+3111+Chillum+Road+Mount+Rainer+MD",
+      "_blank"
+    );
   };
 
   return (
@@ -63,13 +71,19 @@ const ShippingCalculator = () => {
                     </div>
                   </div>
 
-                  <div className="bg-blue-50 p-4 rounded-lg mt-4">
-                    <p className="text-sm text-blue-700">
-                      Please drop off your package at:<br />
-                      <strong>ADOT International Market</strong><br />
-                      3111 Chillum Road<br />
-                      Mount Rainer, MD
-                    </p>
+                  <div 
+                    className="bg-blue-50 p-4 rounded-lg mt-4 cursor-pointer hover:bg-blue-100 transition-colors group"
+                    onClick={handleLocationClick}
+                  >
+                    <div className="flex items-start gap-2">
+                      <MapPin className="w-5 h-5 text-blue-700 mt-0.5 group-hover:animate-bounce" />
+                      <p className="text-sm text-blue-700">
+                        Please drop off your package at:<br />
+                        <strong>ADOT International Market</strong><br />
+                        3111 Chillum Road<br />
+                        Mount Rainer, MD
+                      </p>
+                    </div>
                   </div>
                 </div>
               )}
