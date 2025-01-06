@@ -27,6 +27,8 @@ const ShippingCalculator = () => {
     
     setIsSubmitting(true);
     try {
+      const { data: userData } = await supabase.auth.getUser();
+      
       const { data, error } = await supabase
         .from('shipping_details')
         .insert({
@@ -36,7 +38,8 @@ const ShippingCalculator = () => {
           weight_unit: currentData.unit,
           cost: calculateShippingCost(currentData),
           shipping_date: format(currentData.shippingDate, 'yyyy-MM-dd'),
-          status: 'pending'
+          status: 'pending',
+          created_by: userData.user?.id || null
         })
         .select()
         .single();
