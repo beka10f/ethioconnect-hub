@@ -16,9 +16,20 @@ const Admin = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedStatus, setSelectedStatus] = useState<JobStatus>('pending');
 
+  // Authentication check on mount only
   useEffect(() => {
     checkAuth();
-    setupRealtimeSubscriptions();
+  }, []);
+
+  // Set up real-time subscriptions once on mount
+  useEffect(() => {
+    const cleanup = setupRealtimeSubscriptions();
+    return () => cleanup();
+  }, []);
+
+  // Fetch listings when status changes
+  useEffect(() => {
+    fetchListings();
   }, [selectedStatus]);
 
   const checkAuth = async () => {
@@ -31,7 +42,6 @@ const Admin = () => {
         return;
       }
 
-      // Check if user has admin role
       const { data: profile, error: profileError } = await supabase
         .from("profiles")
         .select("role")
