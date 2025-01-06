@@ -73,22 +73,30 @@ const JobsPortal = () => {
 
   return (
     <Portal title="Recent Job Postings">
-      <div className="flex flex-col space-y-1">
+      <div className="flex flex-col space-y-2">
         {jobs.map((job) => (
           <Link to={`/jobs/${job.id}`} key={job.id} className="block w-full">
-            <div className="group hover:bg-gray-50 py-2 px-1">
-              <div className="flex items-center gap-2 text-sm">
-                <span className="font-medium text-gray-900">{job.title}</span>
-                <span className="text-gray-500">•</span>
-                <span className="text-gray-600">{job.company_name}</span>
+            <div className="group bg-white border border-gray-200 rounded-lg p-3 hover:border-blue-200 transition-all duration-200 hover:shadow-sm w-full">
+              <h3 className="text-sm font-medium text-gray-900 truncate">
+                {job.title}
+              </h3>
+              <div className="flex items-center gap-4 mt-1 text-xs text-gray-600">
+                <div className="flex items-center gap-1">
+                  <Building2 className="w-3 h-3" />
+                  <span>{job.company_name}</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <MapPin className="w-3 h-3" />
+                  <span>{job.location}</span>
+                </div>
               </div>
             </div>
           </Link>
         ))}
       </div>
       <Link to="/jobs" className="block mt-3">
-        <button className="w-full text-left text-sm text-blue-600 hover:text-blue-700 py-1">
-          View All Jobs →
+        <button className="w-full bg-blue-600 text-white py-1.5 text-sm rounded-lg hover:bg-blue-700 transition-colors duration-200">
+          View All Jobs
         </button>
       </Link>
     </Portal>
