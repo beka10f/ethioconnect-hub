@@ -3,7 +3,7 @@ import Portal from "./Portal";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Building2, MapPin, ArrowRight } from "lucide-react";
+import { Building2, MapPin } from "lucide-react";
 
 type JobListing = {
   id: string;
@@ -73,38 +73,31 @@ const JobsPortal = () => {
 
   return (
     <Portal title="Recent Job Postings">
-      <div className="flex flex-col space-y-4">
+      <div className="flex flex-col space-y-2">
         {jobs.map((job) => (
-          <div key={job.id} className="flex items-center justify-between w-full group text-left">
-            <div className="flex-1">
-              <h3 className="text-base font-medium text-gray-900">{job.title}</h3>
-              <div className="flex items-center gap-4 mt-1 text-sm text-gray-600">
+          <Link to={`/jobs/${job.id}`} key={job.id} className="block w-full">
+            <div className="group bg-white border border-gray-200 rounded-lg p-3 hover:border-blue-200 transition-all duration-200 hover:shadow-sm w-full">
+              <h3 className="text-sm font-medium text-gray-900 truncate">
+                {job.title}
+              </h3>
+              <div className="flex items-center gap-4 mt-1 text-xs text-gray-600">
                 <div className="flex items-center gap-1">
-                  <Building2 className="w-4 h-4" />
+                  <Building2 className="w-3 h-3" />
                   <span>{job.company_name}</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <MapPin className="w-4 h-4" />
+                  <MapPin className="w-3 h-3" />
                   <span>{job.location}</span>
                 </div>
               </div>
             </div>
-            <Link 
-              to={`/jobs/${job.id}`}
-              className="flex items-center gap-1 text-blue-600 hover:text-blue-700 transition-colors"
-            >
-              Details
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
+          </Link>
         ))}
       </div>
-      <Link 
-        to="/jobs" 
-        className="inline-flex items-center gap-1 mt-6 text-blue-600 hover:text-blue-700 transition-colors"
-      >
-        View All Jobs
-        <ArrowRight className="w-4 h-4" />
+      <Link to="/jobs" className="block mt-3">
+        <button className="w-full bg-blue-600 text-white py-1.5 text-sm rounded-lg hover:bg-blue-700 transition-colors duration-200">
+          View All Jobs
+        </button>
       </Link>
     </Portal>
   );
