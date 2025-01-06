@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
+import { useRentalApproval } from "@/hooks/useRentalApproval";
 
 type RentalListing = {
   id: string;
@@ -18,26 +17,7 @@ interface PendingRentalsTableProps {
 }
 
 const PendingRentalsTable = ({ pendingRentals, onRentalUpdate }: PendingRentalsTableProps) => {
-  const handleApproval = async (id: string, action: "approve" | "reject") => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
-
-    const { error } = await supabase
-      .from("rentals")
-      .update({
-        status: action === "approve" ? "approved" : "rejected",
-        approved_by: action === "approve" ? user.id : null
-      })
-      .eq("id", id);
-
-    if (error) {
-      toast.error(`Failed to ${action} rental`);
-      return;
-    }
-
-    toast.success(`Rental ${action}d successfully`);
-    onRentalUpdate();
-  };
+  const { handleApproval, isUpdating } = useRentalApproval(onRentalUpdate);
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden border border-ethiopian-sage/20">
@@ -66,6 +46,7 @@ const PendingRentalsTable = ({ pendingRentals, onRentalUpdate }: PendingRentalsT
                     variant="outline"
                     className="border-ethiopian-sage text-ethiopian-sage hover:bg-ethiopian-sage hover:text-white"
                     onClick={() => handleApproval(rental.id, "approve")}
+                    disabled={isUpdating}
                   >
                     Approve
                   </Button>
@@ -73,6 +54,7 @@ const PendingRentalsTable = ({ pendingRentals, onRentalUpdate }: PendingRentalsT
                     variant="outline"
                     className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
                     onClick={() => handleApproval(rental.id, "reject")}
+                    disabled={isUpdating}
                   >
                     Reject
                   </Button>

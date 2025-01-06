@@ -130,6 +130,14 @@ export type Database = {
         }
         Returns: undefined
       }
+      approve_rental: {
+        Args: {
+          rental_id: string
+          admin_id: string
+          action: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       user_role: "admin" | "user"
