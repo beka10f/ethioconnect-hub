@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import JobsManagementTable from "./JobsManagementTable";
 import { useJobsData, JobStatus } from "@/hooks/useJobsData";
