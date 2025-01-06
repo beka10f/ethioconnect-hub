@@ -8,16 +8,15 @@ const RentalsManagement = () => {
   const { rentals, isLoading, refetch } = useRentalsData(selectedStatus);
 
   return (
-    <section className="space-y-4">
-      <h2 className="text-2xl font-semibold text-gray-900">Rentals Management</h2>
+    <div className="space-y-4">
       <Tabs defaultValue="pending" className="w-full">
-        <TabsList className="w-full sm:w-auto grid grid-cols-3 sm:inline-flex gap-1">
+        <TabsList className="w-full sm:w-auto grid grid-cols-3 sm:inline-flex gap-1 bg-ethiopian-cream">
           <TabsTrigger 
             value="pending" 
             onClick={() => setSelectedStatus('pending')}
             className="data-[state=active]:bg-ethiopian-coffee data-[state=active]:text-white"
           >
-            Pending Approval
+            Pending
           </TabsTrigger>
           <TabsTrigger 
             value="approved" 
@@ -60,7 +59,7 @@ const RentalsManagement = () => {
           />
         </TabsContent>
       </Tabs>
-    </section>
+    </div>
   );
 };
 

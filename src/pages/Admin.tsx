@@ -4,6 +4,7 @@ import RentalsManagement from "@/components/admin/RentalsManagement";
 import ExchangeRateManagement from "@/components/admin/ExchangeRateManagement";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 const Admin = () => {
   const { isAuthChecked } = useAdminAuth();
@@ -22,33 +23,39 @@ const Admin = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-ethiopian-cream">
       <Header />
-      <div className="container mx-auto py-8 px-4">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-3xl font-bold text-gray-900 mb-8">Admin Dashboard</h1>
-          
-          <div className="grid gap-8">
-            <Card className="overflow-hidden border-none shadow-sm">
-              <CardContent className="p-6">
-                <ExchangeRateManagement />
-              </CardContent>
-            </Card>
-
-            <Card className="overflow-hidden border-none shadow-sm">
-              <CardContent className="p-6">
-                <JobsManagement />
-              </CardContent>
-            </Card>
-
-            <Card className="overflow-hidden border-none shadow-sm">
-              <CardContent className="p-6">
-                <RentalsManagement />
-              </CardContent>
-            </Card>
+      <main className="container mx-auto py-8 px-4">
+        <div className="max-w-6xl mx-auto space-y-8">
+          <div className="flex items-center">
+            <h1 className="text-3xl font-bold text-ethiopian-coffee">Admin Dashboard</h1>
           </div>
+          
+          <Card className="bg-white shadow-sm border-none">
+            <CardContent className="p-6">
+              <h2 className="text-xl font-semibold text-ethiopian-coffee mb-4">Exchange Rate Management</h2>
+              <Separator className="mb-4" />
+              <ExchangeRateManagement />
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white shadow-sm border-none">
+            <CardContent className="p-6">
+              <h2 className="text-xl font-semibold text-ethiopian-coffee mb-4">Jobs Management</h2>
+              <Separator className="mb-4" />
+              <JobsManagement />
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white shadow-sm border-none">
+            <CardContent className="p-6">
+              <h2 className="text-xl font-semibold text-ethiopian-coffee mb-4">Rentals Management</h2>
+              <Separator className="mb-4" />
+              <RentalsManagement />
+            </CardContent>
+          </Card>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

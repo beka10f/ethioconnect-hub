@@ -35,31 +35,28 @@ const ExchangeRateManagement = () => {
   };
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-2xl font-semibold text-gray-900">Update Exchange Rate</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-          <div className="relative flex-1 w-full">
-            <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 h-4 w-4" />
-            <Input
-              type="number"
-              step="0.01"
-              placeholder="Enter new rate (ETB per 1 USD)"
-              value={rate}
-              onChange={(e) => setRate(e.target.value)}
-              className="pl-10 w-full"
-            />
-          </div>
-          <Button 
-            type="submit" 
-            disabled={isSubmitting}
-            className="w-full sm:w-auto"
-          >
-            {isSubmitting ? "Updating..." : "Update Rate"}
-          </Button>
+    <form onSubmit={handleSubmit} className="max-w-md">
+      <div className="flex flex-col space-y-4">
+        <div className="relative">
+          <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 h-4 w-4" />
+          <Input
+            type="number"
+            step="0.01"
+            placeholder="Enter new rate (ETB per 1 USD)"
+            value={rate}
+            onChange={(e) => setRate(e.target.value)}
+            className="pl-10"
+          />
         </div>
-      </form>
-    </div>
+        <Button 
+          type="submit" 
+          disabled={isSubmitting}
+          className="w-full bg-ethiopian-coffee hover:bg-ethiopian-coffee/90"
+        >
+          {isSubmitting ? "Updating..." : "Update Exchange Rate"}
+        </Button>
+      </div>
+    </form>
   );
 };
 
