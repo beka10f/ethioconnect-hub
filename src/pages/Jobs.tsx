@@ -66,14 +66,14 @@ const Jobs = () => {
   return (
     <div className="min-h-screen bg-white">
       <Header />
-      <div className="container mx-auto py-8 px-4">
-        <div className="flex justify-between items-center mb-8">
+      <div className="max-w-5xl mx-auto py-8 px-4">
+        <div className="flex justify-between items-center mb-6">
           <div>
-            <h1 className="text-3xl font-bold text-black mb-2">Job Listings</h1>
-            <p className="text-gray-600">Find your next opportunity in our community</p>
+            <h1 className="text-2xl font-semibold text-gray-900">Job Listings</h1>
+            <p className="text-sm text-gray-600 mt-1">Find your next opportunity in our community</p>
           </div>
           <Link to="/post-job">
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white transition-colors">
+            <Button className="bg-blue-600 hover:bg-blue-700">
               <Briefcase className="w-4 h-4 mr-2" />
               Post a Job
             </Button>
@@ -85,56 +85,52 @@ const Jobs = () => {
             <div className="animate-pulse text-blue-600">Loading jobs...</div>
           </div>
         ) : (
-          <div className="grid gap-6">
+          <div className="space-y-4">
             {jobs.map((job) => (
               <div 
                 key={job.id} 
-                className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-200 p-6 border border-gray-100"
+                className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow duration-200"
               >
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                  <div className="flex-1 space-y-4">
-                    <div>
-                      <h2 className="text-xl font-semibold text-black group-hover:text-blue-600 transition-colors">
-                        {job.title}
-                      </h2>
-                      <p className="text-blue-600 font-medium mt-1">{job.company_name}</p>
-                    </div>
+                <div className="flex justify-between items-start gap-4">
+                  <div className="flex-1 min-w-0">
+                    <h2 className="text-lg font-semibold text-gray-900 mb-1">
+                      {job.title}
+                    </h2>
+                    <p className="text-blue-600 text-sm font-medium mb-2">{job.company_name}</p>
                     
-                    <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-600 mb-3">
                       <div className="flex items-center">
-                        <MapPin className="w-4 h-4 mr-1.5 text-blue-500" />
+                        <MapPin className="w-4 h-4 mr-1.5 text-gray-400" />
                         {job.location}
                       </div>
                       <div className="flex items-center">
-                        <Calendar className="w-4 h-4 mr-1.5 text-blue-500" />
+                        <Calendar className="w-4 h-4 mr-1.5 text-gray-400" />
                         {new Date(job.created_at).toLocaleDateString()}
                       </div>
                     </div>
                     
-                    <p className="text-gray-700 line-clamp-3">{job.description}</p>
+                    <p className="text-gray-600 text-sm mb-3 line-clamp-2">{job.description}</p>
                     
-                    <div className="flex flex-wrap gap-4 text-sm">
-                      <div className="flex items-center text-gray-600">
-                        <Mail className="w-4 h-4 mr-1.5 text-blue-500" />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-600">
+                      <div className="flex items-center">
+                        <Mail className="w-4 h-4 mr-1.5 text-gray-400" />
                         {job.contact_info}
                       </div>
-                      <div className="flex items-center text-gray-600">
-                        <Phone className="w-4 h-4 mr-1.5 text-blue-500" />
+                      <div className="flex items-center">
+                        <Phone className="w-4 h-4 mr-1.5 text-gray-400" />
                         {job.phone_number}
                       </div>
                     </div>
                   </div>
                   
-                  <div className="flex md:flex-col gap-4 md:ml-6">
-                    <Link to={`/jobs/${job.id}`}>
-                      <Button 
-                        variant="outline" 
-                        className="w-full border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors duration-200"
-                      >
-                        View Details
-                      </Button>
-                    </Link>
-                  </div>
+                  <Link to={`/jobs/${job.id}`}>
+                    <Button 
+                      variant="outline"
+                      className="whitespace-nowrap border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
+                    >
+                      View Details
+                    </Button>
+                  </Link>
                 </div>
               </div>
             ))}
