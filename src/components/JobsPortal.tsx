@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
+import JobDetails from "./JobDetails";
 
 type JobListing = {
   id: string;
@@ -12,18 +13,21 @@ type JobListing = {
   location: string;
   description: string;
   created_at: string;
+  contact_info: string;
+  phone_number: string;
 };
 
 const JobsPortal = () => {
   const [jobs, setJobs] = useState<JobListing[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
         const { data, error } = await supabase
           .from("jobs")
-          .select("id, title, company_name, location, description, created_at")
+          .select("id, title, company_name, location, description, created_at, contact_info, phone_number")
           .eq("status", "approved")
           .order("created_at", { ascending: false })
           .limit(4);
@@ -87,15 +91,14 @@ const JobsPortal = () => {
                 {job.location}
               </div>
             </div>
-            <Link to={`/jobs/${job.id}`}>
-              <Button 
-                variant="outline" 
-                size="sm"
-                className="text-blue-600 border-blue-600 hover:bg-blue-50 hover:text-blue-700"
-              >
-                View Details
-              </Button>
-            </Link>
+            <Button 
+              variant="outline" 
+              size="sm"
+              className="text-blue-600 border-blue-600 hover:bg-blue-50 hover:text-blue-700"
+              onClick={() => setSelectedJobId(job.id)}
+            >
+              View Details
+            </Button>
           </div>
         ))}
       </div>
@@ -107,6 +110,9 @@ const JobsPortal = () => {
           View All Jobs
         </Button>
       </Link>
+      {selectedJobId && (
+        <JobDetails id={selectedJobId} onClose={() => setSelectedJobId(null)} />
+      )}
     </Portal>
   );
 };

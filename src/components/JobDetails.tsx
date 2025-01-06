@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
 import { MapPin, Mail, Phone, Calendar, Building2 } from "lucide-react";
 
 type Job = {
@@ -18,9 +16,12 @@ type Job = {
   created_at: string;
 };
 
-const JobDetails = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
+interface JobDetailsProps {
+  id?: string;
+  onClose?: () => void;
+}
+
+const JobDetails = ({ id, onClose }: JobDetailsProps) => {
   const [job, setJob] = useState<Job | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -39,14 +40,16 @@ const JobDetails = () => {
       } catch (error) {
         console.error("Error fetching job:", error);
         toast.error("Failed to load job details");
-        navigate("/jobs");
+        onClose?.();
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchJob();
-  }, [id, navigate]);
+    if (id) {
+      fetchJob();
+    }
+  }, [id, onClose]);
 
   if (isLoading) {
     return null;
@@ -57,7 +60,7 @@ const JobDetails = () => {
   }
 
   return (
-    <Dialog open={true} onOpenChange={() => navigate("/jobs")}>
+    <Dialog open={true} onOpenChange={() => onClose?.()}>
       <DialogContent className="sm:max-w-[450px]">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold text-left">{job.title}</DialogTitle>
@@ -99,7 +102,7 @@ const JobDetails = () => {
           </div>
 
           <div className="flex justify-end pt-2">
-            <Button variant="outline" onClick={() => navigate("/jobs")}>
+            <Button variant="outline" onClick={() => onClose?.()}>
               Close
             </Button>
           </div>

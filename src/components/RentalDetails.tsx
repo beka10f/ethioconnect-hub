@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
 import { DollarSign, MapPin, Mail, Phone, Calendar } from "lucide-react";
 
 type Rental = {
@@ -18,9 +16,12 @@ type Rental = {
   created_at: string;
 };
 
-const RentalDetails = () => {
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
+interface RentalDetailsProps {
+  id?: string;
+  onClose?: () => void;
+}
+
+const RentalDetails = ({ id, onClose }: RentalDetailsProps) => {
   const [rental, setRental] = useState<Rental | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -41,7 +42,7 @@ const RentalDetails = () => {
         if (error) throw error;
         if (!data) {
           toast.error("Rental not found");
-          navigate("/rentals");
+          onClose?.();
           return;
         }
         
@@ -49,21 +50,23 @@ const RentalDetails = () => {
       } catch (error) {
         console.error("Error fetching rental:", error);
         toast.error("Failed to load rental details");
-        navigate("/rentals");
+        onClose?.();
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchRental();
-  }, [id, navigate]);
+    if (id) {
+      fetchRental();
+    }
+  }, [id, onClose]);
 
   if (isLoading || !rental) {
     return null;
   }
 
   return (
-    <Dialog open={true} onOpenChange={() => navigate("/rentals")}>
+    <Dialog open={true} onOpenChange={() => onClose?.()}>
       <DialogContent className="sm:max-w-[600px] text-left bg-white">
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold text-gray-900">{rental.title}</DialogTitle>
@@ -110,7 +113,7 @@ const RentalDetails = () => {
           <div className="flex justify-end pt-4">
             <Button 
               variant="outline" 
-              onClick={() => navigate("/rentals")}
+              onClick={() => onClose?.()}
               className="border-site-blue text-site-blue hover:bg-site-blue hover:text-white"
             >
               Close

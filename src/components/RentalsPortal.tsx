@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { MapPin, DollarSign } from "lucide-react";
 import { Button } from "./ui/button";
+import RentalDetails from "./RentalDetails";
 
 type RentalListing = {
   id: string;
@@ -12,19 +13,22 @@ type RentalListing = {
   price: number;
   address: string;
   description: string;
+  contact_info: string;
+  phone_number: string;
   created_at: string;
 };
 
 const RentalsPortal = () => {
   const [rentals, setRentals] = useState<RentalListing[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedRentalId, setSelectedRentalId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchRentals = async () => {
       try {
         const { data, error } = await supabase
           .from("rentals")
-          .select("id, title, price, address, description, created_at")
+          .select("id, title, price, address, description, contact_info, phone_number, created_at")
           .eq("status", "approved")
           .order("created_at", { ascending: false })
           .limit(4);
@@ -95,15 +99,14 @@ const RentalsPortal = () => {
                   <DollarSign className="w-4 h-4 mr-1 text-site-blue" />
                   ${rental.price}/month
                 </div>
-                <Link to={`/rentals/${rental.id}`}>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    className="text-xs px-3 py-1 h-7 border-site-blue text-site-blue hover:bg-site-blue hover:text-white"
-                  >
-                    View Details
-                  </Button>
-                </Link>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="text-xs px-3 py-1 h-7 border-site-blue text-site-blue hover:bg-site-blue hover:text-white"
+                  onClick={() => setSelectedRentalId(rental.id)}
+                >
+                  View Details
+                </Button>
               </div>
             </div>
           </div>
@@ -117,6 +120,9 @@ const RentalsPortal = () => {
           View All Rentals
         </Button>
       </Link>
+      {selectedRentalId && (
+        <RentalDetails id={selectedRentalId} onClose={() => setSelectedRentalId(null)} />
+      )}
     </Portal>
   );
 };
