@@ -3,7 +3,7 @@ import Portal from "./Portal";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { MapPin, Building2 } from "lucide-react";
+import { Building2, MapPin } from "lucide-react";
 
 type JobListing = {
   id: string;
@@ -76,17 +76,17 @@ const JobsPortal = () => {
       <div className="grid grid-cols-2 gap-3">
         {jobs.map((job) => (
           <Link to={`/jobs/${job.id}`} key={job.id} className="block">
-            <div className="group bg-white border border-gray-200 rounded-lg p-2.5 hover:border-blue-200 transition-all duration-200 hover:shadow-sm h-full">
-              <h3 className="text-sm font-medium text-gray-900 truncate mb-0.5">
+            <div className="group bg-white border border-gray-200 rounded-lg p-2 hover:border-blue-200 transition-all duration-200 hover:shadow-sm">
+              <h3 className="text-sm font-medium text-gray-900 mb-1">
                 {job.title}
               </h3>
-              <div className="flex items-center gap-3 text-xs text-gray-600">
-                <div className="flex items-center gap-1">
-                  <Building2 className="w-3 h-3 text-blue-500" />
+              <div className="flex flex-col gap-0.5 text-xs">
+                <div className="flex items-center gap-1 text-gray-600">
+                  <Building2 className="w-3 h-3" />
                   <span className="truncate">{job.company_name}</span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <MapPin className="w-3 h-3 text-blue-500" />
+                <div className="flex items-center gap-1 text-gray-600">
+                  <MapPin className="w-3 h-3" />
                   <span className="truncate">{job.location}</span>
                 </div>
               </div>
@@ -95,7 +95,7 @@ const JobsPortal = () => {
         ))}
       </div>
       <Link to="/jobs" className="block mt-3">
-        <button className="w-full bg-blue-600 text-white py-2 text-sm rounded-lg hover:bg-blue-700 transition-colors duration-200">
+        <button className="w-full bg-blue-600 text-white py-1.5 text-sm rounded-lg hover:bg-blue-700 transition-colors duration-200">
           View All Jobs
         </button>
       </Link>
