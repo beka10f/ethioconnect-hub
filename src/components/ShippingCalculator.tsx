@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
-import { MapPin } from "lucide-react";
+import { MapPin, Package, Calendar, Phone, User, DollarSign } from "lucide-react";
 
 const ShippingCalculator = () => {
   const [showSummary, setShowSummary] = React.useState(false);
@@ -46,33 +46,64 @@ const ShippingCalculator = () => {
       </Card>
 
       <Dialog open={showSummary} onOpenChange={setShowSummary}>
-        <DialogContent>
+        <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
-            <DialogTitle>Shipping Details Summary</DialogTitle>
+            <DialogTitle className="text-2xl font-bold text-center text-blue-900">
+              Shipping Details Summary
+            </DialogTitle>
             <DialogDescription>
               {currentData && (
-                <div className="mt-4 space-y-4">
-                  <div className="grid grid-cols-2 gap-2 text-sm">
-                    <div className="font-medium">Name:</div>
-                    <div>{currentData.name}</div>
-                    
-                    <div className="font-medium">Phone Number:</div>
-                    <div>{currentData.phoneNumber}</div>
-                    
-                    <div className="font-medium">Package Weight:</div>
-                    <div>{currentData.weight} {currentData.unit}</div>
-                    
-                    <div className="font-medium">Drop-off Date:</div>
-                    <div>{format(currentData.shippingDate, "MMMM do, yyyy")}</div>
-                    
-                    <div className="font-medium">Estimated Cost:</div>
-                    <div className="text-primary font-semibold">
-                      ${calculateShippingCost(currentData)}
+                <div className="mt-6 space-y-6">
+                  <div className="grid gap-4">
+                    <div className="bg-gradient-to-r from-blue-50/50 to-blue-50/30 p-4 rounded-lg flex items-center gap-3">
+                      <User className="w-5 h-5 text-blue-600 shrink-0" />
+                      <div>
+                        <p className="text-sm text-blue-600 font-medium">Name</p>
+                        <p className="text-blue-900 font-semibold">{currentData.name}</p>
+                      </div>
+                    </div>
+
+                    <div className="bg-gradient-to-r from-blue-50/50 to-blue-50/30 p-4 rounded-lg flex items-center gap-3">
+                      <Phone className="w-5 h-5 text-blue-600 shrink-0" />
+                      <div>
+                        <p className="text-sm text-blue-600 font-medium">Phone Number</p>
+                        <p className="text-blue-900 font-semibold">{currentData.phoneNumber}</p>
+                      </div>
+                    </div>
+
+                    <div className="bg-gradient-to-r from-blue-50/50 to-blue-50/30 p-4 rounded-lg flex items-center gap-3">
+                      <Package className="w-5 h-5 text-blue-600 shrink-0" />
+                      <div>
+                        <p className="text-sm text-blue-600 font-medium">Package Weight</p>
+                        <p className="text-blue-900 font-semibold">
+                          {currentData.weight} {currentData.unit}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="bg-gradient-to-r from-blue-50/50 to-blue-50/30 p-4 rounded-lg flex items-center gap-3">
+                      <Calendar className="w-5 h-5 text-blue-600 shrink-0" />
+                      <div>
+                        <p className="text-sm text-blue-600 font-medium">Drop-off Date</p>
+                        <p className="text-blue-900 font-semibold">
+                          {format(currentData.shippingDate, "MMMM do, yyyy")}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="bg-gradient-to-r from-blue-50/50 to-blue-50/30 p-4 rounded-lg flex items-center gap-3">
+                      <DollarSign className="w-5 h-5 text-blue-600 shrink-0" />
+                      <div>
+                        <p className="text-sm text-blue-600 font-medium">Estimated Cost</p>
+                        <p className="text-blue-900 font-semibold">
+                          ${calculateShippingCost(currentData)}
+                        </p>
+                      </div>
                     </div>
                   </div>
 
                   <div 
-                    className="bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-xl mt-6 cursor-pointer 
+                    className="bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-xl cursor-pointer 
                              hover:from-blue-100 hover:to-blue-200 transition-all duration-300 shadow-sm 
                              border border-blue-200 group"
                     onClick={handleLocationClick}
@@ -100,7 +131,11 @@ const ShippingCalculator = () => {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowSummary(false)}>
+            <Button 
+              variant="outline" 
+              onClick={() => setShowSummary(false)}
+              className="w-full sm:w-auto"
+            >
               Close
             </Button>
           </DialogFooter>
