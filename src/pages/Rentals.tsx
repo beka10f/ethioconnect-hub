@@ -120,7 +120,7 @@ const Rentals = () => {
                     <p className="text-ethiopian-coffee/80 line-clamp-2">{rental.address}</p>
                   </div>
                   
-                  <p className="text-ethiopian-coffee/70 line-clamp-3 text-sm">
+                  <p className="text-ethiopian-coffee/70 line-clamp-3 text-sm text-left">
                     {rental.description}
                   </p>
 
