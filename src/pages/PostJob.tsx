@@ -15,6 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import Header from "@/components/Header";
+import { supabase } from "@/integrations/supabase/client";
 
 const formSchema = z.object({
   title: z.string().min(2, "Job title must be at least 2 characters"),
@@ -22,6 +23,7 @@ const formSchema = z.object({
   location: z.string().min(2, "Location must be at least 2 characters"),
   description: z.string().min(10, "Description must be at least 10 characters"),
   contactInfo: z.string().email("Invalid email address"),
+  phoneNumber: z.string().min(10, "Phone number must be at least 10 digits"),
 });
 
 const PostJob = () => {
@@ -34,11 +36,28 @@ const PostJob = () => {
       location: "",
       description: "",
       contactInfo: "",
+      phoneNumber: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const { data: { user } } = await supabase.auth.getUser();
+    
+    const { error } = await supabase.from("jobs").insert({
+      title: values.title,
+      company_name: values.company,
+      location: values.location,
+      description: values.description,
+      contact_info: values.contactInfo,
+      phone_number: values.phoneNumber,
+      created_by: user?.id,
+    });
+
+    if (error) {
+      toast.error("Failed to submit job posting");
+      return;
+    }
+
     toast.success("Job posting submitted for review!");
     navigate("/jobs");
   }
@@ -119,6 +138,20 @@ const PostJob = () => {
                   <FormLabel>Contact Email</FormLabel>
                   <FormControl>
                     <Input type="email" placeholder="e.g. jobs@company.com" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="phoneNumber"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone Number</FormLabel>
+                  <FormControl>
+                    <Input type="tel" placeholder="e.g. 301-555-0123" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

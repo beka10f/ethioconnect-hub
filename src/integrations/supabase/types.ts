@@ -19,6 +19,7 @@ export type Database = {
           description: string
           id: string
           location: string
+          phone_number: string
           status: string | null
           title: string
         }
@@ -31,6 +32,7 @@ export type Database = {
           description: string
           id?: string
           location: string
+          phone_number: string
           status?: string | null
           title: string
         }
@@ -43,6 +45,7 @@ export type Database = {
           description?: string
           id?: string
           location?: string
+          phone_number?: string
           status?: string | null
           title?: string
         }
@@ -81,6 +84,7 @@ export type Database = {
           created_by: string | null
           description: string
           id: string
+          phone_number: string
           price: number
           status: string | null
           title: string
@@ -93,6 +97,7 @@ export type Database = {
           created_by?: string | null
           description: string
           id?: string
+          phone_number: string
           price: number
           status?: string | null
           title: string
@@ -105,6 +110,7 @@ export type Database = {
           created_by?: string | null
           description?: string
           id?: string
+          phone_number?: string
           price?: number
           status?: string | null
           title?: string

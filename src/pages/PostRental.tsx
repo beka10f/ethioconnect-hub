@@ -15,6 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import Header from "@/components/Header";
+import { supabase } from "@/integrations/supabase/client";
 
 const formSchema = z.object({
   title: z.string().min(2, "Property title must be at least 2 characters"),
@@ -22,6 +23,7 @@ const formSchema = z.object({
   price: z.string().min(1, "Price is required"),
   description: z.string().min(10, "Description must be at least 10 characters"),
   contactInfo: z.string().email("Invalid email address"),
+  phoneNumber: z.string().min(10, "Phone number must be at least 10 digits"),
 });
 
 const PostRental = () => {
@@ -34,11 +36,28 @@ const PostRental = () => {
       price: "",
       description: "",
       contactInfo: "",
+      phoneNumber: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const { data: { user } } = await supabase.auth.getUser();
+    
+    const { error } = await supabase.from("rentals").insert({
+      title: values.title,
+      address: values.address,
+      price: parseFloat(values.price),
+      description: values.description,
+      contact_info: values.contactInfo,
+      phone_number: values.phoneNumber,
+      created_by: user?.id,
+    });
+
+    if (error) {
+      toast.error("Failed to submit rental listing");
+      return;
+    }
+
     toast.success("Rental listing submitted for review!");
     navigate("/rentals");
   }
@@ -86,7 +105,7 @@ const PostRental = () => {
                 <FormItem>
                   <FormLabel>Price (per month)</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g. $1,500" {...field} />
+                    <Input placeholder="e.g. 1500" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -119,6 +138,20 @@ const PostRental = () => {
                   <FormLabel>Contact Email</FormLabel>
                   <FormControl>
                     <Input type="email" placeholder="e.g. contact@email.com" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="phoneNumber"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone Number</FormLabel>
+                  <FormControl>
+                    <Input type="tel" placeholder="e.g. 301-555-0123" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
