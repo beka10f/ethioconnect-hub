@@ -19,11 +19,14 @@ interface JobsManagementTableProps {
   isLoading: boolean;
 }
 
+const MAX_RETRIES = 3;
+const RETRY_DELAY = 1000; // 1 second
+
 const JobsManagementTable = ({ jobs, onJobUpdate, status, isLoading }: JobsManagementTableProps) => {
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
 
-  const handleApproval = async (id: string, action: "approve" | "reject") => {
+  const handleApproval = async (id: string, action: "approve" | "reject", retryCount = 0) => {
     if (isUpdating) return;
     
     try {
@@ -45,7 +48,18 @@ const JobsManagementTable = ({ jobs, onJobUpdate, status, isLoading }: JobsManag
 
       if (error) {
         console.error('Update error:', error);
-        toast.error(`Failed to ${action} job`);
+        
+        // If we haven't exceeded max retries and it's a network error, retry
+        if (retryCount < MAX_RETRIES && (error.message.includes('Failed to fetch') || error.message.includes('network'))) {
+          setIsUpdating(false);
+          toast.error(`Network error, retrying... (Attempt ${retryCount + 1}/${MAX_RETRIES})`);
+          
+          // Wait before retrying
+          await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
+          return handleApproval(id, action, retryCount + 1);
+        }
+        
+        toast.error(`Failed to ${action} job: ${error.message}`);
         return;
       }
 
@@ -54,6 +68,17 @@ const JobsManagementTable = ({ jobs, onJobUpdate, status, isLoading }: JobsManag
       setSelectedJob(null);
     } catch (error) {
       console.error('Unexpected error:', error);
+      
+      // If we haven't exceeded max retries and it's a network error, retry
+      if (retryCount < MAX_RETRIES && error instanceof Error && error.message.includes('Failed to fetch')) {
+        setIsUpdating(false);
+        toast.error(`Network error, retrying... (Attempt ${retryCount + 1}/${MAX_RETRIES})`);
+        
+        // Wait before retrying
+        await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
+        return handleApproval(id, action, retryCount + 1);
+      }
+      
       toast.error('An unexpected error occurred');
     } finally {
       setIsUpdating(false);
