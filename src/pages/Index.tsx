@@ -15,7 +15,7 @@ const Index = () => {
             <RentalsPortal />
             <ExchangeRatePortal />
           </div>
-          <div className="w-full md:w-[32rem] mx-auto">
+          <div className="mt-6 sm:mt-8">
             <ShippingCalculator />
           </div>
         </div>

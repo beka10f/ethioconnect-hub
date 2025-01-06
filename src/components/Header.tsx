@@ -46,7 +46,6 @@ const Header = () => {
     { to: "/jobs", label: "Jobs" },
     { to: "/rentals", label: "Rentals" },
     { to: "/", label: "Exchange Rate" },
-    { to: "/", label: "Ship to Ethiopia" },
     { to: "/contact", label: "Contact" },
   ];
 
