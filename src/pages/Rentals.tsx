@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Home, MapPin, DollarSign, Calendar, Mail, Phone } from "lucide-react";
+import { Home, MapPin, DollarSign, Calendar, Mail, Phone, ChevronRight } from "lucide-react";
 
 type RentalListing = {
   id: string;
@@ -77,75 +77,80 @@ const Rentals = () => {
   }
 
   return (
-    <div className="min-h-screen bg-ethiopian-cream">
+    <div className="min-h-screen bg-[#f5f5f7]">
       <Header />
-      <main className="container mx-auto py-8 px-4">
-        <div className="flex justify-between items-center mb-8">
+      <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center mb-12">
           <div>
-            <h1 className="text-3xl font-bold text-ethiopian-coffee mb-2">Rental Listings</h1>
-            <p className="text-ethiopian-charcoal/60">Find your perfect home in our community</p>
+            <h1 className="text-4xl font-semibold text-black mb-3">Rental Listings</h1>
+            <p className="text-lg text-gray-500">Find your perfect home in our community</p>
           </div>
           <Link to="/post-rental">
-            <Button className="bg-ethiopian-coffee hover:bg-ethiopian-coffee/90 text-white">
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-6 py-2.5 rounded-full transition-all duration-300 shadow-sm">
               <Home className="w-4 h-4 mr-2" />
               Post a Rental
             </Button>
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {rentalListings.map((rental) => (
-            <div
-              key={rental.id}
-              className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-200 overflow-hidden group"
-            >
-              <div className="p-6 space-y-4">
-                <div>
-                  <h3 className="text-xl font-semibold text-ethiopian-coffee group-hover:text-ethiopian-gold transition-colors">
-                    {rental.title}
-                  </h3>
-                  <div className="flex items-center mt-2 text-ethiopian-gold font-semibold">
-                    <DollarSign className="w-5 h-5 mr-1" />
-                    <span className="text-lg">${rental.price}/month</span>
+        {isLoading ? (
+          <div className="flex justify-center items-center h-32">
+            <div className="animate-pulse text-blue-600">Loading rentals...</div>
+          </div>
+        ) : (
+          <div className="grid gap-4">
+            {rentalListings.map((rental) => (
+              <Link to={`/rentals/${rental.id}`} key={rental.id}>
+                <div className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-200/50">
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                    <div className="flex-1 space-y-4">
+                      <div>
+                        <h2 className="text-2xl font-semibold text-black group-hover:text-blue-600 transition-colors">
+                          {rental.title}
+                        </h2>
+                        <div className="flex items-center mt-2">
+                          <DollarSign className="w-5 h-5 text-blue-600 stroke-[1.5]" />
+                          <span className="text-lg font-medium text-blue-600">${rental.price}/month</span>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-wrap gap-6 text-[15px] text-gray-500">
+                        <div className="flex items-center">
+                          <MapPin className="w-4 h-4 mr-2 stroke-[1.5]" />
+                          {rental.address}
+                        </div>
+                        <div className="flex items-center">
+                          <Calendar className="w-4 h-4 mr-2 stroke-[1.5]" />
+                          {new Date(rental.created_at).toLocaleDateString()}
+                        </div>
+                      </div>
+
+                      <p className="text-gray-600 line-clamp-2 text-[15px] leading-relaxed">
+                        {rental.description}
+                      </p>
+
+                      <div className="flex flex-wrap gap-6 text-[15px] text-gray-500 pt-2">
+                        <div className="flex items-center">
+                          <Mail className="w-4 h-4 mr-2 stroke-[1.5]" />
+                          {rental.contact_info}
+                        </div>
+                        <div className="flex items-center">
+                          <Phone className="w-4 h-4 mr-2 stroke-[1.5]" />
+                          {rental.phone_number}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center">
+                      <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors" />
+                    </div>
                   </div>
                 </div>
-
-                <div className="space-y-2 text-sm text-ethiopian-charcoal/70">
-                  <div className="flex items-center">
-                    <MapPin className="w-4 h-4 mr-1.5 text-ethiopian-sage" />
-                    {rental.address}
-                  </div>
-                  <div className="flex items-center">
-                    <Calendar className="w-4 h-4 mr-1.5 text-ethiopian-sage" />
-                    {new Date(rental.created_at).toLocaleDateString()}
-                  </div>
-                </div>
-
-                <p className="text-ethiopian-charcoal/80 line-clamp-3">
-                  {rental.description}
-                </p>
-
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center text-ethiopian-charcoal/70">
-                    <Mail className="w-4 h-4 mr-1.5 text-ethiopian-sage" />
-                    {rental.contact_info}
-                  </div>
-                  <div className="flex items-center text-ethiopian-charcoal/70">
-                    <Phone className="w-4 h-4 mr-1.5 text-ethiopian-sage" />
-                    {rental.phone_number}
-                  </div>
-                </div>
-
-                <Link to={`/rentals/${rental.id}`}>
-                  <Button className="w-full bg-ethiopian-coffee/90 hover:bg-ethiopian-coffee text-white transition-colors duration-200">
-                    View Details
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-      </main>
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
