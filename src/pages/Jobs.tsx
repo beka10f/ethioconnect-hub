@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Briefcase, MapPin, Calendar, Mail, Phone, Building2, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import JobDetails from "@/components/JobDetails";
 
 type Job = {
   id: string;
@@ -21,6 +22,7 @@ type Job = {
 const Jobs = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -101,10 +103,11 @@ const Jobs = () => {
             {jobs.map((job) => (
               <div 
                 key={job.id}
+                onClick={() => setSelectedJobId(job.id)}
                 className={cn(
                   "bg-white border border-gray-200 rounded-lg p-4",
                   "hover:border-blue-200 transition-colors duration-200",
-                  "shadow-sm hover:shadow-md"
+                  "shadow-sm hover:shadow-md cursor-pointer"
                 )}
               >
                 <div className="flex flex-col space-y-3">
@@ -113,22 +116,11 @@ const Jobs = () => {
                       <h2 className="text-xl font-bold text-black leading-tight">
                         {job.title}
                       </h2>
-                      <div className="flex items-center text-blue-600 hover:text-blue-700 mt-1">
+                      <div className="flex items-center text-blue-600 mt-1">
                         <Building2 className="w-4 h-4 mr-1.5" />
                         <span className="font-medium">{job.company_name}</span>
                       </div>
                     </div>
-                    <Link 
-                      to={`/jobs/${job.id}`}
-                      className={cn(
-                        "text-blue-600 hover:text-blue-700",
-                        "flex items-center gap-1 font-medium text-sm",
-                        "transition-colors duration-200"
-                      )}
-                    >
-                      View Details
-                      <ArrowRight className="w-4 h-4" />
-                    </Link>
                   </div>
                   
                   <div className="flex flex-wrap gap-4 text-sm text-gray-600">
@@ -164,6 +156,9 @@ const Jobs = () => {
           </div>
         )}
       </div>
+      {selectedJobId && (
+        <JobDetails id={selectedJobId} onClose={() => setSelectedJobId(null)} />
+      )}
     </div>
   );
 };
