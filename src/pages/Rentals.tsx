@@ -101,9 +101,11 @@ const Rentals = () => {
                 <p className="text-gray-700 mb-4 line-clamp-2">
                   {rental.description}
                 </p>
-                <Button className="w-full bg-blue-600 hover:bg-blue-700">
-                  View Details
-                </Button>
+                <Link to={`/rentals/${rental.id}`}>
+                  <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                    View Details
+                  </Button>
+                </Link>
               </div>
             </div>
           ))}
