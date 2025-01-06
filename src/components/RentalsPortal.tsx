@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { MapPin, DollarSign } from "lucide-react";
+import { Button } from "./ui/button";
 
 type RentalListing = {
   id: string;
@@ -73,31 +74,48 @@ const RentalsPortal = () => {
 
   return (
     <Portal title="Featured Rentals">
-      <div className="flex flex-col space-y-2">
+      <div className="flex flex-col space-y-3">
         {rentals.map((rental) => (
-          <Link to={`/rentals/${rental.id}`} key={rental.id} className="block w-full">
-            <div className="group bg-white border border-gray-200 rounded-lg p-3 hover:border-blue-200 transition-all duration-200 hover:shadow-sm w-full">
-              <h3 className="text-sm font-medium text-gray-900 truncate">
-                {rental.title}
-              </h3>
-              <div className="flex items-center gap-4 mt-1 text-xs text-gray-600">
-                <div className="flex items-center gap-1">
-                  <DollarSign className="w-3 h-3" />
-                  <span>${rental.price}/mo</span>
+          <div 
+            key={rental.id} 
+            className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
+          >
+            <div className="flex justify-between items-start">
+              <div className="space-y-1 flex-1">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-base font-semibold text-gray-900">
+                    {rental.title}
+                  </h3>
+                  <div className="flex items-center text-sm text-gray-600">
+                    <MapPin className="w-4 h-4 mr-1" />
+                    {rental.address}
+                  </div>
                 </div>
-                <div className="flex items-center gap-1">
-                  <MapPin className="w-3 h-3" />
-                  <span>{rental.address}</span>
+                <div className="flex items-center text-sm text-gray-600">
+                  <DollarSign className="w-4 h-4 mr-1" />
+                  ${rental.price}/month
                 </div>
               </div>
+              <Link to={`/rentals/${rental.id}`} className="ml-4">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="whitespace-nowrap"
+                >
+                  View Details
+                </Button>
+              </Link>
             </div>
-          </Link>
+          </div>
         ))}
       </div>
-      <Link to="/rentals" className="block mt-3">
-        <button className="w-full bg-blue-600 text-white py-1.5 text-sm rounded-lg hover:bg-blue-700 transition-colors duration-200">
+      <Link to="/rentals" className="block mt-4">
+        <Button 
+          className="w-full"
+          variant="default"
+        >
           View All Rentals
-        </button>
+        </Button>
       </Link>
     </Portal>
   );

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Building2, MapPin } from "lucide-react";
+import { Button } from "./ui/button";
 
 type JobListing = {
   id: string;
@@ -73,31 +74,48 @@ const JobsPortal = () => {
 
   return (
     <Portal title="Recent Job Postings">
-      <div className="flex flex-col space-y-2">
+      <div className="flex flex-col space-y-3">
         {jobs.map((job) => (
-          <Link to={`/jobs/${job.id}`} key={job.id} className="block w-full">
-            <div className="group bg-white border border-gray-200 rounded-lg p-3 hover:border-blue-200 transition-all duration-200 hover:shadow-sm w-full">
-              <h3 className="text-sm font-medium text-gray-900 truncate">
-                {job.title}
-              </h3>
-              <div className="flex items-center gap-4 mt-1 text-xs text-gray-600">
-                <div className="flex items-center gap-1">
-                  <Building2 className="w-3 h-3" />
-                  <span>{job.company_name}</span>
+          <div 
+            key={job.id} 
+            className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
+          >
+            <div className="flex justify-between items-start">
+              <div className="space-y-1 flex-1">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-base font-semibold text-gray-900">
+                    {job.title}
+                  </h3>
+                  <div className="flex items-center text-sm text-gray-600">
+                    <MapPin className="w-4 h-4 mr-1" />
+                    {job.location}
+                  </div>
                 </div>
-                <div className="flex items-center gap-1">
-                  <MapPin className="w-3 h-3" />
-                  <span>{job.location}</span>
+                <div className="flex items-center text-sm text-gray-600">
+                  <Building2 className="w-4 h-4 mr-1" />
+                  {job.company_name}
                 </div>
               </div>
+              <Link to={`/jobs/${job.id}`} className="ml-4">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="whitespace-nowrap"
+                >
+                  View Details
+                </Button>
+              </Link>
             </div>
-          </Link>
+          </div>
         ))}
       </div>
-      <Link to="/jobs" className="block mt-3">
-        <button className="w-full bg-blue-600 text-white py-1.5 text-sm rounded-lg hover:bg-blue-700 transition-colors duration-200">
+      <Link to="/jobs" className="block mt-4">
+        <Button 
+          className="w-full"
+          variant="default"
+        >
           View All Jobs
-        </button>
+        </Button>
       </Link>
     </Portal>
   );
