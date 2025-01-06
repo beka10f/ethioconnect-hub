@@ -33,17 +33,19 @@ const ShippingCalculator = () => {
 
   return (
     <>
-      <Card className="p-6 bg-white shadow-lg">
-        <div className="space-y-6">
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Ship to Ethiopia</h2>
-            <p className="text-gray-600">Calculate your shipping costs based on package weight.</p>
-          </div>
+      <div className="max-w-2xl mx-auto w-full px-4">
+        <Card className="p-6 bg-white shadow-lg">
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">Ship to Ethiopia</h2>
+              <p className="text-gray-600">Calculate your shipping costs based on package weight.</p>
+            </div>
 
-          <ShippingForm onSubmit={handleSubmit} />
-          <PricingGuide />
-        </div>
-      </Card>
+            <ShippingForm onSubmit={handleSubmit} />
+            <PricingGuide />
+          </div>
+        </Card>
+      </div>
 
       <Dialog open={showSummary} onOpenChange={setShowSummary}>
         <DialogContent className="sm:max-w-[425px]">
