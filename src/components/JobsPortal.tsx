@@ -92,7 +92,6 @@ const JobsPortal = () => {
               </div>
               <div className="flex justify-between items-center">
                 <div className="flex items-center text-sm text-gray-600 justify-start">
-                  <Building2 className="w-4 h-4 mr-1" />
                   {job.company_name}
                 </div>
                 <Link to={`/jobs/${job.id}`}>
