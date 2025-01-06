@@ -16,7 +16,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import type { Database } from "@/integrations/supabase/types";
 
-// Define the form schema to match the database types
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "Name must be at least 2 characters.",
@@ -43,7 +42,6 @@ export function ContactForm() {
 
   async function onSubmit(values: ContactFormValues) {
     try {
-      // Insert a single object instead of an array
       const { error } = await supabase
         .from('contact_submissions')
         .insert({
@@ -70,11 +68,15 @@ export function ContactForm() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel className="text-ethiopian-coffee font-medium">Name</FormLabel>
               <FormControl>
-                <Input placeholder="Your name" {...field} />
+                <Input 
+                  placeholder="Your name" 
+                  {...field} 
+                  className="border-ethiopian-sage/30 focus:border-ethiopian-gold focus:ring-ethiopian-gold/20"
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-600" />
             </FormItem>
           )}
         />
@@ -83,11 +85,16 @@ export function ContactForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel className="text-ethiopian-coffee font-medium">Email</FormLabel>
               <FormControl>
-                <Input placeholder="your.email@example.com" type="email" {...field} />
+                <Input 
+                  placeholder="your.email@example.com" 
+                  type="email" 
+                  {...field} 
+                  className="border-ethiopian-sage/30 focus:border-ethiopian-gold focus:ring-ethiopian-gold/20"
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-600" />
             </FormItem>
           )}
         />
@@ -96,19 +103,24 @@ export function ContactForm() {
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Message</FormLabel>
+              <FormLabel className="text-ethiopian-coffee font-medium">Message</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Type your message here..."
-                  className="min-h-[120px]"
+                  className="min-h-[150px] border-ethiopian-sage/30 focus:border-ethiopian-gold focus:ring-ethiopian-gold/20"
                   {...field}
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-600" />
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">Send Message</Button>
+        <Button 
+          type="submit" 
+          className="w-full bg-ethiopian-coffee hover:bg-ethiopian-coffee/90 text-white font-medium py-2.5"
+        >
+          Send Message
+        </Button>
       </form>
     </Form>
   );
