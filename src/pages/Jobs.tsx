@@ -93,7 +93,7 @@ const Jobs = () => {
             <div className="animate-pulse text-blue-600">Loading jobs...</div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
             {jobs.map((job) => (
               <div 
                 key={job.id}
