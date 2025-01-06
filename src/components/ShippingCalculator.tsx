@@ -10,6 +10,7 @@ import { Card } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 
 const formSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
   weight: z.string().min(1, "Weight is required"),
   unit: z.enum(["kg", "lbs"]),
   speed: z.enum(["standard", "express", "priority"]),
@@ -21,6 +22,7 @@ const ShippingCalculator = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: "",
       weight: "",
       unit: "kg",
       speed: "standard",
@@ -29,21 +31,24 @@ const ShippingCalculator = () => {
 
   const calculateShippingCost = (data: z.infer<typeof formSchema>) => {
     const weight = parseFloat(data.weight);
-    const baseRate = data.unit === "kg" ? 10 : 4.54; // $10 per kg or $4.54 per lb
     let cost = 0;
 
     // Weight-based pricing
     if (data.unit === "kg") {
       if (weight <= 3) {
-        cost = 30; // Flat rate for packages under 3kg
+        cost = 45; // Flat rate for packages under 3kg
+      } else if (weight <= 10) {
+        cost = weight * 18; // $18 per kg for 3-10kg
       } else {
-        cost = weight * baseRate;
+        cost = weight * 15; // $15 per kg for over 10kg
       }
     } else {
       if (weight <= 6) {
-        cost = 30; // Flat rate for packages under 6lbs
+        cost = 45; // Flat rate for packages under 6lbs
+      } else if (weight <= 22) {
+        cost = weight * 8.16; // $8.16 per lb for 6-22lbs
       } else {
-        cost = weight * baseRate;
+        cost = weight * 6.8; // $6.8 per lb for over 22lbs
       }
     }
 
@@ -63,7 +68,7 @@ const ShippingCalculator = () => {
     const cost = calculateShippingCost(data);
     toast({
       title: "Shipping Cost Calculation",
-      description: `Estimated cost: $${cost}`,
+      description: `Hello ${data.name}, your estimated shipping cost is $${cost}. Please note that the weight will be verified at drop-off and final pricing may adjust if discrepancies arise.`,
     });
   };
 
@@ -78,6 +83,20 @@ const ShippingCalculator = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Your Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter your name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
               <FormField
                 control={form.control}
                 name="weight"
