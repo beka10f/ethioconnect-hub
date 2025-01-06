@@ -95,54 +95,66 @@ const Rentals = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {rentalListings.map((rental) => (
-            <div
+            <Link
+              to={`/rentals/${rental.id}`}
               key={rental.id}
-              className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-200 overflow-hidden group"
+              className="group bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden border border-ethiopian-coffee/10"
             >
               <div className="p-6 space-y-4">
-                <div>
-                  <h3 className="text-xl font-semibold text-ethiopian-coffee group-hover:text-ethiopian-gold transition-colors">
+                <div className="flex justify-between items-start">
+                  <h3 className="text-xl font-semibold text-ethiopian-coffee group-hover:text-ethiopian-coffee/80 transition-colors line-clamp-2">
                     {rental.title}
                   </h3>
-                  <div className="flex items-center mt-2 text-ethiopian-gold font-semibold">
-                    <DollarSign className="w-5 h-5 mr-1" />
-                    <span className="text-lg">${rental.price}/month</span>
+                  <div className="flex items-center bg-ethiopian-cream px-3 py-1.5 rounded-full">
+                    <DollarSign className="w-4 h-4 text-ethiopian-coffee/70" />
+                    <span className="font-semibold text-ethiopian-coffee">
+                      ${rental.price}
+                      <span className="text-sm text-ethiopian-coffee/70">/mo</span>
+                    </span>
                   </div>
                 </div>
 
-                <div className="space-y-2 text-sm text-ethiopian-charcoal/70">
-                  <div className="flex items-center">
-                    <MapPin className="w-4 h-4 mr-1.5 text-ethiopian-sage" />
-                    {rental.address}
+                <div className="space-y-3">
+                  <div className="flex items-start gap-2">
+                    <MapPin className="w-4 h-4 mt-1 flex-shrink-0 text-ethiopian-coffee/60" />
+                    <p className="text-ethiopian-coffee/80 line-clamp-2">{rental.address}</p>
                   </div>
-                  <div className="flex items-center">
-                    <Calendar className="w-4 h-4 mr-1.5 text-ethiopian-sage" />
-                    {new Date(rental.created_at).toLocaleDateString()}
+                  
+                  <p className="text-ethiopian-coffee/70 line-clamp-3 text-sm">
+                    {rental.description}
+                  </p>
+
+                  <div className="pt-4 border-t border-ethiopian-coffee/10">
+                    <div className="grid grid-cols-2 gap-3 text-sm">
+                      <div className="flex items-center gap-1.5">
+                        <Mail className="w-4 h-4 text-ethiopian-coffee/60" />
+                        <span className="text-ethiopian-coffee/70 truncate">
+                          {rental.contact_info}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Phone className="w-4 h-4 text-ethiopian-coffee/60" />
+                        <span className="text-ethiopian-coffee/70 truncate">
+                          {rental.phone_number}
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                <p className="text-ethiopian-charcoal/80 line-clamp-3">
-                  {rental.description}
-                </p>
-
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center text-ethiopian-charcoal/70">
-                    <Mail className="w-4 h-4 mr-1.5 text-ethiopian-sage" />
-                    {rental.contact_info}
+                <div className="flex items-center justify-between text-sm text-ethiopian-coffee/60">
+                  <div className="flex items-center gap-1.5">
+                    <Calendar className="w-4 h-4" />
+                    <span>
+                      Posted {new Date(rental.created_at).toLocaleDateString()}
+                    </span>
                   </div>
-                  <div className="flex items-center text-ethiopian-charcoal/70">
-                    <Phone className="w-4 h-4 mr-1.5 text-ethiopian-sage" />
-                    {rental.phone_number}
-                  </div>
+                  <span className="text-ethiopian-coffee underline opacity-0 group-hover:opacity-100 transition-opacity">
+                    View Details →
+                  </span>
                 </div>
-
-                <Link to={`/rentals/${rental.id}`}>
-                  <Button className="w-full bg-ethiopian-coffee/90 hover:bg-ethiopian-coffee text-white transition-colors duration-200">
-                    View Details
-                  </Button>
-                </Link>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </main>
