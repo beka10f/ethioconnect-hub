@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { MapPin, Calendar, Mail, Phone } from "lucide-react";
 
 type Job = {
   id: string;
@@ -47,42 +48,57 @@ const JobDetails = () => {
     fetchJob();
   }, [id, navigate]);
 
-  if (isLoading) {
-    return null;
-  }
-
-  if (!job) {
+  if (isLoading || !job) {
     return null;
   }
 
   return (
     <Dialog open={true} onOpenChange={() => navigate("/jobs")}>
-      <DialogContent className="sm:max-w-[600px]">
-        <DialogHeader>
-          <DialogTitle className="text-xl font-semibold">{job.title}</DialogTitle>
-        </DialogHeader>
-        <div className="space-y-4">
-          <div>
-            <h4 className="font-medium text-gray-900">Company</h4>
-            <p className="text-gray-700 mt-1">{job.company_name}</p>
-          </div>
-          <div>
-            <h4 className="font-medium text-gray-900">Description</h4>
-            <p className="text-gray-700 mt-1">{job.description}</p>
-          </div>
-          <div>
-            <h4 className="font-medium text-gray-900">Location</h4>
-            <p className="text-gray-700 mt-1">{job.location}</p>
-          </div>
-          <div>
-            <h4 className="font-medium text-gray-900">Contact Information</h4>
-            <p className="text-gray-700 mt-1">Email: {job.contact_info}</p>
-            <p className="text-gray-700">Phone: {job.phone_number}</p>
-          </div>
-          <div className="flex justify-end pt-4">
-            <Button variant="outline" onClick={() => navigate("/jobs")}>
-              Close
-            </Button>
+      <DialogContent className="sm:max-w-[600px] p-0 overflow-hidden">
+        <div className="bg-[#f5f5f7] p-8">
+          <DialogHeader>
+            <DialogTitle>
+              <h2 className="text-2xl font-semibold text-[#0066CC] mb-2">{job.company_name}</h2>
+              <h3 className="text-xl text-gray-900">{job.title}</h3>
+            </DialogTitle>
+          </DialogHeader>
+          
+          <div className="mt-6 space-y-6">
+            <div className="flex flex-wrap gap-4 text-[15px] text-gray-500">
+              <div className="flex items-center">
+                <MapPin className="w-4 h-4 mr-2 stroke-[1.5]" />
+                {job.location}
+              </div>
+              <div className="flex items-center">
+                <Calendar className="w-4 h-4 mr-2 stroke-[1.5]" />
+                {new Date(job.created_at).toLocaleDateString()}
+              </div>
+            </div>
+
+            <div className="prose prose-gray max-w-none">
+              <p className="text-gray-600 leading-relaxed">{job.description}</p>
+            </div>
+
+            <div className="space-y-3">
+              <div className="flex items-center text-[15px] text-gray-500">
+                <Mail className="w-4 h-4 mr-2 stroke-[1.5]" />
+                {job.contact_info}
+              </div>
+              <div className="flex items-center text-[15px] text-gray-500">
+                <Phone className="w-4 h-4 mr-2 stroke-[1.5]" />
+                {job.phone_number}
+              </div>
+            </div>
+
+            <div className="flex justify-end pt-4">
+              <Button 
+                variant="outline" 
+                onClick={() => navigate("/jobs")}
+                className="bg-white hover:bg-gray-50 text-gray-900"
+              >
+                Close
+              </Button>
+            </div>
           </div>
         </div>
       </DialogContent>
