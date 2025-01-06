@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Briefcase, MapPin, Calendar, Mail, Phone, ChevronRight } from "lucide-react";
+import { Briefcase, MapPin, Calendar, Mail, Phone } from "lucide-react";
 
 type Job = {
   id: string;
@@ -64,16 +64,17 @@ const Jobs = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#f5f5f7]">
+    <div className="min-h-screen bg-white">
       <Header />
-      <div className="container mx-auto py-8 px-4 sm:px-6 lg:px-8 max-w-3xl">
+      <div className="container mx-auto py-8 px-4">
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-semibold text-gray-900 tracking-tight">Job Listings</h1>
-            <p className="text-base text-gray-500 mt-1">Find your next opportunity</p>
+            <h1 className="text-3xl font-bold text-black mb-2">Job Listings</h1>
+            <p className="text-gray-600">Find your next opportunity in our community</p>
           </div>
           <Link to="/post-job">
-            <Button className="bg-[#0066CC] hover:bg-[#0055B3] text-white text-sm px-4 py-2 rounded-lg">
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white transition-colors">
+              <Briefcase className="w-4 h-4 mr-2" />
               Post a Job
             </Button>
           </Link>
@@ -81,51 +82,61 @@ const Jobs = () => {
         
         {isLoading ? (
           <div className="flex justify-center items-center h-32">
-            <div className="animate-pulse text-[#0066CC]">Loading jobs...</div>
+            <div className="animate-pulse text-blue-600">Loading jobs...</div>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="grid gap-6">
             {jobs.map((job) => (
-              <Link to={`/jobs/${job.id}`} key={job.id}>
-                <div className="bg-white rounded-xl p-6 transition-all duration-200 hover:shadow-md border border-gray-200">
-                  <div className="space-y-4">
+              <div 
+                key={job.id} 
+                className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-200 p-6 border border-gray-100"
+              >
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                  <div className="flex-1 space-y-4">
                     <div>
-                      <h2 className="text-xl font-semibold text-[#0066CC] mb-1">
-                        {job.company_name}
-                      </h2>
-                      <h3 className="text-lg text-gray-900">
+                      <h2 className="text-xl font-semibold text-black group-hover:text-blue-600 transition-colors">
                         {job.title}
-                      </h3>
+                      </h2>
+                      <p className="text-blue-600 font-medium mt-1">{job.company_name}</p>
                     </div>
                     
-                    <div className="grid grid-cols-2 gap-3 text-sm text-gray-500">
+                    <div className="flex flex-wrap gap-4 text-sm text-gray-600">
                       <div className="flex items-center">
-                        <MapPin className="w-4 h-4 mr-2 stroke-[1.5]" />
+                        <MapPin className="w-4 h-4 mr-1.5 text-blue-500" />
                         {job.location}
                       </div>
                       <div className="flex items-center">
-                        <Calendar className="w-4 h-4 mr-2 stroke-[1.5]" />
+                        <Calendar className="w-4 h-4 mr-1.5 text-blue-500" />
                         {new Date(job.created_at).toLocaleDateString()}
                       </div>
                     </div>
                     
-                    <p className="text-sm text-gray-600 line-clamp-2">
-                      {job.description}
-                    </p>
+                    <p className="text-gray-700 line-clamp-3">{job.description}</p>
                     
-                    <div className="grid grid-cols-2 gap-3 text-sm text-gray-500">
-                      <div className="flex items-center">
-                        <Mail className="w-4 h-4 mr-2 stroke-[1.5]" />
+                    <div className="flex flex-wrap gap-4 text-sm">
+                      <div className="flex items-center text-gray-600">
+                        <Mail className="w-4 h-4 mr-1.5 text-blue-500" />
                         {job.contact_info}
                       </div>
-                      <div className="flex items-center">
-                        <Phone className="w-4 h-4 mr-2 stroke-[1.5]" />
+                      <div className="flex items-center text-gray-600">
+                        <Phone className="w-4 h-4 mr-1.5 text-blue-500" />
                         {job.phone_number}
                       </div>
                     </div>
                   </div>
+                  
+                  <div className="flex md:flex-col gap-4 md:ml-6">
+                    <Link to={`/jobs/${job.id}`}>
+                      <Button 
+                        variant="outline" 
+                        className="w-full border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors duration-200"
+                      >
+                        View Details
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         )}

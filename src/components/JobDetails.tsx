@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
-import { MapPin, Calendar, Mail, Phone } from "lucide-react";
 
 type Job = {
   id: string;
@@ -48,51 +47,40 @@ const JobDetails = () => {
     fetchJob();
   }, [id, navigate]);
 
-  if (isLoading || !job) {
+  if (isLoading) {
+    return null;
+  }
+
+  if (!job) {
     return null;
   }
 
   return (
     <Dialog open={true} onOpenChange={() => navigate("/jobs")}>
-      <DialogContent className="sm:max-w-[500px] p-0">
-        <div className="p-6 space-y-6">
+      <DialogContent className="sm:max-w-[600px]">
+        <DialogHeader>
+          <DialogTitle className="text-xl font-semibold">{job.title}</DialogTitle>
+        </DialogHeader>
+        <div className="space-y-4">
           <div>
-            <h2 className="text-xl font-semibold text-[#0066CC] mb-1">{job.company_name}</h2>
-            <h3 className="text-lg text-gray-900">{job.title}</h3>
+            <h4 className="font-medium text-gray-900">Company</h4>
+            <p className="text-gray-700 mt-1">{job.company_name}</p>
           </div>
-          
-          <div className="grid grid-cols-2 gap-3 text-sm text-gray-500">
-            <div className="flex items-center">
-              <MapPin className="w-4 h-4 mr-2 stroke-[1.5]" />
-              {job.location}
-            </div>
-            <div className="flex items-center">
-              <Calendar className="w-4 h-4 mr-2 stroke-[1.5]" />
-              {new Date(job.created_at).toLocaleDateString()}
-            </div>
+          <div>
+            <h4 className="font-medium text-gray-900">Description</h4>
+            <p className="text-gray-700 mt-1">{job.description}</p>
           </div>
-
-          <div className="prose prose-sm max-w-none">
-            <p className="text-gray-600">{job.description}</p>
+          <div>
+            <h4 className="font-medium text-gray-900">Location</h4>
+            <p className="text-gray-700 mt-1">{job.location}</p>
           </div>
-
-          <div className="grid grid-cols-2 gap-3 text-sm text-gray-500">
-            <div className="flex items-center">
-              <Mail className="w-4 h-4 mr-2 stroke-[1.5]" />
-              {job.contact_info}
-            </div>
-            <div className="flex items-center">
-              <Phone className="w-4 h-4 mr-2 stroke-[1.5]" />
-              {job.phone_number}
-            </div>
+          <div>
+            <h4 className="font-medium text-gray-900">Contact Information</h4>
+            <p className="text-gray-700 mt-1">Email: {job.contact_info}</p>
+            <p className="text-gray-700">Phone: {job.phone_number}</p>
           </div>
-
           <div className="flex justify-end pt-4">
-            <Button 
-              variant="outline" 
-              onClick={() => navigate("/jobs")}
-              className="text-sm px-4 py-2"
-            >
+            <Button variant="outline" onClick={() => navigate("/jobs")}>
               Close
             </Button>
           </div>
