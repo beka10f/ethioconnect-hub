@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
+import PendingJobsTable from "@/components/admin/PendingJobsTable";
+import PendingRentalsTable from "@/components/admin/PendingRentalsTable";
 
 type JobListing = {
   id: string;
@@ -33,7 +32,35 @@ const Admin = () => {
   useEffect(() => {
     checkAdminStatus();
     fetchPendingListings();
+    setupRealtimeSubscriptions();
   }, []);
+
+  const setupRealtimeSubscriptions = () => {
+    const jobsChannel = supabase
+      .channel('public:jobs')
+      .on('postgres_changes', 
+        { event: '*', schema: 'public', table: 'jobs' }, 
+        () => {
+          fetchPendingListings();
+        }
+      )
+      .subscribe();
+
+    const rentalsChannel = supabase
+      .channel('public:rentals')
+      .on('postgres_changes', 
+        { event: '*', schema: 'public', table: 'rentals' }, 
+        () => {
+          fetchPendingListings();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(jobsChannel);
+      supabase.removeChannel(rentalsChannel);
+    };
+  };
 
   const checkAdminStatus = async () => {
     const { data: { user } } = await supabase.auth.getUser();
@@ -50,7 +77,6 @@ const Admin = () => {
 
     if (profile?.role !== "admin") {
       navigate("/");
-      toast.error("Access denied. Admin privileges required.");
       return;
     }
 
@@ -74,28 +100,6 @@ const Admin = () => {
     if (rentals) setPendingRentals(rentals);
   };
 
-  const handleApproval = async (id: string, type: "job" | "rental", action: "approve" | "reject") => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
-
-    const table = type === "job" ? "jobs" : "rentals";
-    const { error } = await supabase
-      .from(table)
-      .update({
-        status: action === "approve" ? "approved" : "rejected",
-        approved_by: action === "approve" ? user.id : null
-      })
-      .eq("id", id);
-
-    if (error) {
-      toast.error(`Failed to ${action} ${type}`);
-      return;
-    }
-
-    toast.success(`${type} ${action}d successfully`);
-    fetchPendingListings();
-  };
-
   if (!isAdmin) return null;
 
   return (
@@ -107,92 +111,18 @@ const Admin = () => {
         <div className="space-y-8">
           <section>
             <h2 className="text-2xl font-semibold text-ethiopian-coffee mb-4">Pending Jobs</h2>
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Title</TableHead>
-                    <TableHead>Company</TableHead>
-                    <TableHead>Location</TableHead>
-                    <TableHead>Date</TableHead>
-                    <TableHead>Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {pendingJobs.map((job) => (
-                    <TableRow key={job.id}>
-                      <TableCell className="font-medium">{job.title}</TableCell>
-                      <TableCell>{job.company_name}</TableCell>
-                      <TableCell>{job.location}</TableCell>
-                      <TableCell>{new Date(job.created_at).toLocaleDateString()}</TableCell>
-                      <TableCell>
-                        <div className="flex gap-2">
-                          <Button
-                            variant="outline"
-                            className="border-ethiopian-sage text-ethiopian-sage hover:bg-ethiopian-sage hover:text-white"
-                            onClick={() => handleApproval(job.id, "job", "approve")}
-                          >
-                            Approve
-                          </Button>
-                          <Button
-                            variant="outline"
-                            className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
-                            onClick={() => handleApproval(job.id, "job", "reject")}
-                          >
-                            Reject
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
+            <PendingJobsTable 
+              pendingJobs={pendingJobs} 
+              onJobUpdate={fetchPendingListings} 
+            />
           </section>
 
           <section>
             <h2 className="text-2xl font-semibold text-ethiopian-coffee mb-4">Pending Rentals</h2>
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Title</TableHead>
-                    <TableHead>Address</TableHead>
-                    <TableHead>Price</TableHead>
-                    <TableHead>Date</TableHead>
-                    <TableHead>Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {pendingRentals.map((rental) => (
-                    <TableRow key={rental.id}>
-                      <TableCell className="font-medium">{rental.title}</TableCell>
-                      <TableCell>{rental.address}</TableCell>
-                      <TableCell>${rental.price}</TableCell>
-                      <TableCell>{new Date(rental.created_at).toLocaleDateString()}</TableCell>
-                      <TableCell>
-                        <div className="flex gap-2">
-                          <Button
-                            variant="outline"
-                            className="border-ethiopian-sage text-ethiopian-sage hover:bg-ethiopian-sage hover:text-white"
-                            onClick={() => handleApproval(rental.id, "rental", "approve")}
-                          >
-                            Approve
-                          </Button>
-                          <Button
-                            variant="outline"
-                            className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white"
-                            onClick={() => handleApproval(rental.id, "rental", "reject")}
-                          >
-                            Reject
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
+            <PendingRentalsTable 
+              pendingRentals={pendingRentals} 
+              onRentalUpdate={fetchPendingListings} 
+            />
           </section>
         </div>
       </div>
