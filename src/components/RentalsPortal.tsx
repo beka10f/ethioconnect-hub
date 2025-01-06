@@ -63,7 +63,7 @@ const RentalsPortal = () => {
     return (
       <Portal title="Featured Rentals">
         <div className="flex justify-start items-center h-32">
-          <p className="text-gray-600">Loading rentals...</p>
+          <p className="text-gray-500">Loading rentals...</p>
         </div>
       </Portal>
     );
@@ -75,11 +75,11 @@ const RentalsPortal = () => {
         {rentals.map((rental) => (
           <Link to="/rentals" key={rental.id}>
             <div className="group border-b border-gray-100/50 last:border-0 pb-4 hover:bg-blue-50/50 rounded-lg transition-colors duration-200">
-              <h3 className="text-lg font-medium text-gray-900 group-hover:text-blue-600 transition-colors mb-1">
+              <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors mb-1">
                 {rental.title}
               </h3>
-              <p className="text-sm text-gray-700 mb-0.5">{rental.address}</p>
-              <p className="text-sm font-medium text-blue-600">
+              <p className="text-sm text-gray-400">{rental.address}</p>
+              <p className="text-base font-medium text-blue-600">
                 ${rental.price}/mo
               </p>
             </div>

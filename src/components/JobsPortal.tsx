@@ -64,7 +64,7 @@ const JobsPortal = () => {
     return (
       <Portal title="Recent Job Postings">
         <div className="flex justify-start items-center h-32">
-          <p className="text-gray-600">Loading jobs...</p>
+          <p className="text-gray-500">Loading jobs...</p>
         </div>
       </Portal>
     );
@@ -76,11 +76,11 @@ const JobsPortal = () => {
         {jobs.map((job) => (
           <Link to="/jobs" key={job.id}>
             <div className="group border-b border-gray-100/50 last:border-0 pb-4 hover:bg-blue-50/50 rounded-lg transition-colors duration-200">
-              <h3 className="text-lg font-medium text-gray-900 group-hover:text-blue-600 transition-colors mb-1">
+              <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors mb-1">
                 {job.title}
               </h3>
-              <p className="text-sm text-gray-700 mb-0.5">{job.company_name}</p>
-              <p className="text-sm text-gray-500">{job.location}</p>
+              <p className="text-sm text-gray-500">{job.company_name}</p>
+              <p className="text-sm text-gray-400">{job.location}</p>
             </div>
           </Link>
         ))}
