@@ -40,31 +40,31 @@ const PendingJobsTable = ({ pendingJobs, onJobUpdate }: PendingJobsTableProps) =
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden border border-ethiopian-sage/20">
+    <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
       <Table>
-        <TableHeader className="bg-ethiopian-coffee/5">
+        <TableHeader className="bg-gray-50">
           <TableRow>
-            <TableHead className="text-ethiopian-coffee">Title</TableHead>
-            <TableHead className="text-ethiopian-coffee">Company</TableHead>
-            <TableHead className="text-ethiopian-coffee">Location</TableHead>
-            <TableHead className="text-ethiopian-coffee">Date</TableHead>
-            <TableHead className="text-ethiopian-coffee">Actions</TableHead>
+            <TableHead className="text-gray-900">Title</TableHead>
+            <TableHead className="text-gray-900">Company</TableHead>
+            <TableHead className="text-gray-900">Location</TableHead>
+            <TableHead className="text-gray-900">Date</TableHead>
+            <TableHead className="text-gray-900">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {pendingJobs.map((job) => (
-            <TableRow key={job.id} className="hover:bg-ethiopian-cream/20">
-              <TableCell className="font-medium text-ethiopian-coffee">{job.title}</TableCell>
-              <TableCell className="text-ethiopian-charcoal">{job.company_name}</TableCell>
-              <TableCell className="text-ethiopian-charcoal">{job.location}</TableCell>
-              <TableCell className="text-ethiopian-charcoal">
+            <TableRow key={job.id} className="hover:bg-blue-50/50">
+              <TableCell className="font-medium text-gray-900">{job.title}</TableCell>
+              <TableCell className="text-gray-700">{job.company_name}</TableCell>
+              <TableCell className="text-gray-700">{job.location}</TableCell>
+              <TableCell className="text-gray-700">
                 {new Date(job.created_at).toLocaleDateString()}
               </TableCell>
               <TableCell>
                 <div className="flex gap-2">
                   <Button
                     variant="outline"
-                    className="border-ethiopian-sage text-ethiopian-sage hover:bg-ethiopian-sage hover:text-white"
+                    className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
                     onClick={() => handleApproval(job.id, "approve")}
                   >
                     Approve
