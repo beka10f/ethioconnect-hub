@@ -3,7 +3,7 @@ import Portal from "./Portal";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Building2, MapPin } from "lucide-react";
+import { MapPin, Building2 } from "lucide-react";
 import { Button } from "./ui/button";
 
 type JobListing = {
@@ -78,33 +78,33 @@ const JobsPortal = () => {
         {jobs.map((job) => (
           <div 
             key={job.id} 
-            className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
+            className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100"
           >
-            <div className="flex justify-between items-start">
-              <div className="space-y-1 flex-1">
-                <div className="flex justify-between items-center">
-                  <h3 className="text-base font-semibold text-gray-900">
-                    {job.title}
-                  </h3>
-                  <div className="flex items-center text-sm text-gray-600">
-                    <MapPin className="w-4 h-4 mr-1" />
-                    {job.location}
-                  </div>
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <h3 className="text-lg font-semibold text-gray-900">
+                  {job.title}
+                </h3>
+                <div className="flex items-center text-sm text-gray-600">
+                  <MapPin className="w-4 h-4 mr-1" />
+                  {job.location}
                 </div>
+              </div>
+              <div className="flex justify-between items-center">
                 <div className="flex items-center text-sm text-gray-600">
                   <Building2 className="w-4 h-4 mr-1" />
                   {job.company_name}
                 </div>
+                <Link to={`/jobs/${job.id}`}>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="text-xs px-3 py-1 h-7 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200"
+                  >
+                    View Details
+                  </Button>
+                </Link>
               </div>
-              <Link to={`/jobs/${job.id}`} className="ml-4">
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  className="whitespace-nowrap"
-                >
-                  View Details
-                </Button>
-              </Link>
             </div>
           </div>
         ))}
