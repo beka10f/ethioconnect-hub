@@ -20,41 +20,31 @@ const ShippingCalculator = () => {
   const { toast } = useToast();
   const [showConfirmation, setShowConfirmation] = React.useState(false);
   const [currentData, setCurrentData] = React.useState<ShippingFormData | null>(null);
+  const [showDeliveryAddress, setShowDeliveryAddress] = React.useState(false);
   const formRef = React.useRef<ShippingFormRef>(null);
 
   const handleSubmit = (data: ShippingFormData) => {
     setCurrentData(data);
+    setShowDeliveryAddress(false);
     setShowConfirmation(true);
   };
 
   const handleConfirm = () => {
+    setShowDeliveryAddress(true);
+  };
+
+  const handleClose = () => {
     setShowConfirmation(false);
-    
-    toast({
-      title: "Delivery Address",
-      description: (
-        <div className="space-y-2">
-          <p className="font-medium">Please deliver your items to:</p>
-          <div className="bg-slate-50 p-3 rounded-md">
-            ADOT International Market<br />
-            3111 Chillum Road<br />
-            Mount Rainer, MD
-          </div>
-        </div>
-      ),
-      duration: 5000,
-    });
-    
+    setShowDeliveryAddress(false);
+    setCurrentData(null);
     if (formRef.current) {
       formRef.current.reset();
     }
-    setCurrentData(null);
   };
 
   const handleDialogClose = (open: boolean) => {
-    setShowConfirmation(open);
     if (!open) {
-      setCurrentData(null);
+      handleClose();
     }
   };
 
@@ -75,9 +65,11 @@ const ShippingCalculator = () => {
       <AlertDialog open={showConfirmation} onOpenChange={handleDialogClose}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Confirm Shipping Details</AlertDialogTitle>
+            <AlertDialogTitle>
+              {showDeliveryAddress ? "Delivery Instructions" : "Confirm Shipping Details"}
+            </AlertDialogTitle>
             <AlertDialogDescription>
-              {currentData && (
+              {!showDeliveryAddress && currentData ? (
                 <div className="space-y-2">
                   <p>Please review your shipping details:</p>
                   <div className="bg-gray-50 p-4 rounded-md space-y-1">
@@ -88,14 +80,30 @@ const ShippingCalculator = () => {
                     <p><span className="font-medium">Estimated Cost:</span> ${calculateShippingCost(currentData)}</p>
                   </div>
                 </div>
+              ) : (
+                <div className="space-y-3">
+                  <p className="font-medium">Please deliver your items to:</p>
+                  <div className="bg-gray-50 p-4 rounded-md text-lg">
+                    ADOT International Market<br />
+                    3111 Chillum Road<br />
+                    Mount Rainer, MD
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-2">
+                    Make sure to bring your items during business hours.
+                  </p>
+                </div>
               )}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction type="button" onClick={handleConfirm}>
-              Confirm Details
-            </AlertDialogAction>
+            <AlertDialogCancel onClick={handleClose}>
+              {showDeliveryAddress ? "Close" : "Cancel"}
+            </AlertDialogCancel>
+            {!showDeliveryAddress && (
+              <AlertDialogAction onClick={handleConfirm}>
+                Confirm Details
+              </AlertDialogAction>
+            )}
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
