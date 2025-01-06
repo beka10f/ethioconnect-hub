@@ -80,7 +80,7 @@ const JobsPortal = () => {
             className="py-3 px-1 flex items-center justify-between hover:bg-gray-50 transition-colors duration-200"
           >
             <div className="space-y-0.5">
-              <h3 className="text-base font-medium text-gray-900">
+              <h3 className="text-base font-medium text-gray-900 text-left">
                 {job.title}
               </h3>
               <div className="text-sm text-gray-500">
