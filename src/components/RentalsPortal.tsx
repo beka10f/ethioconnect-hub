@@ -71,22 +71,22 @@ const RentalsPortal = () => {
 
   return (
     <Portal title="Featured Rentals">
-      <div className="space-y-4 text-left">
+      <div className="space-y-6 text-left">
         {rentals.map((rental) => (
           <Link to="/rentals" key={rental.id}>
-            <div className="group border-b border-gray-100/50 last:border-0 pb-4 hover:bg-blue-50/50 rounded-lg transition-colors duration-200">
-              <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors mb-1">
+            <div className="group p-4 -mx-4 border-b last:border-0 border-gray-200/30 hover:bg-white/50 rounded-lg transition-all duration-200">
+              <h3 className="text-lg font-semibold text-ethiopian-coffee group-hover:text-ethiopian-coffee/80 transition-colors mb-2">
                 {rental.title}
               </h3>
-              <p className="text-sm text-gray-400">{rental.address}</p>
-              <p className="text-base font-medium text-blue-600">
+              <p className="text-sm text-ethiopian-coffee/60 mb-1">{rental.address}</p>
+              <p className="text-base font-medium text-ethiopian-coffee/90">
                 ${rental.price}/mo
               </p>
             </div>
           </Link>
         ))}
-        <Link to="/rentals" className="block mt-4">
-          <button className="w-full bg-blue-600/90 backdrop-blur-sm text-white py-2.5 rounded-xl hover:bg-blue-700 transition-colors duration-200">
+        <Link to="/rentals" className="block pt-2">
+          <button className="w-full bg-ethiopian-coffee/90 text-white py-3 rounded-xl hover:bg-ethiopian-coffee transition-colors duration-200">
             View All Rentals
           </button>
         </Link>
