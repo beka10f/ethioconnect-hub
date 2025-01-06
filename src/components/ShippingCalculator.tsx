@@ -18,7 +18,7 @@ import {
 
 const ShippingCalculator = () => {
   const { toast } = useToast();
-  const [showConfirmation, setShowConfirmation] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
   const [currentData, setCurrentData] = React.useState<ShippingFormData | null>(null);
   const [showDeliveryAddress, setShowDeliveryAddress] = React.useState(false);
   const formRef = React.useRef<ShippingFormRef>(null);
@@ -26,7 +26,7 @@ const ShippingCalculator = () => {
   const handleSubmit = (data: ShippingFormData) => {
     setCurrentData(data);
     setShowDeliveryAddress(false);
-    setShowConfirmation(true);
+    setIsOpen(true);
   };
 
   const handleConfirm = () => {
@@ -34,7 +34,7 @@ const ShippingCalculator = () => {
   };
 
   const handleClose = () => {
-    setShowConfirmation(false);
+    setIsOpen(false);
     setShowDeliveryAddress(false);
     setCurrentData(null);
     if (formRef.current) {
@@ -56,7 +56,7 @@ const ShippingCalculator = () => {
         </div>
       </Card>
 
-      <AlertDialog open={showConfirmation} onOpenChange={(open) => !open && handleClose()}>
+      <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
