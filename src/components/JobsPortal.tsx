@@ -98,7 +98,7 @@ const JobsPortal = () => {
                   <Button 
                     variant="outline" 
                     size="sm"
-                    className="text-xs px-3 py-1 h-7 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200"
+                    className="text-xs px-3 py-1 h-7 border-site-blue text-site-blue hover:bg-site-blue hover:text-white"
                   >
                     View Details
                   </Button>
@@ -110,7 +110,7 @@ const JobsPortal = () => {
       </div>
       <Link to="/jobs" className="block mt-4">
         <Button 
-          className="w-full"
+          className="w-full bg-site-blue hover:bg-site-blue/90 text-white"
           variant="default"
         >
           View All Jobs

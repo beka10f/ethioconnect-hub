@@ -48,71 +48,71 @@ const ShippingCalculator = () => {
       <Dialog open={showSummary} onOpenChange={setShowSummary}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle className="text-xl font-semibold text-blue-900">
+            <DialogTitle className="text-xl font-semibold text-site-blue">
               Shipping Details
             </DialogTitle>
           </DialogHeader>
           {currentData && (
             <div className="space-y-3">
               <div className="grid grid-cols-2 gap-3">
-                <div className="bg-blue-50/50 p-3 rounded-lg">
+                <div className="bg-site-blue/5 p-3 rounded-lg">
                   <div className="flex items-center gap-2">
-                    <User className="w-4 h-4 text-blue-600" />
-                    <p className="text-sm text-blue-900 font-medium">{currentData.name}</p>
+                    <User className="w-4 h-4 text-site-blue" />
+                    <p className="text-sm text-gray-900 font-medium">{currentData.name}</p>
                   </div>
                 </div>
 
-                <div className="bg-blue-50/50 p-3 rounded-lg">
+                <div className="bg-site-blue/5 p-3 rounded-lg">
                   <div className="flex items-center gap-2">
-                    <Phone className="w-4 h-4 text-blue-600" />
-                    <p className="text-sm text-blue-900 font-medium">{currentData.phoneNumber}</p>
+                    <Phone className="w-4 h-4 text-site-blue" />
+                    <p className="text-sm text-gray-900 font-medium">{currentData.phoneNumber}</p>
                   </div>
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
-                <div className="bg-blue-50/50 p-3 rounded-lg">
+                <div className="bg-site-blue/5 p-3 rounded-lg">
                   <div className="flex items-center gap-2">
-                    <Package className="w-4 h-4 text-blue-600" />
-                    <p className="text-sm text-blue-900 font-medium">
+                    <Package className="w-4 h-4 text-site-blue" />
+                    <p className="text-sm text-gray-900 font-medium">
                       {currentData.weight} {currentData.unit}
                     </p>
                   </div>
                 </div>
 
-                <div className="bg-blue-50/50 p-3 rounded-lg">
+                <div className="bg-site-blue/5 p-3 rounded-lg">
                   <div className="flex items-center gap-2">
-                    <DollarSign className="w-4 h-4 text-blue-600" />
-                    <p className="text-sm text-blue-900 font-medium">
+                    <DollarSign className="w-4 h-4 text-site-blue" />
+                    <p className="text-sm text-gray-900 font-medium">
                       ${calculateShippingCost(currentData)}
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-blue-50/50 p-3 rounded-lg">
+              <div className="bg-site-blue/5 p-3 rounded-lg">
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-blue-600" />
-                  <p className="text-sm text-blue-900 font-medium">
+                  <Calendar className="w-4 h-4 text-site-blue" />
+                  <p className="text-sm text-gray-900 font-medium">
                     {format(currentData.shippingDate, "MMM do, yyyy")}
                   </p>
                 </div>
               </div>
 
               <div 
-                className="bg-gradient-to-r from-blue-50 to-blue-100 p-3 rounded-lg cursor-pointer 
-                         hover:from-blue-100 hover:to-blue-200 transition-all duration-300
-                         border border-blue-200 group"
+                className="bg-gradient-to-r from-site-blue/5 to-site-blue/10 p-3 rounded-lg cursor-pointer 
+                         hover:from-site-blue/10 hover:to-site-blue/20 transition-all duration-300
+                         border border-site-blue/20 group"
                 onClick={handleLocationClick}
               >
                 <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-blue-600 group-hover:animate-bounce" />
+                  <MapPin className="w-4 h-4 text-site-blue group-hover:animate-bounce" />
                   <div>
-                    <p className="text-sm text-blue-900 font-medium">
+                    <p className="text-sm text-gray-900 font-medium">
                       ADOT International Market<br />
                       3111 Chillum Road, Mount Rainer, MD
                     </p>
-                    <p className="text-xs text-blue-600 mt-1 flex items-center gap-1 group-hover:gap-2 transition-all">
+                    <p className="text-xs text-site-blue mt-1 flex items-center gap-1 group-hover:gap-2 transition-all">
                       Click for directions 
                       <span className="group-hover:translate-x-1 transition-transform">→</span>
                     </p>
@@ -125,7 +125,7 @@ const ShippingCalculator = () => {
             <Button 
               variant="outline" 
               onClick={() => setShowSummary(false)}
-              className="w-full sm:w-auto"
+              className="w-full sm:w-auto border-site-blue text-site-blue hover:bg-site-blue hover:text-white"
             >
               Close
             </Button>
