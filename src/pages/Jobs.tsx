@@ -83,8 +83,8 @@ const Jobs = () => {
             <Button 
               size="lg"
               className={cn(
-                "bg-blue-600 hover:bg-blue-700 text-white",
-                "shadow-md hover:shadow-lg transition-all duration-200",
+                "bg-blue-600 active:bg-blue-700 md:hover:bg-blue-700 text-white",
+                "shadow-md active:shadow-lg md:hover:shadow-lg transition-all duration-200",
                 "flex items-center gap-2 px-6 py-2.5 rounded-xl"
               )}
             >
@@ -106,8 +106,8 @@ const Jobs = () => {
                 onClick={() => setSelectedJobId(job.id)}
                 className={cn(
                   "bg-white border border-gray-200 rounded-lg p-4",
-                  "hover:border-blue-200 transition-colors duration-200",
-                  "shadow-sm hover:shadow-md cursor-pointer"
+                  "active:border-blue-200 md:hover:border-blue-200 transition-colors duration-200",
+                  "shadow-sm active:shadow-md md:hover:shadow-md cursor-pointer"
                 )}
               >
                 <div className="flex flex-col space-y-3">
