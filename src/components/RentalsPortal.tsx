@@ -62,7 +62,7 @@ const RentalsPortal = () => {
   if (isLoading) {
     return (
       <Portal title="Featured Rentals">
-        <div className="flex justify-center items-center h-32">
+        <div className="flex justify-start items-center h-32">
           <p className="text-gray-600">Loading rentals...</p>
         </div>
       </Portal>
@@ -71,16 +71,22 @@ const RentalsPortal = () => {
 
   return (
     <Portal title="Featured Rentals">
-      <div className="space-y-4">
+      <div className="space-y-4 text-left">
         {rentals.map((rental) => (
-          <div key={rental.id} className="group border-b border-gray-100/50 last:border-0 pb-3 hover:bg-blue-50/50 rounded-lg transition-colors duration-200 -mx-2 px-2">
-            <h3 className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors">{rental.title}</h3>
-            <p className="text-sm text-gray-600">{rental.address}</p>
-            <p className="text-sm font-medium text-blue-600">${rental.price}/mo</p>
-          </div>
+          <Link to="/rentals" key={rental.id}>
+            <div className="group border-b border-gray-100/50 last:border-0 pb-4 hover:bg-blue-50/50 rounded-lg transition-colors duration-200">
+              <h3 className="text-lg font-medium text-gray-900 group-hover:text-blue-600 transition-colors mb-1">
+                {rental.title}
+              </h3>
+              <p className="text-sm text-gray-700 mb-0.5">{rental.address}</p>
+              <p className="text-sm font-medium text-blue-600">
+                ${rental.price}/mo
+              </p>
+            </div>
+          </Link>
         ))}
-        <Link to="/rentals">
-          <button className="w-full mt-4 bg-blue-600/90 backdrop-blur-sm text-white py-2.5 rounded-xl hover:bg-blue-700 transition-colors duration-200">
+        <Link to="/rentals" className="block mt-4">
+          <button className="w-full bg-blue-600/90 backdrop-blur-sm text-white py-2.5 rounded-xl hover:bg-blue-700 transition-colors duration-200">
             View All Rentals
           </button>
         </Link>
