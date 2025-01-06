@@ -4,7 +4,7 @@ import RentalsPortal from "@/components/RentalsPortal";
 import ExchangeRatePortal from "@/components/ExchangeRatePortal";
 import ShippingCalculator from "@/components/ShippingCalculator";
 import { motion } from "framer-motion";
-import { ArrowRight, Building, Home, DollarSign, Plane } from "lucide-react";
+import { Building, Home, DollarSign, Plane } from "lucide-react";
 
 const Index = () => {
   return (
@@ -87,9 +87,6 @@ const Index = () => {
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature.title}</h3>
                 <p className="text-gray-600">{feature.description}</p>
-                <div className="mt-4 flex items-center text-site-blue text-sm font-medium">
-                  Learn more <ArrowRight className="ml-1 w-4 h-4" />
-                </div>
               </motion.div>
             ))}
           </motion.div>
