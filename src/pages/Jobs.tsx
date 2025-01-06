@@ -65,19 +65,19 @@ const Jobs = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#FDF8F5]">
+    <div className="min-h-screen bg-white">
       <Header />
       <div className="max-w-6xl mx-auto py-6 px-4 sm:px-6">
         <div className="flex justify-between items-center mb-6">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Job Listings</h1>
+            <h1 className="text-3xl font-bold text-black">Job Listings</h1>
             <p className="text-sm text-gray-600 mt-1">Find your next opportunity in our community</p>
           </div>
           <Link to="/post-job">
             <Button 
               size="lg"
               className={cn(
-                "bg-ethiopian-coffee hover:bg-ethiopian-sage text-white shadow-md",
+                "bg-blue-600 hover:bg-blue-700 text-white shadow-md",
                 "transition-all duration-200 ease-in-out",
                 "flex items-center gap-2 rounded-lg"
               )}
@@ -98,15 +98,15 @@ const Jobs = () => {
               <div 
                 key={job.id}
                 className={cn(
-                  "bg-white border border-gray-200/50 rounded-lg p-4",
+                  "bg-white border border-gray-200 rounded-lg p-4",
                   "hover:border-blue-200 transition-colors duration-200",
                   "shadow-sm hover:shadow-md"
                 )}
               >
-                <div className="flex flex-col text-left space-y-3">
+                <div className="flex flex-col space-y-3">
                   <div className="flex justify-between items-start">
                     <div>
-                      <h2 className="text-xl font-bold text-gray-900 leading-tight">
+                      <h2 className="text-xl font-bold text-black leading-tight">
                         {job.title}
                       </h2>
                       <div className="flex items-center text-blue-600 hover:text-blue-700 mt-1">
@@ -129,27 +129,27 @@ const Jobs = () => {
                   
                   <div className="flex flex-wrap gap-4 text-sm text-gray-600">
                     <div className="flex items-center">
-                      <MapPin className="w-4 h-4 mr-1.5 text-gray-400" />
+                      <MapPin className="w-4 h-4 mr-1.5 text-blue-400" />
                       {job.location}
                     </div>
                     <div className="flex items-center">
-                      <Calendar className="w-4 h-4 mr-1.5 text-gray-400" />
+                      <Calendar className="w-4 h-4 mr-1.5 text-blue-400" />
                       {new Date(job.created_at).toLocaleDateString()}
                     </div>
                   </div>
 
-                  <p className="text-gray-600 text-sm line-clamp-2 text-left">
+                  <p className="text-gray-600 text-sm line-clamp-2">
                     {job.description}
                   </p>
 
-                  <div className="border-t pt-3 mt-2">
+                  <div className="border-t border-gray-100 pt-3 mt-2">
                     <div className="flex flex-wrap gap-4 text-sm">
                       <div className="flex items-center text-gray-600">
-                        <Mail className="w-4 h-4 mr-1.5 text-gray-400" />
+                        <Mail className="w-4 h-4 mr-1.5 text-blue-400" />
                         {job.contact_info}
                       </div>
                       <div className="flex items-center text-gray-600">
-                        <Phone className="w-4 h-4 mr-1.5 text-gray-400" />
+                        <Phone className="w-4 h-4 mr-1.5 text-blue-400" />
                         {job.phone_number}
                       </div>
                     </div>
