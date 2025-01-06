@@ -57,7 +57,7 @@ const ShippingForm = React.forwardRef<ShippingFormRef, ShippingFormProps>(
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-base font-medium text-gray-900">Full Name</FormLabel>
+                  <FormLabel className="text-base font-medium text-gray-900 text-left block">Full Name</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="Enter your full name" 
@@ -75,7 +75,7 @@ const ShippingForm = React.forwardRef<ShippingFormRef, ShippingFormProps>(
               name="phoneNumber"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-base font-medium text-gray-900">Phone Number</FormLabel>
+                  <FormLabel className="text-base font-medium text-gray-900 text-left block">Phone Number</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="e.g., +1 (555) 123-4567" 
@@ -94,7 +94,7 @@ const ShippingForm = React.forwardRef<ShippingFormRef, ShippingFormProps>(
                 name="weight"
                 render={({ field }) => (
                   <FormItem className="flex-1">
-                    <FormLabel className="text-base font-medium text-gray-900">Package Weight</FormLabel>
+                    <FormLabel className="text-base font-medium text-gray-900 text-left block">Package Weight</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
@@ -114,7 +114,7 @@ const ShippingForm = React.forwardRef<ShippingFormRef, ShippingFormProps>(
                 name="unit"
                 render={({ field }) => (
                   <FormItem className="w-32">
-                    <FormLabel className="text-base font-medium text-gray-900">Unit</FormLabel>
+                    <FormLabel className="text-base font-medium text-gray-900 text-left block">Unit</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger className="text-base">
@@ -137,7 +137,7 @@ const ShippingForm = React.forwardRef<ShippingFormRef, ShippingFormProps>(
               name="shippingDate"
               render={({ field }) => (
                 <FormItem className="flex flex-col md:col-span-2">
-                  <FormLabel className="text-base font-medium text-gray-900">Drop-off Date</FormLabel>
+                  <FormLabel className="text-base font-medium text-gray-900 text-left block">Drop-off Date</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
