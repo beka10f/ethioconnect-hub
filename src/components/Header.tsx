@@ -46,9 +46,7 @@ const Header = () => {
               {[
                 { to: "/jobs", label: "Jobs" },
                 { to: "/rentals", label: "Rentals" },
-                { to: "/", label: "Business Directory" },
                 { to: "/", label: "Exchange Rate" },
-                { to: "/", label: "Calendar" },
                 { to: "/", label: "Contact" },
               ].map((link) => (
                 <Link
