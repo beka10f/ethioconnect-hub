@@ -31,22 +31,28 @@ const ShippingCalculator = () => {
     
     const cost = calculateShippingCost(currentData);
     toast({
-      title: "Shipping Details Confirmed",
+      title: "Drop-off Location Confirmed",
       description: (
         <div className="space-y-2">
-          <p>Hello {currentData.name}, your estimated shipping cost is ${cost}.</p>
+          <p>Hello {currentData.name}, your shipping details have been confirmed.</p>
           <div className="mt-2">
-            <p className="font-semibold">Your Details:</p>
-            <p>Phone: {currentData.phoneNumber}</p>
-            <p>Planned Drop-off: {format(currentData.shippingDate, 'MMMM do, yyyy')}</p>
+            <p className="font-semibold">Estimated Cost:</p>
+            <p>${cost}</p>
           </div>
           <div className="mt-2">
-            <p className="font-semibold">Drop-off Location:</p>
+            <p className="font-semibold">Please bring your items to:</p>
+            <p>ADOT International Market</p>
             <p>3111 Chillum Road</p>
             <p>Mount Rainer, MD</p>
           </div>
+          <div className="mt-2">
+            <p className="font-semibold">Your Details:</p>
+            <p>Phone: {currentData.phoneNumber}</p>
+            <p>Drop-off Date: {format(currentData.shippingDate, 'MMMM do, yyyy')}</p>
+            <p>Package Weight: {currentData.weight} {currentData.unit}</p>
+          </div>
           <p className="text-sm text-muted-foreground mt-2">
-            Please note: The weight will be verified at drop-off and final pricing may adjust if discrepancies arise.
+            Note: The weight will be verified at drop-off and final pricing may adjust accordingly.
           </p>
         </div>
       ),
