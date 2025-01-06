@@ -1,21 +1,84 @@
+import { useEffect, useState } from "react";
 import Portal from "./Portal";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+
+type JobListing = {
+  id: string;
+  title: string;
+  company_name: string;
+  location: string;
+  created_at: string;
+};
 
 const JobsPortal = () => {
-  const recentJobs = [
-    { title: "Restaurant Server", location: "Silver Spring, MD", date: "2024-02-20" },
-    { title: "Store Manager", location: "Alexandria, VA", date: "2024-02-19" },
-    { title: "Delivery Driver", location: "Washington, DC", date: "2024-02-18" },
-  ];
+  const [jobs, setJobs] = useState<JobListing[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("jobs")
+          .select("id, title, company_name, location, created_at")
+          .eq("status", "approved")
+          .order("created_at", { ascending: false })
+          .limit(3);
+
+        if (error) throw error;
+        setJobs(data || []);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+        toast.error("Failed to load job listings");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchJobs();
+
+    // Set up real-time subscription for approved jobs
+    const channel = supabase
+      .channel("portal-jobs")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "jobs",
+          filter: "status=eq.approved",
+        },
+        () => {
+          fetchJobs();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  if (isLoading) {
+    return (
+      <Portal title="Recent Job Postings">
+        <div className="flex justify-center items-center h-32">
+          <p className="text-gray-600">Loading jobs...</p>
+        </div>
+      </Portal>
+    );
+  }
 
   return (
     <Portal title="Recent Job Postings">
       <div className="space-y-4">
-        {recentJobs.map((job, index) => (
-          <Link to="/jobs" key={index}>
+        {jobs.map((job) => (
+          <Link to="/jobs" key={job.id}>
             <div className="group border-b border-gray-100/50 last:border-0 pb-3 hover:bg-blue-50/50 rounded-lg transition-colors duration-200 -mx-2 px-2">
               <h3 className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors">{job.title}</h3>
-              <p className="text-sm text-gray-600">{job.location}</p>
+              <p className="text-sm text-gray-600">{job.company_name}</p>
+              <p className="text-sm text-gray-500">{job.location}</p>
             </div>
           </Link>
         ))}
