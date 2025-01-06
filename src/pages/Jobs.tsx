@@ -68,12 +68,12 @@ const Jobs = () => {
     <div className="min-h-screen bg-white">
       <Header />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-          <div className="space-y-2">
-            <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
+        <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-8">
+          <div className="space-y-2 text-left">
+            <h1 className="text-4xl font-bold text-gray-900 tracking-tight">
               Job Listings
             </h1>
-            <p className="text-gray-600">
+            <p className="text-lg text-gray-600">
               Find your next opportunity in our community
             </p>
           </div>
