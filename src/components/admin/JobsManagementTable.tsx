@@ -7,10 +7,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
 import type { Job } from "@/hooks/useJobsData";
+import JobActions from "./JobActions";
 
 interface JobsManagementTableProps {
   jobs: Job[];
@@ -19,71 +18,8 @@ interface JobsManagementTableProps {
   isLoading: boolean;
 }
 
-const MAX_RETRIES = 3;
-const RETRY_DELAY = 1000; // 1 second
-
 const JobsManagementTable = ({ jobs, onJobUpdate, status, isLoading }: JobsManagementTableProps) => {
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
-  const [isUpdating, setIsUpdating] = useState(false);
-
-  const handleApproval = async (id: string, action: "approve" | "reject", retryCount = 0) => {
-    if (isUpdating) return;
-    
-    try {
-      setIsUpdating(true);
-      
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        toast.error('You must be logged in to perform this action');
-        return;
-      }
-
-      const { error } = await supabase
-        .from("jobs")
-        .update({
-          status: action === "approve" ? "approved" : "rejected",
-          approved_by: action === "approve" ? user.id : null
-        })
-        .eq("id", id);
-
-      if (error) {
-        console.error('Update error:', error);
-        
-        // If we haven't exceeded max retries and it's a network error, retry
-        if (retryCount < MAX_RETRIES && (error.message.includes('Failed to fetch') || error.message.includes('network'))) {
-          setIsUpdating(false);
-          toast.error(`Network error, retrying... (Attempt ${retryCount + 1}/${MAX_RETRIES})`);
-          
-          // Wait before retrying
-          await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
-          return handleApproval(id, action, retryCount + 1);
-        }
-        
-        toast.error(`Failed to ${action} job: ${error.message}`);
-        return;
-      }
-
-      toast.success(`Job ${action}d successfully`);
-      onJobUpdate();
-      setSelectedJob(null);
-    } catch (error) {
-      console.error('Unexpected error:', error);
-      
-      // If we haven't exceeded max retries and it's a network error, retry
-      if (retryCount < MAX_RETRIES && error instanceof Error && error.message.includes('Failed to fetch')) {
-        setIsUpdating(false);
-        toast.error(`Network error, retrying... (Attempt ${retryCount + 1}/${MAX_RETRIES})`);
-        
-        // Wait before retrying
-        await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
-        return handleApproval(id, action, retryCount + 1);
-      }
-      
-      toast.error('An unexpected error occurred');
-    } finally {
-      setIsUpdating(false);
-    }
-  };
 
   if (isLoading) {
     return (
@@ -133,28 +69,11 @@ const JobsManagementTable = ({ jobs, onJobUpdate, status, isLoading }: JobsManag
                     >
                       View Details
                     </Button>
-                    {status === 'pending' && (
-                      <>
-                        <Button
-                          type="button"
-                          variant="outline"
-                          disabled={isUpdating}
-                          className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white disabled:opacity-50"
-                          onClick={() => handleApproval(job.id, "approve")}
-                        >
-                          {isUpdating ? 'Processing...' : 'Approve'}
-                        </Button>
-                        <Button
-                          type="button"
-                          variant="outline"
-                          disabled={isUpdating}
-                          className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white disabled:opacity-50"
-                          onClick={() => handleApproval(job.id, "reject")}
-                        >
-                          {isUpdating ? 'Processing...' : 'Reject'}
-                        </Button>
-                      </>
-                    )}
+                    <JobActions 
+                      jobId={job.id}
+                      onUpdate={onJobUpdate}
+                      showActions={status === 'pending'}
+                    />
                   </div>
                 </TableCell>
               </TableRow>
@@ -185,26 +104,16 @@ const JobsManagementTable = ({ jobs, onJobUpdate, status, isLoading }: JobsManag
               <p className="text-gray-700 mt-1">Email: {selectedJob?.contact_info}</p>
               <p className="text-gray-700">Phone: {selectedJob?.phone_number}</p>
             </div>
-            {status === 'pending' && (
+            {status === 'pending' && selectedJob && (
               <div className="flex justify-end gap-2 pt-4">
-                <Button
-                  type="button"
-                  variant="outline"
-                  disabled={isUpdating}
-                  className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white disabled:opacity-50"
-                  onClick={() => selectedJob && handleApproval(selectedJob.id, "approve")}
-                >
-                  {isUpdating ? 'Processing...' : 'Approve'}
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  disabled={isUpdating}
-                  className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white disabled:opacity-50"
-                  onClick={() => selectedJob && handleApproval(selectedJob.id, "reject")}
-                >
-                  {isUpdating ? 'Processing...' : 'Reject'}
-                </Button>
+                <JobActions 
+                  jobId={selectedJob.id}
+                  onUpdate={() => {
+                    onJobUpdate();
+                    setSelectedJob(null);
+                  }}
+                  showActions={true}
+                />
               </div>
             )}
           </div>
