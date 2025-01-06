@@ -8,31 +8,34 @@ const RentalsManagement = () => {
   const { rentals, isLoading, refetch } = useRentalsData(selectedStatus);
 
   return (
-    <section>
-      <h2 className="text-2xl font-semibold text-gray-900 mb-4">Rentals Management</h2>
+    <section className="space-y-4">
+      <h2 className="text-2xl font-semibold text-gray-900">Rentals Management</h2>
       <Tabs defaultValue="pending" className="w-full">
-        <TabsList className="mb-4">
+        <TabsList className="w-full sm:w-auto grid grid-cols-3 sm:inline-flex gap-1">
           <TabsTrigger 
             value="pending" 
             onClick={() => setSelectedStatus('pending')}
+            className="data-[state=active]:bg-ethiopian-coffee data-[state=active]:text-white"
           >
             Pending Approval
           </TabsTrigger>
           <TabsTrigger 
             value="approved" 
             onClick={() => setSelectedStatus('approved')}
+            className="data-[state=active]:bg-ethiopian-coffee data-[state=active]:text-white"
           >
             Approved
           </TabsTrigger>
           <TabsTrigger 
             value="rejected" 
             onClick={() => setSelectedStatus('rejected')}
+            className="data-[state=active]:bg-ethiopian-coffee data-[state=active]:text-white"
           >
             Rejected
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="pending" className="mt-0">
+        <TabsContent value="pending" className="mt-6">
           <RentalsManagementTable 
             rentals={rentals} 
             onRentalUpdate={refetch}
@@ -40,7 +43,7 @@ const RentalsManagement = () => {
             isLoading={isLoading}
           />
         </TabsContent>
-        <TabsContent value="approved" className="mt-0">
+        <TabsContent value="approved" className="mt-6">
           <RentalsManagementTable 
             rentals={rentals} 
             onRentalUpdate={refetch}
@@ -48,7 +51,7 @@ const RentalsManagement = () => {
             isLoading={isLoading}
           />
         </TabsContent>
-        <TabsContent value="rejected" className="mt-0">
+        <TabsContent value="rejected" className="mt-6">
           <RentalsManagementTable 
             rentals={rentals} 
             onRentalUpdate={refetch}
