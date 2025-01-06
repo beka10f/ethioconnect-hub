@@ -47,7 +47,7 @@ const Header = () => {
                 { to: "/jobs", label: "Jobs" },
                 { to: "/rentals", label: "Rentals" },
                 { to: "/", label: "Exchange Rate" },
-                { to: "/", label: "Contact" },
+                { to: "/contact", label: "Contact" },
               ].map((link) => (
                 <Link
                   key={link.label}
