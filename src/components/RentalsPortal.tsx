@@ -75,7 +75,7 @@ const RentalsPortal = () => {
     <Portal title="Featured Rentals">
       <div className="flex flex-col space-y-4">
         {rentals.map((rental) => (
-          <div key={rental.id} className="flex items-center justify-between w-full group">
+          <div key={rental.id} className="flex items-center justify-between w-full group text-left">
             <div className="flex-1">
               <h3 className="text-base font-medium text-gray-900">{rental.title}</h3>
               <div className="flex items-center gap-4 mt-1 text-sm text-gray-600">
@@ -98,7 +98,7 @@ const RentalsPortal = () => {
       </div>
       <Link 
         to="/rentals" 
-        className="inline-flex items-center gap-1 mt-4 text-blue-600 hover:text-blue-700 transition-colors"
+        className="inline-flex items-center gap-1 mt-6 text-blue-600 hover:text-blue-700 transition-colors"
       >
         View All Rentals
         <ArrowRight className="w-4 h-4" />
