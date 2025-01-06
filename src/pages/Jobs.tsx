@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Briefcase, MapPin, Calendar, Mail, Phone } from "lucide-react";
+import { Briefcase, MapPin, Calendar, Mail, Phone, Building2, ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 type Job = {
   id: string;
@@ -64,17 +65,24 @@ const Jobs = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#F5F1E9]">
       <Header />
-      <div className="max-w-4xl mx-auto py-6 px-4 sm:px-6">
-        <div className="flex justify-between items-center mb-6">
+      <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6">
+        <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-2xl font-semibold text-gray-900">Job Listings</h1>
+            <h1 className="text-3xl font-bold text-gray-900">Job Listings</h1>
             <p className="text-sm text-gray-600 mt-1">Find your next opportunity in our community</p>
           </div>
           <Link to="/post-job">
-            <Button className="bg-blue-600 hover:bg-blue-700">
-              <Briefcase className="w-4 h-4 mr-2" />
+            <Button 
+              size="lg"
+              className={cn(
+                "bg-blue-600 hover:bg-blue-700 text-white shadow-md",
+                "transition-all duration-200 ease-in-out",
+                "flex items-center gap-2"
+              )}
+            >
+              <Briefcase className="w-4 h-4" />
               Post a Job
             </Button>
           </Link>
@@ -85,39 +93,69 @@ const Jobs = () => {
             <div className="animate-pulse text-blue-600">Loading jobs...</div>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-6">
             {jobs.map((job) => (
-              <Link to={`/jobs/${job.id}`} key={job.id}>
-                <div className="bg-white border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors duration-200">
-                  <div className="flex flex-col text-left">
-                    <h2 className="text-xl font-medium text-gray-900 mb-1">
-                      {job.title}
-                    </h2>
-                    <p className="text-blue-600 text-sm font-medium mb-2">
-                      {job.company_name}
-                    </p>
-                    
-                    <div className="grid grid-cols-1 gap-2 text-sm text-gray-600">
-                      <div className="flex items-center">
-                        <MapPin className="w-3.5 h-3.5 mr-1.5 text-gray-400" />
-                        {job.location}
+              <div 
+                key={job.id}
+                className={cn(
+                  "bg-white border border-gray-200/50 rounded-xl p-6",
+                  "hover:border-blue-200 transition-colors duration-200",
+                  "shadow-sm hover:shadow-md"
+                )}
+              >
+                <div className="flex flex-col text-left">
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="space-y-1">
+                      <h2 className="text-2xl font-semibold text-gray-900 leading-tight">
+                        {job.title}
+                      </h2>
+                      <div className="flex items-center text-blue-600 hover:text-blue-700">
+                        <Building2 className="w-4 h-4 mr-1.5" />
+                        <span className="font-medium">{job.company_name}</span>
                       </div>
-                      <div className="flex items-center">
-                        <Calendar className="w-3.5 h-3.5 mr-1.5 text-gray-400" />
-                        {new Date(job.created_at).toLocaleDateString()}
-                      </div>
-                      <div className="flex items-center">
-                        <Mail className="w-3.5 h-3.5 mr-1.5 text-gray-400" />
+                    </div>
+                    <Link 
+                      to={`/jobs/${job.id}`}
+                      className={cn(
+                        "text-blue-600 hover:text-blue-700",
+                        "flex items-center gap-1 font-medium",
+                        "transition-colors duration-200"
+                      )}
+                    >
+                      View Details
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
+                  </div>
+                  
+                  <div className="grid gap-3 text-sm text-gray-600 mb-4">
+                    <div className="flex items-center">
+                      <MapPin className="w-4 h-4 mr-1.5 text-gray-400" />
+                      {job.location}
+                    </div>
+                    <div className="flex items-center">
+                      <Calendar className="w-4 h-4 mr-1.5 text-gray-400" />
+                      {new Date(job.created_at).toLocaleDateString()}
+                    </div>
+                  </div>
+
+                  <p className="text-gray-600 mb-4 text-sm text-left line-clamp-2">
+                    {job.description}
+                  </p>
+
+                  <div className="border-t pt-4">
+                    <div className="grid gap-2 text-sm">
+                      <div className="flex items-center text-gray-600">
+                        <Mail className="w-4 h-4 mr-1.5 text-gray-400" />
                         {job.contact_info}
                       </div>
-                      <div className="flex items-center">
-                        <Phone className="w-3.5 h-3.5 mr-1.5 text-gray-400" />
+                      <div className="flex items-center text-gray-600">
+                        <Phone className="w-4 h-4 mr-1.5 text-gray-400" />
                         {job.phone_number}
                       </div>
                     </div>
                   </div>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         )}
