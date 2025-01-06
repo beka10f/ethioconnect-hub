@@ -165,6 +165,51 @@ export type Database = {
         }
         Relationships: []
       }
+      shipping_details: {
+        Row: {
+          cost: number
+          created_at: string
+          created_by: string | null
+          customer_name: string
+          id: string
+          notes: string | null
+          phone: string
+          shipping_date: string
+          status: Database["public"]["Enums"]["shipping_status"] | null
+          updated_at: string
+          weight: number
+          weight_unit: string
+        }
+        Insert: {
+          cost: number
+          created_at?: string
+          created_by?: string | null
+          customer_name: string
+          id?: string
+          notes?: string | null
+          phone: string
+          shipping_date: string
+          status?: Database["public"]["Enums"]["shipping_status"] | null
+          updated_at?: string
+          weight: number
+          weight_unit: string
+        }
+        Update: {
+          cost?: number
+          created_at?: string
+          created_by?: string | null
+          customer_name?: string
+          id?: string
+          notes?: string | null
+          phone?: string
+          shipping_date?: string
+          status?: Database["public"]["Enums"]["shipping_status"] | null
+          updated_at?: string
+          weight?: number
+          weight_unit?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -188,6 +233,7 @@ export type Database = {
       }
     }
     Enums: {
+      shipping_status: "pending" | "in_progress" | "completed" | "cancelled"
       user_role: "admin" | "user"
     }
     CompositeTypes: {

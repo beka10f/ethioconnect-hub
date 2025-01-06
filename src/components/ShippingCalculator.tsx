@@ -14,14 +14,57 @@ import {
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import { MapPin, Package, Calendar, Phone, User, DollarSign } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const ShippingCalculator = () => {
   const [showSummary, setShowSummary] = React.useState(false);
   const [currentData, setCurrentData] = React.useState<ShippingFormData | null>(null);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const { toast } = useToast();
 
   const handleSubmit = (data: ShippingFormData) => {
     setCurrentData(data);
     setShowSummary(true);
+  };
+
+  const handleConfirmShipping = async () => {
+    if (!currentData) return;
+    
+    setIsSubmitting(true);
+    try {
+      const { data, error } = await supabase
+        .from('shipping_details')
+        .insert({
+          customer_name: currentData.name,
+          phone: currentData.phoneNumber,
+          weight: parseFloat(currentData.weight),
+          weight_unit: currentData.unit,
+          cost: calculateShippingCost(currentData),
+          shipping_date: format(currentData.shippingDate, 'yyyy-MM-dd'),
+          status: 'pending'
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      toast({
+        title: "Shipping details saved!",
+        description: "We'll contact you soon with further instructions.",
+      });
+      
+      setShowSummary(false);
+    } catch (error) {
+      console.error('Error saving shipping details:', error);
+      toast({
+        title: "Error saving shipping details",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleLocationClick = () => {
@@ -53,6 +96,9 @@ const ShippingCalculator = () => {
             <DialogTitle className="text-lg sm:text-xl font-semibold text-site-blue">
               Shipping Details
             </DialogTitle>
+            <DialogDescription>
+              Review your shipping details before confirming.
+            </DialogDescription>
           </DialogHeader>
           {currentData && (
             <div className="space-y-3">
@@ -123,13 +169,21 @@ const ShippingCalculator = () => {
               </div>
             </div>
           )}
-          <DialogFooter className="mt-2">
+          <DialogFooter className="mt-2 space-x-2">
             <Button 
               variant="outline" 
               onClick={() => setShowSummary(false)}
-              className="w-full sm:w-auto border-site-blue text-site-blue hover:bg-site-blue hover:text-white"
+              disabled={isSubmitting}
+              className="border-site-blue text-site-blue hover:bg-site-blue hover:text-white"
             >
-              Close
+              Cancel
+            </Button>
+            <Button 
+              onClick={handleConfirmShipping}
+              disabled={isSubmitting}
+              className="bg-site-blue hover:bg-site-blue/90 text-white"
+            >
+              {isSubmitting ? "Saving..." : "Confirm Shipping"}
             </Button>
           </DialogFooter>
         </DialogContent>
