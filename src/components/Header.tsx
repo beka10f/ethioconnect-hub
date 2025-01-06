@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { LogOut, Menu } from "lucide-react";
@@ -15,6 +15,7 @@ import {
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -42,11 +43,24 @@ const Header = () => {
     }
   };
 
+  const handleShipToEthiopia = () => {
+    if (location.pathname !== "/") {
+      navigate("/?section=shipping");
+    } else {
+      // If already on home page, scroll to shipping section
+      const shippingSection = document.getElementById("shipping-calculator");
+      if (shippingSection) {
+        shippingSection.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+    setIsOpen(false);
+  };
+
   const navigationLinks = [
     { to: "/jobs", label: "Jobs" },
     { to: "/rentals", label: "Rentals" },
     { to: "/", label: "Exchange Rate" },
-    { to: "/", label: "Ship to Ethiopia" },
+    { label: "Ship to Ethiopia", onClick: handleShipToEthiopia },
     { to: "/contact", label: "Contact" },
   ];
 
@@ -61,13 +75,23 @@ const Header = () => {
           <div className="flex items-center space-x-4 sm:space-x-8">
             <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-site-black/70">
               {navigationLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  to={link.to}
-                  className="hover:text-site-blue transition-colors duration-200 relative after:content-[''] after:absolute after:left-0 after:bottom-[-2px] after:h-[2px] after:w-0 after:bg-site-blue after:transition-all hover:after:w-full"
-                >
-                  {link.label}
-                </Link>
+                link.onClick ? (
+                  <button
+                    key={link.label}
+                    onClick={link.onClick}
+                    className="hover:text-site-blue transition-colors duration-200 relative after:content-[''] after:absolute after:left-0 after:bottom-[-2px] after:h-[2px] after:w-0 after:bg-site-blue after:transition-all hover:after:w-full"
+                  >
+                    {link.label}
+                  </button>
+                ) : (
+                  <Link
+                    key={link.label}
+                    to={link.to}
+                    className="hover:text-site-blue transition-colors duration-200 relative after:content-[''] after:absolute after:left-0 after:bottom-[-2px] after:h-[2px] after:w-0 after:bg-site-blue after:transition-all hover:after:w-full"
+                  >
+                    {link.label}
+                  </Link>
+                )
               ))}
             </nav>
 
@@ -86,14 +110,24 @@ const Header = () => {
                   </SheetHeader>
                   <nav className="flex flex-col gap-4 mt-8">
                     {navigationLinks.map((link) => (
-                      <Link
-                        key={link.label}
-                        to={link.to}
-                        className="text-lg font-medium text-site-black/70 hover:text-site-blue transition-colors px-2 py-1"
-                        onClick={() => setIsOpen(false)}
-                      >
-                        {link.label}
-                      </Link>
+                      link.onClick ? (
+                        <button
+                          key={link.label}
+                          onClick={link.onClick}
+                          className="text-lg font-medium text-site-black/70 hover:text-site-blue transition-colors px-2 py-1 text-left"
+                        >
+                          {link.label}
+                        </button>
+                      ) : (
+                        <Link
+                          key={link.label}
+                          to={link.to}
+                          className="text-lg font-medium text-site-black/70 hover:text-site-blue transition-colors px-2 py-1"
+                          onClick={() => setIsOpen(false)}
+                        >
+                          {link.label}
+                        </Link>
+                      )
                     ))}
                   </nav>
                 </SheetContent>
