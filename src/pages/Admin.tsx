@@ -2,20 +2,24 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
-import PendingJobsTable from "@/components/admin/PendingJobsTable";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import JobsManagementTable from "@/components/admin/JobsManagementTable";
 import PendingRentalsTable from "@/components/admin/PendingRentalsTable";
+
+type JobStatus = 'pending' | 'approved' | 'rejected';
 
 const Admin = () => {
   const navigate = useNavigate();
-  const [pendingJobs, setPendingJobs] = useState([]);
+  const [jobs, setJobs] = useState<any[]>([]);
   const [pendingRentals, setPendingRentals] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState<JobStatus>('pending');
 
   useEffect(() => {
     checkAdminStatus();
-    fetchPendingListings();
+    fetchListings();
     setupRealtimeSubscriptions();
-  }, []);
+  }, [selectedStatus]);
 
   const checkAdminStatus = async () => {
     const { data: { user } } = await supabase.auth.getUser();
@@ -38,12 +42,12 @@ const Admin = () => {
     setIsAdmin(true);
   };
 
-  const fetchPendingListings = async () => {
-    // Fetch pending jobs
-    const { data: jobs } = await supabase
+  const fetchListings = async () => {
+    // Fetch jobs based on selected status
+    const { data: jobsData } = await supabase
       .from("jobs")
       .select("*")
-      .eq("status", "pending")
+      .eq("status", selectedStatus)
       .order("created_at", { ascending: false });
 
     // Fetch pending rentals
@@ -53,31 +57,29 @@ const Admin = () => {
       .eq("status", "pending")
       .order("created_at", { ascending: false });
 
-    if (jobs) setPendingJobs(jobs);
+    if (jobsData) setJobs(jobsData);
     if (rentals) setPendingRentals(rentals);
   };
 
   const setupRealtimeSubscriptions = () => {
-    // Subscribe to jobs changes
     const jobsChannel = supabase
       .channel('public:jobs')
       .on('postgres_changes', 
         { event: '*', schema: 'public', table: 'jobs' }, 
         () => {
           console.log("Jobs table changed, fetching updates");
-          fetchPendingListings();
+          fetchListings();
         }
       )
       .subscribe();
 
-    // Subscribe to rentals changes
     const rentalsChannel = supabase
       .channel('public:rentals')
       .on('postgres_changes', 
         { event: '*', schema: 'public', table: 'rentals' }, 
         () => {
           console.log("Rentals table changed, fetching updates");
-          fetchPendingListings();
+          fetchListings();
         }
       )
       .subscribe();
@@ -98,18 +100,58 @@ const Admin = () => {
         
         <div className="space-y-8">
           <section>
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Pending Jobs</h2>
-            <PendingJobsTable 
-              pendingJobs={pendingJobs} 
-              onJobUpdate={fetchPendingListings} 
-            />
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Jobs Management</h2>
+            <Tabs defaultValue="pending" className="w-full">
+              <TabsList className="mb-4">
+                <TabsTrigger 
+                  value="pending" 
+                  onClick={() => setSelectedStatus('pending')}
+                >
+                  Pending Approval
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="approved" 
+                  onClick={() => setSelectedStatus('approved')}
+                >
+                  Approved
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="rejected" 
+                  onClick={() => setSelectedStatus('rejected')}
+                >
+                  Rejected
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="pending" className="mt-0">
+                <JobsManagementTable 
+                  jobs={jobs} 
+                  onJobUpdate={fetchListings}
+                  status="pending"
+                />
+              </TabsContent>
+              <TabsContent value="approved" className="mt-0">
+                <JobsManagementTable 
+                  jobs={jobs} 
+                  onJobUpdate={fetchListings}
+                  status="approved"
+                />
+              </TabsContent>
+              <TabsContent value="rejected" className="mt-0">
+                <JobsManagementTable 
+                  jobs={jobs} 
+                  onJobUpdate={fetchListings}
+                  status="rejected"
+                />
+              </TabsContent>
+            </Tabs>
           </section>
 
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">Pending Rentals</h2>
             <PendingRentalsTable 
               pendingRentals={pendingRentals} 
-              onRentalUpdate={fetchPendingListings} 
+              onRentalUpdate={fetchListings} 
             />
           </section>
         </div>
