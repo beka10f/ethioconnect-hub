@@ -30,67 +30,59 @@ const ShippingReceiptDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[95vw] max-w-[500px] p-0 bg-white rounded-2xl">
-        <DialogHeader className="p-6 space-y-6 border-b border-gray-100">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Receipt className="w-6 h-6 text-site-blue" />
-              <DialogTitle className="text-2xl font-semibold text-site-blue">
-                Shipping Receipt
-              </DialogTitle>
-            </div>
-          </div>
-          <DialogDescription className="flex items-center justify-center gap-3 p-4 bg-blue-50 rounded-xl text-site-blue">
-            <Camera className="w-8 h-8" strokeWidth={1.5} />
-            <span className="text-lg font-medium">
-              Please take a screenshot of this receipt for your records
-            </span>
+      <DialogContent className="w-[95vw] max-w-[425px] p-4 sm:p-6">
+        <DialogHeader>
+          <DialogTitle className="text-lg sm:text-xl font-semibold text-site-blue flex items-center gap-2">
+            <Receipt className="w-5 h-5" />
+            Shipping Receipt
+          </DialogTitle>
+          <DialogDescription className="flex items-center gap-2 text-site-blue">
+            <Camera className="w-4 h-4" />
+            Please take a screenshot of this receipt for your records
           </DialogDescription>
         </DialogHeader>
-
-        <div className="p-8 space-y-6">
-          <div className="text-center space-y-2">
-            <h3 className="text-2xl font-bold text-gray-900">ADOT International Market</h3>
-            <p className="text-lg text-gray-600">3111 Chillum Road, Mount Rainer, MD</p>
+        <div className="space-y-4 bg-white rounded-lg border border-gray-200 p-4">
+          <div className="text-center border-b border-gray-200 pb-3">
+            <h3 className="font-bold text-lg text-gray-900">ADOT International Market</h3>
+            <p className="text-sm text-gray-600">3111 Chillum Road, Mount Rainer, MD</p>
           </div>
           
-          <div className="space-y-4 divide-y divide-gray-100">
-            <div className="grid grid-cols-2 py-3 text-lg">
-              <span className="text-gray-500">Confirmation ID:</span>
-              <span className="font-medium text-right text-gray-900">{confirmationId.slice(0, 8)}</span>
+          <div className="space-y-3">
+            <div className="flex justify-between text-sm">
+              <span className="text-gray-600">Confirmation ID:</span>
+              <span className="font-medium text-gray-900">{confirmationId.slice(0, 8)}</span>
             </div>
-            <div className="grid grid-cols-2 py-3 text-lg">
-              <span className="text-gray-500">Customer:</span>
-              <span className="font-medium text-right text-gray-900">{data.name}</span>
+            <div className="flex justify-between text-sm">
+              <span className="text-gray-600">Customer:</span>
+              <span className="font-medium text-gray-900">{data.name}</span>
             </div>
-            <div className="grid grid-cols-2 py-3 text-lg">
-              <span className="text-gray-500">Phone:</span>
-              <span className="font-medium text-right text-gray-900">{data.phoneNumber}</span>
+            <div className="flex justify-between text-sm">
+              <span className="text-gray-600">Phone:</span>
+              <span className="font-medium text-gray-900">{data.phoneNumber}</span>
             </div>
-            <div className="grid grid-cols-2 py-3 text-lg">
-              <span className="text-gray-500">Package Weight:</span>
-              <span className="font-medium text-right text-gray-900">{data.weight} {data.unit}</span>
+            <div className="flex justify-between text-sm">
+              <span className="text-gray-600">Package Weight:</span>
+              <span className="font-medium text-gray-900">{data.weight} {data.unit}</span>
             </div>
-            <div className="grid grid-cols-2 py-3 text-lg">
-              <span className="text-gray-500">Drop-off Date:</span>
-              <span className="font-medium text-right text-gray-900">{format(data.shippingDate, "MMM do, yyyy")}</span>
+            <div className="flex justify-between text-sm">
+              <span className="text-gray-600">Drop-off Date:</span>
+              <span className="font-medium text-gray-900">{format(data.shippingDate, "MMM do, yyyy")}</span>
             </div>
-            <div className="grid grid-cols-2 py-4 text-xl">
+            <div className="flex justify-between text-sm border-t border-gray-200 pt-2 mt-2">
               <span className="font-semibold text-gray-900">Total Cost:</span>
-              <span className="font-bold text-right text-site-blue">${calculateShippingCost(data)}</span>
+              <span className="font-bold text-site-blue">${calculateShippingCost(data)}</span>
             </div>
           </div>
 
-          <div className="text-center space-y-1 pt-6 border-t border-gray-100">
-            <p className="text-gray-600">Thank you for choosing ADOT International Market</p>
-            <p className="text-gray-500 text-sm">For any questions, please contact us with your confirmation ID</p>
+          <div className="text-center text-xs text-gray-500 mt-4 pt-4 border-t border-gray-200">
+            <p>Thank you for choosing ADOT International Market</p>
+            <p>For any questions, please contact us with your confirmation ID</p>
           </div>
         </div>
-
-        <DialogFooter className="p-6 border-t border-gray-100">
+        <DialogFooter>
           <Button 
             onClick={() => onOpenChange(false)}
-            className="w-full h-12 text-lg bg-site-blue hover:bg-site-blue/90 text-white rounded-xl"
+            className="w-full bg-site-blue hover:bg-site-blue/90 text-white"
           >
             Done
           </Button>
