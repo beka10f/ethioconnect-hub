@@ -115,38 +115,37 @@ const Index = () => {
               </p>
             </motion.div>
           ) : (
-      {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="max-w-7xl mx-auto px-4 py-16 sm:px-6 sm:py-24 lg:px-8"
-        >
-          <div className="text-center">
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight"
-            >
-              Your Ethiopian Community Hub
-              <br />
-              <span className="text-site-blue">in the DMV Area</span>
-            </motion.h1>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="mt-6 text-xl text-gray-600 max-w-3xl mx-auto"
-            >
-              Connect with your community, find opportunities, and access essential services 
-              all in one place. From job listings to rental properties, currency exchange 
-              rates to shipping services.
-            </motion.p>
-          </div>
-        </motion.div>
-      </section>
+            <section className="relative overflow-hidden">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="max-w-7xl mx-auto px-4 py-16 sm:px-6 sm:py-24 lg:px-8"
+              >
+                <div className="text-center">
+                  <motion.h1 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight"
+                  >
+                    Your Ethiopian Community Hub
+                    <br />
+                    <span className="text-site-blue">in the DMV Area</span>
+                  </motion.h1>
+                  <motion.p 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.4 }}
+                    className="mt-6 text-xl text-gray-600 max-w-3xl mx-auto"
+                  >
+                    Connect with your community, find opportunities, and access essential services 
+                    all in one place. From job listings to rental properties, currency exchange 
+                    rates to shipping services.
+                  </motion.p>
+                </div>
+              </motion.div>
+            </section>
           )}
         </div>
       </main>
