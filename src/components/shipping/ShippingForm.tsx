@@ -57,15 +57,15 @@ const ShippingForm = React.forwardRef<ShippingFormRef, ShippingFormProps>(
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-base font-medium text-gray-900 text-left block">Full Name</FormLabel>
+                  <FormLabel className="text-base font-medium text-gray-900">Full Name</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="Enter your full name" 
-                      className="text-base" 
+                      className="h-11 border-gray-200 bg-white focus:border-site-blue focus:ring-site-blue/20 rounded-xl" 
                       {...field} 
                     />
                   </FormControl>
-                  <FormMessage className="text-sm" />
+                  <FormMessage className="text-red-500" />
                 </FormItem>
               )}
             />
@@ -75,15 +75,15 @@ const ShippingForm = React.forwardRef<ShippingFormRef, ShippingFormProps>(
               name="phoneNumber"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-base font-medium text-gray-900 text-left block">Phone Number</FormLabel>
+                  <FormLabel className="text-base font-medium text-gray-900">Phone Number</FormLabel>
                   <FormControl>
                     <Input 
                       placeholder="e.g., +1 (555) 123-4567" 
-                      className="text-base" 
+                      className="h-11 border-gray-200 bg-white focus:border-site-blue focus:ring-site-blue/20 rounded-xl" 
                       {...field} 
                     />
                   </FormControl>
-                  <FormMessage className="text-sm" />
+                  <FormMessage className="text-red-500" />
                 </FormItem>
               )}
             />
@@ -94,17 +94,17 @@ const ShippingForm = React.forwardRef<ShippingFormRef, ShippingFormProps>(
                 name="weight"
                 render={({ field }) => (
                   <FormItem className="flex-1">
-                    <FormLabel className="text-base font-medium text-gray-900 text-left block">Package Weight</FormLabel>
+                    <FormLabel className="text-base font-medium text-gray-900">Package Weight</FormLabel>
                     <FormControl>
                       <Input 
                         type="number" 
                         step="0.1" 
                         placeholder="Enter package weight" 
-                        className="text-base" 
+                        className="h-11 border-gray-200 bg-white focus:border-site-blue focus:ring-site-blue/20 rounded-xl" 
                         {...field} 
                       />
                     </FormControl>
-                    <FormMessage className="text-sm" />
+                    <FormMessage className="text-red-500" />
                   </FormItem>
                 )}
               />
@@ -114,19 +114,19 @@ const ShippingForm = React.forwardRef<ShippingFormRef, ShippingFormProps>(
                 name="unit"
                 render={({ field }) => (
                   <FormItem className="w-32">
-                    <FormLabel className="text-base font-medium text-gray-900 text-left block">Unit</FormLabel>
+                    <FormLabel className="text-base font-medium text-gray-900">Unit</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger className="text-base">
+                        <SelectTrigger className="h-11 border-gray-200 bg-white focus:border-site-blue focus:ring-site-blue/20 rounded-xl">
                           <SelectValue placeholder="Select unit" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent className="bg-white border-gray-200">
                         <SelectItem value="kg">Kilograms (kg)</SelectItem>
                         <SelectItem value="lbs">Pounds (lbs)</SelectItem>
                       </SelectContent>
                     </Select>
-                    <FormMessage className="text-sm" />
+                    <FormMessage className="text-red-500" />
                   </FormItem>
                 )}
               />
@@ -137,15 +137,15 @@ const ShippingForm = React.forwardRef<ShippingFormRef, ShippingFormProps>(
               name="shippingDate"
               render={({ field }) => (
                 <FormItem className="flex flex-col md:col-span-2">
-                  <FormLabel className="text-base font-medium text-gray-900 text-left block">Drop-off Date</FormLabel>
+                  <FormLabel className="text-base font-medium text-gray-900">Drop-off Date</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
                           variant={"outline"}
                           className={cn(
-                            "w-full pl-3 text-left font-normal text-base",
-                            !field.value && "text-muted-foreground"
+                            "w-full h-11 border-gray-200 bg-white hover:bg-gray-50 text-left font-normal",
+                            !field.value && "text-gray-500"
                           )}
                         >
                           {field.value ? (
@@ -157,7 +157,7 @@ const ShippingForm = React.forwardRef<ShippingFormRef, ShippingFormProps>(
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
+                    <PopoverContent className="w-auto p-0 bg-white" align="start">
                       <Calendar
                         mode="single"
                         selected={field.value}
@@ -169,7 +169,7 @@ const ShippingForm = React.forwardRef<ShippingFormRef, ShippingFormProps>(
                       />
                     </PopoverContent>
                   </Popover>
-                  <FormMessage className="text-sm" />
+                  <FormMessage className="text-red-500" />
                 </FormItem>
               )}
             />
@@ -177,7 +177,7 @@ const ShippingForm = React.forwardRef<ShippingFormRef, ShippingFormProps>(
 
           <Button 
             type="submit" 
-            className="w-full bg-site-blue hover:bg-site-blue/90 text-white text-base font-medium py-3"
+            className="w-full bg-site-blue hover:bg-site-blue/90 text-white text-base font-medium h-11 rounded-xl shadow-sm"
           >
             Calculate Shipping Cost
           </Button>

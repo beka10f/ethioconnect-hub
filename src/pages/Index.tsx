@@ -23,14 +23,14 @@ const Index = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center px-4 py-8 sm:py-10"
+            className="text-center px-4 py-8 sm:py-12 bg-white rounded-2xl shadow-sm border border-gray-100"
           >
-            <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 tracking-tight">
-              Welcome to Ethiopian DMV Hub
-            </h2>
+            <h1 className="text-3xl sm:text-4xl font-semibold text-gray-900 tracking-tight mb-4">
+              Ethiopian DMV Hub
+            </h1>
             <p className="mt-4 text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Your one-stop platform for shipping to Ethiopia, finding jobs and rentals, 
-              and tracking exchange rates in the DMV area.
+              Your comprehensive platform for connecting with the Ethiopian community in the DMV area.
+              Easily manage shipping, find jobs and housing, and track exchange rates.
             </p>
           </motion.div>
 
@@ -57,7 +57,7 @@ const Index = () => {
                   {/* Mobile Job Button */}
                   <Link to="/jobs" className="block aspect-square">
                     <Button 
-                      className="w-full h-full bg-white hover:bg-gray-50 text-gray-900 border border-gray-100 shadow-sm p-4 flex flex-col items-center justify-center gap-4 group transition-all duration-300 rounded-2xl"
+                      className="w-full h-full bg-white hover:bg-gray-50 text-gray-900 border border-gray-200 shadow-sm p-4 flex flex-col items-center justify-center gap-4 group transition-all duration-300 rounded-2xl"
                       variant="ghost"
                     >
                       <div className="rounded-2xl bg-blue-50 p-4 transition-transform duration-300 group-hover:scale-105">
@@ -73,7 +73,7 @@ const Index = () => {
                   {/* Mobile Rental Button */}
                   <Link to="/rentals" className="block aspect-square">
                     <Button 
-                      className="w-full h-full bg-white hover:bg-gray-50 text-gray-900 border border-gray-100 shadow-sm p-4 flex flex-col items-center justify-center gap-4 group transition-all duration-300 rounded-2xl"
+                      className="w-full h-full bg-white hover:bg-gray-50 text-gray-900 border border-gray-200 shadow-sm p-4 flex flex-col items-center justify-center gap-4 group transition-all duration-300 rounded-2xl"
                       variant="ghost"
                     >
                       <div className="rounded-2xl bg-blue-50 p-4 transition-transform duration-300 group-hover:scale-105">
@@ -89,7 +89,7 @@ const Index = () => {
 
                 {/* Exchange Rate Portal - Rectangle on mobile */}
                 <div className="col-span-full">
-                  <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                  <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
                     <div className="flex items-center gap-4 mb-4">
                       <div className="rounded-xl bg-blue-50 p-3">
                         <DollarSign className="w-6 h-6 text-site-blue" />
