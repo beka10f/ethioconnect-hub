@@ -5,8 +5,13 @@ import ExchangeRatePortal from "@/components/ExchangeRatePortal";
 import ShippingCalculator from "@/components/ShippingCalculator";
 import { motion } from "framer-motion";
 import { Building, Home, DollarSign, Plane } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
+  const isMobile = useIsMobile();
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-site-blue/5 via-white to-site-blue/5">
       <Header />
@@ -96,22 +101,7 @@ const Index = () => {
       {/* Portal Sections */}
       <main className="w-full px-3 py-4 sm:px-6 sm:py-8 lg:px-8">
         <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.2 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6"
-          >
-            <div className="w-full">
-              <JobsPortal />
-            </div>
-            <div className="w-full">
-              <RentalsPortal />
-            </div>
-            <div className="w-full">
-              <ExchangeRatePortal />
-            </div>
-          </motion.div>
+          {/* Shipping Calculator - Always at top on mobile */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -119,6 +109,63 @@ const Index = () => {
             className="w-full"
           >
             <ShippingCalculator />
+          </motion.div>
+
+          {/* Portals Grid */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.2 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6"
+          >
+            {isMobile ? (
+              <>
+                {/* Mobile Job Button */}
+                <Link to="/jobs" className="h-full">
+                  <Button 
+                    className="w-full h-full aspect-square bg-white hover:bg-gray-50 text-site-black border border-gray-100 shadow-sm p-6 flex flex-col items-center justify-center gap-4 group transition-all duration-300"
+                    variant="ghost"
+                  >
+                    <Building className="w-12 h-12 text-site-blue group-hover:scale-110 transition-transform duration-300" />
+                    <div className="text-center">
+                      <h3 className="text-lg font-semibold mb-2">Job Postings</h3>
+                      <p className="text-sm text-gray-600">Browse available positions in the community</p>
+                    </div>
+                  </Button>
+                </Link>
+
+                {/* Mobile Rental Button */}
+                <Link to="/rentals" className="h-full">
+                  <Button 
+                    className="w-full h-full aspect-square bg-white hover:bg-gray-50 text-site-black border border-gray-100 shadow-sm p-6 flex flex-col items-center justify-center gap-4 group transition-all duration-300"
+                    variant="ghost"
+                  >
+                    <Home className="w-12 h-12 text-site-blue group-hover:scale-110 transition-transform duration-300" />
+                    <div className="text-center">
+                      <h3 className="text-lg font-semibold mb-2">Rentals</h3>
+                      <p className="text-sm text-gray-600">Find available properties for rent</p>
+                    </div>
+                  </Button>
+                </Link>
+
+                {/* Exchange Rate Portal - Rectangle on mobile */}
+                <div className="col-span-1">
+                  <ExchangeRatePortal />
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="w-full">
+                  <JobsPortal />
+                </div>
+                <div className="w-full">
+                  <RentalsPortal />
+                </div>
+                <div className="w-full">
+                  <ExchangeRatePortal />
+                </div>
+              </>
+            )}
           </motion.div>
         </div>
       </main>
