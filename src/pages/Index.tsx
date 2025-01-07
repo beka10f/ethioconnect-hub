@@ -16,9 +16,24 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-b from-site-blue/5 via-white to-site-blue/5">
       <Header />
       
-      {/* Main Content */}
       <main className="w-full px-3 py-4 sm:px-6 sm:py-8 lg:px-8">
         <div className="max-w-7xl mx-auto space-y-6">
+          {/* Introduction Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center px-4 py-6 sm:py-8"
+          >
+            <h2 className="text-2xl sm:text-3xl font-medium text-gray-900 tracking-tight">
+              Welcome to Ethiopian DMV Hub
+            </h2>
+            <p className="mt-3 text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
+              Your one-stop platform for shipping to Ethiopia, finding jobs and rentals, 
+              and tracking exchange rates in the DMV area.
+            </p>
+          </motion.div>
+
           {/* Shipping Calculator - Always at top */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -49,7 +64,7 @@ const Index = () => {
                         <Building className="w-8 h-8 text-site-blue" />
                       </div>
                       <span className="text-base font-medium">Jobs</span>
-                      <span className="text-xs text-gray-500">72 Available</span>
+                      <span className="text-xs text-gray-500">Browse Listings</span>
                     </Button>
                   </Link>
 
@@ -63,7 +78,7 @@ const Index = () => {
                         <Home className="w-8 h-8 text-site-blue" />
                       </div>
                       <span className="text-base font-medium">Rentals</span>
-                      <span className="text-xs text-gray-500">175 Listed</span>
+                      <span className="text-xs text-gray-500">Find Housing</span>
                     </Button>
                   </Link>
                 </div>
