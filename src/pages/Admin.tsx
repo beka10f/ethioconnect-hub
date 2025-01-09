@@ -6,8 +6,9 @@ import ShippingManagement from "@/components/admin/ShippingManagement";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { DollarSign, Briefcase, Home, Package } from "lucide-react";
+import { DollarSign, Briefcase, Home, Package, FileText, Users } from "lucide-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import FormSubmissionsManagement from "@/components/admin/FormSubmissionsManagement";
 
 const queryClient = new QueryClient();
 
@@ -42,9 +43,16 @@ const Admin = () => {
               </p>
             </div>
 
-            <Tabs defaultValue="exchange" className="space-y-8">
+            <Tabs defaultValue="submissions" className="space-y-8">
               <div className="sticky top-0 z-30 -mx-4 px-4 py-4 bg-gray-50/80 backdrop-blur-sm">
                 <TabsList className="w-full sm:w-auto inline-flex h-12 items-center justify-center rounded-lg bg-white p-1 text-site-blue shadow-sm border">
+                  <TabsTrigger 
+                    value="submissions" 
+                    className="inline-flex items-center justify-center whitespace-nowrap rounded-md px-6 py-3.5 text-sm font-medium ring-offset-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-site-blue focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-site-blue data-[state=active]:text-white data-[state=active]:shadow-sm hover:bg-site-blue/10"
+                  >
+                    <FileText className="mr-2 h-4 w-4" />
+                    Form Submissions
+                  </TabsTrigger>
                   <TabsTrigger 
                     value="exchange" 
                     className="inline-flex items-center justify-center whitespace-nowrap rounded-md px-6 py-3.5 text-sm font-medium ring-offset-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-site-blue focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-site-blue data-[state=active]:text-white data-[state=active]:shadow-sm hover:bg-site-blue/10"
@@ -75,6 +83,14 @@ const Admin = () => {
                   </TabsTrigger>
                 </TabsList>
               </div>
+
+              <TabsContent value="submissions" className="mt-6 space-y-6">
+                <Card className="bg-white shadow-sm border-gray-200/50">
+                  <CardContent className="p-6">
+                    <FormSubmissionsManagement />
+                  </CardContent>
+                </Card>
+              </TabsContent>
 
               <TabsContent value="exchange" className="mt-6 space-y-6">
                 <Card className="bg-white shadow-sm border-gray-200/50">

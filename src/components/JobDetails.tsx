@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -10,18 +9,25 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Briefcase, MapPin, Calendar, Mail, Phone, Building2 } from "lucide-react";
 
 const formSchema = z.object({
-  full_name: z.string().min(2, "Full name must be at least 2 characters"),
+  full_name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
   phone: z.string().min(10, "Phone number must be at least 10 digits"),
-  cover_letter: z.string().min(10, "Cover letter must be at least 10 characters"),
+  cover_letter: z.string().optional(),
 });
 
 interface JobDetailsProps {
@@ -31,7 +37,6 @@ interface JobDetailsProps {
 
 const JobDetails = ({ id, onClose }: JobDetailsProps) => {
   const [job, setJob] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -57,8 +62,6 @@ const JobDetails = ({ id, onClose }: JobDetailsProps) => {
     } catch (error) {
       console.error("Error fetching job details:", error);
       toast.error("Failed to load job details");
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -69,7 +72,6 @@ const JobDetails = ({ id, onClose }: JobDetailsProps) => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
     try {
-      // Ensure all required fields are present and match the expected types
       const applicationData = {
         job_id: id,
         full_name: values.full_name,
@@ -94,140 +96,100 @@ const JobDetails = ({ id, onClose }: JobDetailsProps) => {
     }
   };
 
+  if (!job) return null;
+
   return (
-    <Dialog open={true} onOpenChange={onClose}>
+    <Dialog open onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[600px]">
-        {isLoading ? (
-          <div className="flex justify-center items-center h-32">
-            <p className="text-gray-600">Loading job details...</p>
+        <DialogHeader>
+          <DialogTitle className="text-xl font-semibold">{job.title}</DialogTitle>
+          <DialogDescription>
+            {job.company_name} - {job.location}
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="space-y-6">
+          <div>
+            <h4 className="font-medium text-gray-900">Job Description</h4>
+            <p className="mt-1 text-gray-700">{job.description}</p>
           </div>
-        ) : job ? (
-          <>
-            <DialogHeader>
-              <DialogTitle className="text-xl font-semibold">{job.title}</DialogTitle>
-              <DialogDescription>
-                <div className="flex items-center gap-2 text-gray-600">
-                  <Building2 className="w-4 h-4" />
-                  <span>{job.company_name}</span>
+
+          <div className="border-t pt-6">
+            <h4 className="font-medium text-gray-900 mb-4">Apply for this position</h4>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="full_name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-left">Full Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="John Doe" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-left">Email</FormLabel>
+                      <FormControl>
+                        <Input type="email" placeholder="john@example.com" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="phone"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-left">Phone Number</FormLabel>
+                      <FormControl>
+                        <Input placeholder="(555) 123-4567" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="cover_letter"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-left">Cover Letter (Optional)</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Tell us why you're interested in this position..."
+                          className="min-h-[100px]"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <div className="flex justify-end gap-2">
+                  <Button type="button" variant="outline" onClick={onClose}>
+                    Cancel
+                  </Button>
+                  <Button type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? "Submitting..." : "Submit Application"}
+                  </Button>
                 </div>
-              </DialogDescription>
-            </DialogHeader>
-
-            <div className="space-y-6">
-              <div className="grid grid-cols-2 gap-4 text-sm text-gray-600">
-                <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-gray-400" />
-                  <span>{job.location}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-gray-400" />
-                  <span>{new Date(job.created_at).toLocaleDateString()}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Mail className="w-4 h-4 text-gray-400" />
-                  <span>{job.contact_info}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Phone className="w-4 h-4 text-gray-400" />
-                  <span>{job.phone_number}</span>
-                </div>
-              </div>
-
-              <div>
-                <h4 className="font-medium text-gray-900 mb-2">Description</h4>
-                <p className="text-gray-700 text-sm whitespace-pre-wrap">{job.description}</p>
-              </div>
-
-              <div className="border-t pt-6">
-                <h4 className="font-medium text-gray-900 mb-4">Apply for this position</h4>
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                    <FormField
-                      control={form.control}
-                      name="full_name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-left">Full Name</FormLabel>
-                          <FormControl>
-                            <Input {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-left">Email</FormLabel>
-                          <FormControl>
-                            <Input type="email" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="phone"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-left">Phone Number</FormLabel>
-                          <FormControl>
-                            <Input {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="cover_letter"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-left">Cover Letter</FormLabel>
-                          <FormControl>
-                            <Textarea 
-                              {...field}
-                              className="min-h-[120px]"
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <div className="flex justify-end gap-2 pt-4">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        onClick={onClose}
-                        disabled={isSubmitting}
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="bg-site-blue hover:bg-site-blue/90"
-                      >
-                        {isSubmitting ? "Submitting..." : "Submit Application"}
-                      </Button>
-                    </div>
-                  </form>
-                </Form>
-              </div>
-            </div>
-          </>
-        ) : (
-          <div className="flex justify-center items-center h-32">
-            <p className="text-gray-600">Job not found</p>
+              </form>
+            </Form>
           </div>
-        )}
+        </div>
       </DialogContent>
     </Dialog>
   );
