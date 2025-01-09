@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Header from "@/components/Header";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Briefcase, MapPin, Calendar, Mail, Phone, Building2, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import JobDetails from "@/components/JobDetails";
 
 type Job = {
   id: string;
@@ -21,6 +22,15 @@ type Job = {
 const Jobs = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
+  const params = useParams();
+
+  useEffect(() => {
+    // If there's a job ID in the URL params, show its details
+    if (params.id) {
+      setSelectedJobId(params.id);
+    }
+  }, [params.id]);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -118,17 +128,19 @@ const Jobs = () => {
                         <span className="font-medium">{job.company_name}</span>
                       </div>
                     </div>
-                    <Link 
-                      to={`/jobs/${job.id}`}
+                    <Button 
+                      onClick={() => setSelectedJobId(job.id)}
                       className={cn(
                         "text-blue-600 hover:text-blue-700",
                         "flex items-center gap-1 font-medium text-sm",
                         "transition-colors duration-200"
                       )}
+                      variant="outline"
+                      size="sm"
                     >
                       View Details
                       <ArrowRight className="w-4 h-4" />
-                    </Link>
+                    </Button>
                   </div>
                   
                   <div className="flex flex-wrap gap-4 text-sm text-gray-600">
@@ -164,6 +176,12 @@ const Jobs = () => {
           </div>
         )}
       </div>
+      {selectedJobId && (
+        <JobDetails 
+          id={selectedJobId} 
+          onClose={() => setSelectedJobId(null)} 
+        />
+      )}
     </div>
   );
 };
