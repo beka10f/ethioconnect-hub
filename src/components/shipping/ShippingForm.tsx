@@ -33,8 +33,8 @@ import { CalendarIcon } from "lucide-react";
 import ShippingSummaryDialog from "./ShippingSummaryDialog";
 
 const formSchema = z.object({
-  customerName: z.string().min(2, "Name must be at least 2 characters"),
-  phone: z.string().min(10, "Phone number must be at least 10 digits"),
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  phoneNumber: z.string().min(10, "Phone number must be at least 10 digits"),
   weight: z.string().min(1, "Weight is required"),
   unit: z.enum(["kg", "lbs"]),
   shippingDate: z.date({
@@ -46,18 +46,18 @@ const formSchema = z.object({
 export type ShippingFormData = z.infer<typeof formSchema>;
 
 interface ShippingFormProps {
-  onSubmit: (data: ShippingFormData & { cost: number }) => void;
+  onSubmit: (data: ShippingFormData) => void;
 }
 
 const ShippingForm = ({ onSubmit }: ShippingFormProps) => {
   const [showSummary, setShowSummary] = useState(false);
-  const [formData, setFormData] = useState<(ShippingFormData & { cost: number }) | null>(null);
+  const [formData, setFormData] = useState<ShippingFormData | null>(null);
 
   const form = useForm<ShippingFormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      customerName: "",
-      phone: "",
+      name: "",
+      phoneNumber: "",
       weight: "",
       unit: "kg",
       notes: "",
@@ -85,7 +85,7 @@ const ShippingForm = ({ onSubmit }: ShippingFormProps) => {
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
           <FormField
             control={form.control}
-            name="customerName"
+            name="name"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-left w-full">Customer Name</FormLabel>
@@ -99,7 +99,7 @@ const ShippingForm = ({ onSubmit }: ShippingFormProps) => {
 
           <FormField
             control={form.control}
-            name="phone"
+            name="phoneNumber"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-left w-full">Phone Number</FormLabel>
@@ -217,8 +217,9 @@ const ShippingForm = ({ onSubmit }: ShippingFormProps) => {
         <ShippingSummaryDialog
           data={formData}
           open={showSummary}
-          onClose={() => setShowSummary(false)}
+          onOpenChange={setShowSummary}
           onConfirm={handleConfirm}
+          isSubmitting={false}
         />
       )}
     </>
