@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -62,17 +62,25 @@ const JobDetails = ({ id, onClose }: JobDetailsProps) => {
     }
   };
 
-  useState(() => {
+  useEffect(() => {
     fetchJobDetails();
   }, [id]);
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
     try {
-      const { error } = await supabase.from("job_applications").insert({
+      // Ensure all required fields are present and match the expected types
+      const applicationData = {
         job_id: id,
-        ...values,
-      });
+        full_name: values.full_name,
+        email: values.email,
+        phone: values.phone,
+        cover_letter: values.cover_letter,
+      };
+
+      const { error } = await supabase
+        .from("job_applications")
+        .insert(applicationData);
 
       if (error) throw error;
 
