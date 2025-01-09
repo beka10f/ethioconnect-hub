@@ -27,7 +27,7 @@ const JobsPortal = () => {
       try {
         const { data, error } = await supabase
           .from("jobs")
-          .select("id, title, company_name, location, description, created_at, contact_info, phone_number")
+          .select("*")
           .eq("status", "approved")
           .order("created_at", { ascending: false })
           .limit(4);
@@ -111,7 +111,10 @@ const JobsPortal = () => {
         </Button>
       </Link>
       {selectedJobId && (
-        <JobDetails id={selectedJobId} onClose={() => setSelectedJobId(null)} />
+        <JobDetails 
+          id={selectedJobId} 
+          onClose={() => setSelectedJobId(null)} 
+        />
       )}
     </Portal>
   );

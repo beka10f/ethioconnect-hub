@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { MapPin, Mail, Phone, Calendar, Building2 } from "lucide-react";
@@ -26,9 +26,12 @@ const JobDetails = ({ id, onClose }: JobDetailsProps) => {
   const [job, setJob] = useState<Job | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showApplicationForm, setShowApplicationForm] = useState(false);
+  const [open, setOpen] = useState(true);
 
   useEffect(() => {
     const fetchJob = async () => {
+      if (!id) return;
+      
       try {
         const { data, error } = await supabase
           .from("jobs")
@@ -48,31 +51,35 @@ const JobDetails = ({ id, onClose }: JobDetailsProps) => {
       }
     };
 
-    if (id) {
-      fetchJob();
-    }
+    fetchJob();
   }, [id, onClose]);
+
+  const handleOpenChange = (open: boolean) => {
+    setOpen(open);
+    if (!open) {
+      onClose?.();
+    }
+  };
 
   if (isLoading || !job) {
     return null;
   }
 
   return (
-    <Dialog open={true} onOpenChange={() => onClose?.()}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold text-left">
             {job.title}
           </DialogTitle>
+          <DialogDescription className="text-blue-600 flex items-center">
+            <Building2 className="w-4 h-4 mr-1.5" />
+            <span className="font-medium">{job.company_name}</span>
+          </DialogDescription>
         </DialogHeader>
 
         {!showApplicationForm ? (
           <div className="space-y-4 text-left">
-            <div className="flex items-center text-blue-600">
-              <Building2 className="w-4 h-4 mr-1.5" />
-              <span className="font-medium">{job.company_name}</span>
-            </div>
-
             <div className="grid gap-2 text-sm text-gray-600">
               <div className="flex items-center">
                 <MapPin className="w-3.5 h-3.5 mr-1.5 text-gray-400 flex-shrink-0" />
