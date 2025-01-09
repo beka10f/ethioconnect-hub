@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { calculateShippingCost } from "@/utils/shipping";
 
 export type ShippingFormData = {
   name: string;
@@ -74,6 +73,7 @@ const ShippingForm = ({ onSubmit }: ShippingFormProps) => {
         <div className="flex gap-4">
           <div className="flex-1">
             <FormField
+              label="Weight"
               id="weight"
               placeholder="Enter weight"
               registration={register("weight", {
