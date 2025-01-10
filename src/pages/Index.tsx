@@ -28,9 +28,8 @@ const Index = () => {
             <h1 className="text-3xl sm:text-4xl font-semibold text-gray-900 tracking-tight mb-4">
               Ethiopian DMV Hub
             </h1>
-            <p className="mt-4 text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Your comprehensive platform for connecting with the Ethiopian community in the DMV area.
-              Easily manage shipping, find jobs and housing, and track exchange rates.
+            <p className="mt-4 text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
+              Your one-stop platform for Ethiopian community services in the DMV area.
             </p>
           </motion.div>
 

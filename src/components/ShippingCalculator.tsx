@@ -82,15 +82,20 @@ const ShippingCalculator = () => {
           <div className="space-y-4 sm:space-y-6">
             <div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Ship to Ethiopia</h2>
-              <div className="space-y-2 text-sm sm:text-base text-gray-600">
-                <p className="leading-relaxed">Simple steps to ship your package:</p>
-                <ol className="list-decimal list-inside space-y-1 pl-1">
-                  <li>Fill the form below and get your price</li>
-                  <li>Click confirm and save your receipt</li>
-                  <li>Bring your package and receipt to our store</li>
-                  <li>Your family can pick it up in Ethiopia</li>
-                </ol>
-              </div>
+              <Collapsible className="w-full">
+                <CollapsibleTrigger className="flex items-center gap-2 text-sm sm:text-base text-primary hover:text-primary/80">
+                  <InfoIcon className="h-4 w-4" />
+                  <span>How it works</span>
+                </CollapsibleTrigger>
+                <CollapsibleContent className="mt-2 space-y-2 text-sm text-gray-600">
+                  <ol className="list-decimal list-inside space-y-1">
+                    <li>Enter package details for price</li>
+                    <li>Get receipt</li>
+                    <li>Drop off package</li>
+                    <li>Pickup in Ethiopia</li>
+                  </ol>
+                </CollapsibleContent>
+              </Collapsible>
             </div>
 
             <ShippingForm onSubmit={handleSubmit} />

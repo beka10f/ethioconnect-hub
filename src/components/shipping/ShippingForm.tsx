@@ -91,13 +91,13 @@ const ShippingForm = ({ onSubmit }: ShippingFormProps) => {
             <RadioGroup
               defaultValue={getValues("unit")}
               onValueChange={(value) => setValue("unit", value as "kg" | "lbs")}
-              className="grid grid-cols-2 gap-2 p-1 rounded-lg border bg-muted"
+              className="inline-flex items-center justify-center rounded-lg border bg-muted p-1 w-full"
             >
               <div className="relative">
                 <RadioGroupItem value="kg" id="kg" className="peer sr-only" />
                 <Label
                   htmlFor="kg"
-                  className="flex items-center justify-center px-3 py-2 rounded-md cursor-pointer border border-transparent peer-data-[state=checked]:bg-white peer-data-[state=checked]:border-primary peer-data-[state=checked]:text-primary transition-all"
+                  className="flex-1 flex items-center justify-center px-3 py-2 rounded-md cursor-pointer border border-transparent peer-data-[state=checked]:bg-white peer-data-[state=checked]:border-primary peer-data-[state=checked]:text-primary transition-all"
                 >
                   KG
                 </Label>
@@ -106,7 +106,7 @@ const ShippingForm = ({ onSubmit }: ShippingFormProps) => {
                 <RadioGroupItem value="lbs" id="lbs" className="peer sr-only" />
                 <Label
                   htmlFor="lbs"
-                  className="flex items-center justify-center px-3 py-2 rounded-md cursor-pointer border border-transparent peer-data-[state=checked]:bg-white peer-data-[state=checked]:border-primary peer-data-[state=checked]:text-primary transition-all"
+                  className="flex-1 flex items-center justify-center px-3 py-2 rounded-md cursor-pointer border border-transparent peer-data-[state=checked]:bg-white peer-data-[state=checked]:border-primary peer-data-[state=checked]:text-primary transition-all"
                 >
                   LBS
                 </Label>
