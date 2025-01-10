@@ -70,10 +70,10 @@ const ShippingForm = ({ onSubmit }: ShippingFormProps) => {
         <Label className="text-left block text-sm font-medium text-gray-900">
           Package Weight
         </Label>
-        <div className="flex gap-4">
+        <div className="flex items-start gap-3">
           <div className="flex-1">
             <FormField
-              label="Weight"
+              label=""
               id="weight"
               placeholder="Enter weight"
               registration={register("weight", {
@@ -87,17 +87,17 @@ const ShippingForm = ({ onSubmit }: ShippingFormProps) => {
               className="w-full"
             />
           </div>
-          <div className="w-40">
+          <div className="w-44">
             <RadioGroup
               defaultValue={getValues("unit")}
               onValueChange={(value) => setValue("unit", value as "kg" | "lbs")}
-              className="flex p-1 bg-white border border-gray-200 rounded-full"
+              className="flex h-[40px] p-1 bg-white border border-gray-200 rounded-full"
             >
               <div className="flex-1 relative">
                 <RadioGroupItem value="kg" id="kg" className="peer sr-only" />
                 <Label
                   htmlFor="kg"
-                  className="flex items-center justify-center px-4 py-2 rounded-full text-sm cursor-pointer transition-all peer-data-[state=checked]:bg-site-blue peer-data-[state=checked]:text-white"
+                  className="flex h-full items-center justify-center px-4 rounded-full text-sm cursor-pointer transition-all peer-data-[state=checked]:bg-site-blue peer-data-[state=checked]:text-white"
                 >
                   KG
                 </Label>
@@ -106,7 +106,7 @@ const ShippingForm = ({ onSubmit }: ShippingFormProps) => {
                 <RadioGroupItem value="lbs" id="lbs" className="peer sr-only" />
                 <Label
                   htmlFor="lbs"
-                  className="flex items-center justify-center px-4 py-2 rounded-full text-sm cursor-pointer transition-all peer-data-[state=checked]:bg-site-blue peer-data-[state=checked]:text-white"
+                  className="flex h-full items-center justify-center px-4 rounded-full text-sm cursor-pointer transition-all peer-data-[state=checked]:bg-site-blue peer-data-[state=checked]:text-white"
                 >
                   LBS
                 </Label>
