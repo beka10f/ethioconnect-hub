@@ -9,6 +9,8 @@ import { format } from "date-fns";
 import ShippingSummaryDialog from "./shipping/ShippingSummaryDialog";
 import ShippingReceiptDialog from "./shipping/ShippingReceiptDialog";
 import type { Database } from "@/integrations/supabase/types";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { InfoIcon } from "lucide-react";
 
 type ShippingStatus = Database["public"]["Enums"]["shipping_status"];
 
