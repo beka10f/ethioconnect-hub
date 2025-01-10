@@ -82,7 +82,15 @@ const ShippingCalculator = () => {
           <div className="space-y-4 sm:space-y-6">
             <div>
               <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Ship to Ethiopia</h2>
-              <p className="text-sm sm:text-base text-gray-600">Calculate your shipping costs based on package weight.</p>
+              <div className="space-y-2 text-sm sm:text-base text-gray-600">
+                <p className="leading-relaxed">Simple steps to ship your package:</p>
+                <ol className="list-decimal list-inside space-y-1 pl-1">
+                  <li>Fill the form below and get your price</li>
+                  <li>Click confirm and save your receipt</li>
+                  <li>Bring your package and receipt to our store</li>
+                  <li>Your family can pick it up in Ethiopia</li>
+                </ol>
+              </div>
             </div>
 
             <ShippingForm onSubmit={handleSubmit} />

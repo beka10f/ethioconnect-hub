@@ -87,19 +87,29 @@ const ShippingForm = ({ onSubmit }: ShippingFormProps) => {
               className="w-full"
             />
           </div>
-          <div className="w-32">
+          <div className="w-40">
             <RadioGroup
               defaultValue={getValues("unit")}
               onValueChange={(value) => setValue("unit", value as "kg" | "lbs")}
-              className="flex gap-3"
+              className="grid grid-cols-2 gap-2 p-1 rounded-lg border bg-muted"
             >
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="kg" id="kg" />
-                <Label htmlFor="kg">KG</Label>
+              <div className="relative">
+                <RadioGroupItem value="kg" id="kg" className="peer sr-only" />
+                <Label
+                  htmlFor="kg"
+                  className="flex items-center justify-center px-3 py-2 rounded-md cursor-pointer border border-transparent peer-data-[state=checked]:bg-white peer-data-[state=checked]:border-primary peer-data-[state=checked]:text-primary transition-all"
+                >
+                  KG
+                </Label>
               </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="lbs" id="lbs" />
-                <Label htmlFor="lbs">LBS</Label>
+              <div className="relative">
+                <RadioGroupItem value="lbs" id="lbs" className="peer sr-only" />
+                <Label
+                  htmlFor="lbs"
+                  className="flex items-center justify-center px-3 py-2 rounded-md cursor-pointer border border-transparent peer-data-[state=checked]:bg-white peer-data-[state=checked]:border-primary peer-data-[state=checked]:text-primary transition-all"
+                >
+                  LBS
+                </Label>
               </div>
             </RadioGroup>
           </div>
@@ -108,7 +118,7 @@ const ShippingForm = ({ onSubmit }: ShippingFormProps) => {
 
       <div className="space-y-3">
         <Label className="text-left block text-sm font-medium text-gray-900">
-          Shipping Date
+          Drop-off Date
         </Label>
         <Popover>
           <PopoverTrigger asChild>
