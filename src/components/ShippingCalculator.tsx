@@ -10,7 +10,7 @@ import ShippingSummaryDialog from "./shipping/ShippingSummaryDialog";
 import ShippingReceiptDialog from "./shipping/ShippingReceiptDialog";
 import type { Database } from "@/integrations/supabase/types";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { InfoIcon } from "lucide-react";
+import { InfoIcon, Package } from "lucide-react";
 
 type ShippingStatus = Database["public"]["Enums"]["shipping_status"];
 
@@ -40,10 +40,9 @@ const ShippingCalculator = () => {
         cost: calculateShippingCost(currentData),
         shipping_date: format(currentData.shippingDate, 'yyyy-MM-dd'),
         status: 'pending' as ShippingStatus,
-        created_by: null // Set to null by default for unauthenticated users
+        created_by: null
       };
 
-      // Try to get the authenticated user, but don't require it
       const { data: userData } = await supabase.auth.getUser();
       if (userData.user) {
         shippingData.created_by = userData.user.id;
@@ -82,23 +81,26 @@ const ShippingCalculator = () => {
       <div id="shipping-calculator" className="w-full mx-auto px-0">
         <Card className="w-full p-4 sm:p-6 bg-white shadow-lg">
           <div className="space-y-4 sm:space-y-6">
-            <div>
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Ship to Ethiopia</h2>
-              <Collapsible className="w-full">
-                <CollapsibleTrigger className="flex items-center gap-2 text-sm sm:text-base text-primary hover:text-primary/80">
-                  <InfoIcon className="h-4 w-4" />
-                  <span>How it works</span>
-                </CollapsibleTrigger>
-                <CollapsibleContent className="mt-2 space-y-2 text-sm text-gray-600">
-                  <ol className="list-decimal list-inside space-y-1">
-                    <li>Enter package details for price</li>
-                    <li>Get receipt</li>
-                    <li>Drop off package</li>
-                    <li>Pickup in Ethiopia</li>
-                  </ol>
-                </CollapsibleContent>
-              </Collapsible>
+            <div className="flex items-center gap-4">
+              <div className="rounded-xl bg-blue-50 p-3">
+                <Package className="w-6 h-6 text-site-blue" />
+              </div>
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Ship to Ethiopia</h2>
             </div>
+            <Collapsible className="w-full">
+              <CollapsibleTrigger className="flex items-center gap-2 text-sm sm:text-base text-primary hover:text-primary/80">
+                <InfoIcon className="h-4 w-4" />
+                <span>How it works</span>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="mt-2 space-y-2 text-sm text-gray-600">
+                <ol className="list-decimal list-inside space-y-1">
+                  <li>Enter package details for price</li>
+                  <li>Get receipt</li>
+                  <li>Drop off package</li>
+                  <li>Pickup in Ethiopia</li>
+                </ol>
+              </CollapsibleContent>
+            </Collapsible>
 
             <ShippingForm onSubmit={handleSubmit} />
             <PricingGuide />
