@@ -4,7 +4,7 @@ import RentalsPortal from "@/components/RentalsPortal";
 import ExchangeRatePortal from "@/components/ExchangeRatePortal";
 import ShippingCalculator from "@/components/ShippingCalculator";
 import { motion } from "framer-motion";
-import { Building, Home, DollarSign, Package } from "lucide-react";
+import { Building, Home, DollarSign } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -15,117 +15,91 @@ const Index = () => {
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6 }
+    transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Header />
       
-      <main className="w-full px-4 py-6 sm:px-8 sm:py-10 lg:px-10">
-        <div className="max-w-6xl mx-auto space-y-8">
-          {/* Hero Section - Hidden on Mobile */}
+      <main className="w-full px-4 py-6 sm:px-6 lg:px-8 xl:px-10 max-w-[1440px] mx-auto">
+        {/* Mobile Quick Actions */}
+        {isMobile && (
+          <motion.div 
+            {...fadeInUp}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="grid grid-cols-2 gap-3 mb-6"
+          >
+            <Link to="/jobs" className="block">
+              <Button 
+                className="w-full h-24 bg-white hover:bg-gray-50 text-gray-900 border border-gray-100 shadow-sm p-4 flex flex-col items-center justify-center gap-2 group transition-all duration-300 rounded-2xl"
+                variant="ghost"
+              >
+                <Building className="w-6 h-6 text-site-blue transition-transform duration-300 group-hover:scale-110" />
+                <span className="text-sm font-medium">Jobs</span>
+              </Button>
+            </Link>
+
+            <Link to="/rentals" className="block">
+              <Button 
+                className="w-full h-24 bg-white hover:bg-gray-50 text-gray-900 border border-gray-100 shadow-sm p-4 flex flex-col items-center justify-center gap-2 group transition-all duration-300 rounded-2xl"
+                variant="ghost"
+              >
+                <Home className="w-6 h-6 text-site-blue transition-transform duration-300 group-hover:scale-110" />
+                <span className="text-sm font-medium">Rentals</span>
+              </Button>
+            </Link>
+          </motion.div>
+        )}
+
+        <div className="space-y-6 lg:space-y-8">
+          {/* Shipping Calculator - Full Width */}
+          <motion.div 
+            {...fadeInUp}
+            className="w-full rounded-3xl overflow-hidden bg-white border border-gray-100 shadow-sm"
+          >
+            <ShippingCalculator />
+          </motion.div>
+
+          {/* Desktop Layout */}
           {!isMobile && (
-            <motion.div
-              {...fadeInUp}
-              className="text-center px-4 py-8 sm:py-12 bg-white rounded-2xl shadow-sm border border-gray-100"
-            >
-              <h1 className="text-3xl sm:text-4xl font-semibold text-gray-900 tracking-tight mb-4">
-                Ethiopian DMV Hub
-              </h1>
-              <p className="mt-4 text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
-                Your one-stop platform for Ethiopian community services in the DMV area.
-              </p>
-            </motion.div>
-          )}
-
-          {/* Main Content Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Shipping Calculator - Full Width */}
-            <motion.div 
-              {...fadeInUp}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="lg:col-span-2 w-full rounded-2xl overflow-hidden shadow-sm bg-white border border-gray-100"
-            >
-              <ShippingCalculator />
-            </motion.div>
-
-            {/* Quick Actions Grid - Mobile Only */}
-            {isMobile && (
+            <div className="grid lg:grid-cols-2 gap-6">
               <motion.div 
                 {...fadeInUp}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="grid grid-cols-2 gap-4"
+                transition={{ duration: 0.4, delay: 0.2 }}
+                className="space-y-6"
               >
-                <Link to="/jobs" className="block aspect-square">
-                  <Button 
-                    className="w-full h-full bg-white hover:bg-gray-50 text-gray-900 border border-gray-200 shadow-sm p-4 flex flex-col items-center justify-center gap-4 group transition-all duration-300 rounded-2xl"
-                    variant="ghost"
-                  >
-                    <div className="rounded-2xl bg-blue-50 p-4 transition-transform duration-300 group-hover:scale-105">
-                      <Building className="w-8 h-8 text-site-blue" />
-                    </div>
-                    <div className="space-y-1">
-                      <span className="text-base font-medium block">Jobs</span>
-                      <span className="text-xs text-gray-500 block">Browse Listings</span>
-                    </div>
-                  </Button>
-                </Link>
-
-                <Link to="/rentals" className="block aspect-square">
-                  <Button 
-                    className="w-full h-full bg-white hover:bg-gray-50 text-gray-900 border border-gray-200 shadow-sm p-4 flex flex-col items-center justify-center gap-4 group transition-all duration-300 rounded-2xl"
-                    variant="ghost"
-                  >
-                    <div className="rounded-2xl bg-blue-50 p-4 transition-transform duration-300 group-hover:scale-105">
-                      <Home className="w-8 h-8 text-site-blue" />
-                    </div>
-                    <div className="space-y-1">
-                      <span className="text-base font-medium block">Rentals</span>
-                      <span className="text-xs text-gray-500 block">Find Housing</span>
-                    </div>
-                  </Button>
-                </Link>
-              </motion.div>
-            )}
-
-            {/* Desktop Portals */}
-            {!isMobile && (
-              <>
-                <motion.div 
-                  {...fadeInUp}
-                  transition={{ duration: 0.6, delay: 0.3 }}
-                  className="w-full"
-                >
+                <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
                   <JobsPortal />
-                </motion.div>
-                <motion.div 
-                  {...fadeInUp}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                  className="w-full"
-                >
-                  <RentalsPortal />
-                </motion.div>
-              </>
-            )}
-
-            {/* Exchange Rate - Full Width */}
-            <motion.div 
-              {...fadeInUp}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="lg:col-span-2"
-            >
-              <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="rounded-xl bg-blue-50 p-3">
-                    <DollarSign className="w-6 h-6 text-site-blue" />
-                  </div>
-                  <h2 className="text-xl font-semibold text-gray-900">Exchange Rate</h2>
                 </div>
-                <ExchangeRatePortal />
+              </motion.div>
+
+              <motion.div 
+                {...fadeInUp}
+                transition={{ duration: 0.4, delay: 0.3 }}
+                className="space-y-6"
+              >
+                <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
+                  <RentalsPortal />
+                </div>
+              </motion.div>
+            </div>
+          )}
+
+          {/* Exchange Rate - Full Width */}
+          <motion.div 
+            {...fadeInUp}
+            transition={{ duration: 0.4, delay: 0.4 }}
+            className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm"
+          >
+            <div className="flex items-center gap-4 mb-6">
+              <div className="rounded-2xl bg-blue-50 p-3">
+                <DollarSign className="w-6 h-6 text-site-blue" />
               </div>
-            </motion.div>
-          </div>
+              <h2 className="text-xl font-semibold text-gray-900">Exchange Rate</h2>
+            </div>
+            <ExchangeRatePortal />
+          </motion.div>
         </div>
       </main>
     </div>
