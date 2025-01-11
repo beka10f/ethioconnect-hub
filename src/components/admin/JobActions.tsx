@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useJobApproval } from "@/hooks/useJobApproval";
+import { CheckCircle, XCircle } from "lucide-react";
 
 interface JobActionsProps {
   jobId: string;
@@ -18,19 +19,21 @@ const JobActions = ({ jobId, onUpdate, showActions }: JobActionsProps) => {
         type="button"
         variant="outline"
         disabled={isUpdating}
-        className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white disabled:opacity-50"
+        className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white disabled:opacity-50 w-full sm:w-auto"
         onClick={() => handleApproval(jobId, "approve")}
       >
-        {isUpdating ? 'Processing...' : 'Approve'}
+        <CheckCircle className="w-4 h-4 sm:mr-2" />
+        <span className="hidden sm:inline">{isUpdating ? 'Processing...' : 'Approve'}</span>
       </Button>
       <Button
         type="button"
         variant="outline"
         disabled={isUpdating}
-        className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white disabled:opacity-50"
+        className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white disabled:opacity-50 w-full sm:w-auto"
         onClick={() => handleApproval(jobId, "reject")}
       >
-        {isUpdating ? 'Processing...' : 'Reject'}
+        <XCircle className="w-4 h-4 sm:mr-2" />
+        <span className="hidden sm:inline">{isUpdating ? 'Processing...' : 'Reject'}</span>
       </Button>
     </div>
   );

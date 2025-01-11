@@ -10,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const FormSubmissionsManagement = () => {
   const { data: jobApplications, isLoading: isLoadingJobs } = useQuery({
@@ -42,46 +43,50 @@ const FormSubmissionsManagement = () => {
       </div>
 
       <Tabs defaultValue="jobs" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="jobs">Job Applications</TabsTrigger>
+        <TabsList className="bg-white/70 backdrop-blur-sm border border-gray-200/50">
+          <TabsTrigger value="jobs" className="data-[state=active]:bg-site-blue data-[state=active]:text-white">
+            Job Applications
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="jobs">
-          <Card>
+          <Card className="bg-white/70 backdrop-blur-sm border-gray-200/50">
             <CardHeader>
               <CardTitle>Job Applications</CardTitle>
             </CardHeader>
             <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Job Title</TableHead>
-                    <TableHead>Applicant</TableHead>
-                    <TableHead>Email</TableHead>
-                    <TableHead>Phone</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Date</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {jobApplications?.map((application) => (
-                    <TableRow key={application.id}>
-                      <TableCell>{application.jobs?.title}</TableCell>
-                      <TableCell>{application.full_name}</TableCell>
-                      <TableCell>{application.email}</TableCell>
-                      <TableCell>{application.phone}</TableCell>
-                      <TableCell>
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                          {application.status}
-                        </span>
-                      </TableCell>
-                      <TableCell>
-                        {new Date(application.created_at).toLocaleDateString()}
-                      </TableCell>
+              <ScrollArea className="h-[calc(100vh-25rem)]">
+                <Table>
+                  <TableHeader className="bg-gray-50/50 backdrop-blur-sm sticky top-0 z-10">
+                    <TableRow>
+                      <TableHead className="font-medium">Job Title</TableHead>
+                      <TableHead className="font-medium">Applicant</TableHead>
+                      <TableHead className="font-medium hidden sm:table-cell">Email</TableHead>
+                      <TableHead className="font-medium hidden md:table-cell">Phone</TableHead>
+                      <TableHead className="font-medium">Status</TableHead>
+                      <TableHead className="font-medium hidden sm:table-cell">Date</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {jobApplications?.map((application) => (
+                      <TableRow key={application.id} className="hover:bg-blue-50/50">
+                        <TableCell>{application.jobs?.title}</TableCell>
+                        <TableCell>{application.full_name}</TableCell>
+                        <TableCell className="hidden sm:table-cell">{application.email}</TableCell>
+                        <TableCell className="hidden md:table-cell">{application.phone}</TableCell>
+                        <TableCell>
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                            {application.status}
+                          </span>
+                        </TableCell>
+                        <TableCell className="hidden sm:table-cell">
+                          {new Date(application.created_at).toLocaleDateString()}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </ScrollArea>
             </CardContent>
           </Card>
         </TabsContent>

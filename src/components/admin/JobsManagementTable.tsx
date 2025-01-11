@@ -10,6 +10,7 @@ import {
 import { useState } from "react";
 import type { Job } from "@/hooks/useJobsData";
 import JobActions from "./JobActions";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface JobsManagementTableProps {
   jobs: Job[];
@@ -23,7 +24,7 @@ const JobsManagementTable = ({ jobs, onJobUpdate, status, isLoading }: JobsManag
 
   if (isLoading) {
     return (
-      <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 p-4">
+      <div className="bg-white/70 backdrop-blur-sm rounded-lg shadow-sm overflow-hidden border border-gray-200/50 p-4">
         <p className="text-center text-gray-500">Loading jobs...</p>
       </div>
     );
@@ -31,7 +32,7 @@ const JobsManagementTable = ({ jobs, onJobUpdate, status, isLoading }: JobsManag
 
   if (jobs.length === 0) {
     return (
-      <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 p-4">
+      <div className="bg-white/70 backdrop-blur-sm rounded-lg shadow-sm overflow-hidden border border-gray-200/50 p-8">
         <p className="text-center text-gray-500">No jobs found</p>
       </div>
     );
@@ -39,51 +40,53 @@ const JobsManagementTable = ({ jobs, onJobUpdate, status, isLoading }: JobsManag
 
   return (
     <>
-      <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
-        <Table>
-          <TableHeader className="bg-gray-50">
-            <TableRow>
-              <TableHead className="text-gray-900">Title</TableHead>
-              <TableHead className="text-gray-900">Company</TableHead>
-              <TableHead className="text-gray-900">Location</TableHead>
-              <TableHead className="text-gray-900">Date</TableHead>
-              <TableHead className="text-gray-900">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {jobs.map((job) => (
-              <TableRow key={job.id} className="hover:bg-blue-50/50">
-                <TableCell className="font-medium text-gray-900">{job.title}</TableCell>
-                <TableCell className="text-gray-700">{job.company_name}</TableCell>
-                <TableCell className="text-gray-700">{job.location}</TableCell>
-                <TableCell className="text-gray-700">
-                  {new Date(job.created_at).toLocaleDateString()}
-                </TableCell>
-                <TableCell>
-                  <div className="flex gap-2">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
-                      onClick={() => setSelectedJob(job)}
-                    >
-                      View Details
-                    </Button>
-                    <JobActions 
-                      jobId={job.id}
-                      onUpdate={onJobUpdate}
-                      showActions={status === 'pending'}
-                    />
-                  </div>
-                </TableCell>
+      <div className="bg-white/70 backdrop-blur-sm rounded-lg shadow-sm overflow-hidden border border-gray-200/50">
+        <ScrollArea className="h-[calc(100vh-20rem)]">
+          <Table>
+            <TableHeader className="bg-gray-50/50 backdrop-blur-sm sticky top-0 z-10">
+              <TableRow>
+                <TableHead className="text-gray-900 font-medium">Title</TableHead>
+                <TableHead className="text-gray-900 font-medium">Company</TableHead>
+                <TableHead className="text-gray-900 font-medium hidden md:table-cell">Location</TableHead>
+                <TableHead className="text-gray-900 font-medium hidden sm:table-cell">Date</TableHead>
+                <TableHead className="text-gray-900 font-medium">Actions</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {jobs.map((job) => (
+                <TableRow key={job.id} className="hover:bg-blue-50/50">
+                  <TableCell className="font-medium text-gray-900">{job.title}</TableCell>
+                  <TableCell className="text-gray-700">{job.company_name}</TableCell>
+                  <TableCell className="text-gray-700 hidden md:table-cell">{job.location}</TableCell>
+                  <TableCell className="text-gray-700 hidden sm:table-cell">
+                    {new Date(job.created_at).toLocaleDateString()}
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="border-site-blue text-site-blue hover:bg-site-blue hover:text-white w-full sm:w-auto"
+                        onClick={() => setSelectedJob(job)}
+                      >
+                        View
+                      </Button>
+                      <JobActions 
+                        jobId={job.id}
+                        onUpdate={onJobUpdate}
+                        showActions={status === 'pending'}
+                      />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </ScrollArea>
       </div>
 
       <Dialog open={!!selectedJob} onOpenChange={(open) => !open && setSelectedJob(null)}>
-        <DialogContent className="sm:max-w-[600px]">
+        <DialogContent className="sm:max-w-[600px] bg-white/90 backdrop-blur-sm">
           <DialogHeader>
             <DialogTitle className="text-xl font-semibold">{selectedJob?.title}</DialogTitle>
             <DialogDescription>
