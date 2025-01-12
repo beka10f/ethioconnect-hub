@@ -19,6 +19,7 @@ const ShippingCalculator = () => {
   const [showReceipt, setShowReceipt] = React.useState(false);
   const [currentData, setCurrentData] = React.useState<ShippingFormData | null>(null);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
   const [confirmationId, setConfirmationId] = React.useState<string>("");
   const { toast } = useToast();
 
@@ -79,28 +80,30 @@ const ShippingCalculator = () => {
   return (
     <>
       <div id="shipping-calculator" className="w-full mx-auto">
-        <Card className="w-full bg-white shadow-lg">
-          <div className="space-y-4 sm:space-y-6">
-            <div className="text-center">
-              <div className="flex items-center justify-center gap-4 mb-4">
+        <Card className="w-full bg-white shadow-sm hover:shadow-md transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]">
+          <div className="space-y-6">
+            <div className="text-center border-b border-gray-100 px-4 py-6 sm:px-6">
+              <div className="flex items-center justify-center gap-4 mb-6">
                 <div className="rounded-xl bg-blue-50 p-3">
                   <Package className="w-6 h-6 text-site-blue" />
                 </div>
                 <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Ship to Ethiopia</h2>
               </div>
-              <Collapsible className="w-full">
-                <CollapsibleTrigger className="flex items-center justify-center gap-2 text-sm sm:text-base text-primary hover:text-primary/80 mx-auto">
+              <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
+                <CollapsibleTrigger className="flex items-center justify-center gap-2 text-sm sm:text-base text-primary hover:text-primary/80 mx-auto group">
                   <InfoIcon className="h-4 w-4" />
                   <span>How it works</span>
-                  <ChevronDown className="h-4 w-4 transition-transform duration-200" />
+                  <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
                 </CollapsibleTrigger>
-                <CollapsibleContent className="mt-2 space-y-2 text-sm text-gray-600 bg-gray-50 p-4 rounded-lg mx-4">
-                  <ol className="list-decimal list-inside space-y-1">
-                    <li>Enter package details for price</li>
-                    <li>Get receipt</li>
-                    <li>Drop off package</li>
-                    <li>Pickup in Ethiopia</li>
-                  </ol>
+                <CollapsibleContent className="mt-4 mx-auto max-w-md">
+                  <div className="bg-gray-50 rounded-xl p-4 shadow-inner">
+                    <ol className="list-decimal list-inside space-y-2 text-sm text-gray-600">
+                      <li>Enter package details for price</li>
+                      <li>Get receipt</li>
+                      <li>Drop off package</li>
+                      <li>Pickup in Ethiopia</li>
+                    </ol>
+                  </div>
                 </CollapsibleContent>
               </Collapsible>
             </div>

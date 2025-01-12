@@ -24,7 +24,7 @@ const Index = () => {
       
       <main className="w-full max-w-6xl mx-auto py-8 sm:py-12">
         {/* Hero Section */}
-        <div className="text-center mb-12 px-6 sm:px-8">
+        <div className="text-center mb-12 px-4 sm:px-6">
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
             Ethiopian DMV Hub
           </h1>
@@ -38,7 +38,7 @@ const Index = () => {
           <motion.div 
             {...fadeInUp}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="grid grid-cols-2 gap-3 mb-6 px-6 sm:px-8"
+            className="grid grid-cols-2 gap-3 mb-6 px-4 sm:px-6"
           >
             <Link to="/jobs" className="block">
               <Button 
@@ -62,11 +62,11 @@ const Index = () => {
           </motion.div>
         )}
 
-        <div className="space-y-8 lg:space-y-12 px-6 sm:px-8">
+        <div className="space-y-8 lg:space-y-12 px-4 sm:px-6">
           {/* Shipping Calculator - Full Width */}
           <motion.div 
             {...fadeInUp}
-            className="w-full rounded-3xl overflow-hidden bg-white border border-gray-100 shadow-sm"
+            className="w-full rounded-3xl overflow-hidden"
           >
             <ShippingCalculator />
           </motion.div>
