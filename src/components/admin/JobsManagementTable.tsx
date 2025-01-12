@@ -12,6 +12,8 @@ import type { Job } from "@/hooks/useJobsData";
 import JobActions from "./JobActions";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { ChevronRight, MapPin, Calendar } from "lucide-react";
 
 interface JobsManagementTableProps {
   jobs: Job[];
@@ -39,33 +41,52 @@ const JobsManagementTable = ({ jobs, onJobUpdate, status, isLoading }: JobsManag
     );
   }
 
+  const getStatusColor = (jobStatus: string) => {
+    switch (jobStatus) {
+      case 'approved':
+        return 'bg-green-100 text-green-800 border-green-200';
+      case 'rejected':
+        return 'bg-red-100 text-red-800 border-red-200';
+      default:
+        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+    }
+  };
+
   const MobileJobCard = ({ job }: { job: Job }) => (
-    <Card className="mb-4 last:mb-0">
-      <CardContent className="p-4 space-y-4">
-        <div>
-          <h3 className="font-medium text-gray-900">{job.title}</h3>
-          <p className="text-sm text-gray-500">{job.company_name}</p>
-        </div>
-        <div className="space-y-2">
-          <p className="text-sm text-gray-600">{job.location}</p>
-          <p className="text-sm text-gray-600">
-            {new Date(job.created_at).toLocaleDateString()}
-          </p>
-        </div>
-        <div className="flex flex-col gap-2">
-          <Button
-            type="button"
-            variant="outline"
-            className="w-full border-site-blue text-site-blue hover:bg-site-blue hover:text-white"
-            onClick={() => setSelectedJob(job)}
-          >
-            View
-          </Button>
-          <JobActions 
-            jobId={job.id}
-            onUpdate={onJobUpdate}
-            showActions={status === 'pending'}
-          />
+    <Card 
+      className="mb-3 last:mb-0 overflow-hidden border-0 shadow-sm"
+      onClick={() => setSelectedJob(job)}
+    >
+      <CardContent className="p-0">
+        <div className="px-4 py-3 bg-white">
+          <div className="flex items-start justify-between gap-2">
+            <div className="flex-1 min-w-0">
+              <h3 className="font-medium text-gray-900 truncate">{job.title}</h3>
+              <p className="text-sm text-gray-500 mt-0.5">{job.company_name}</p>
+            </div>
+            <ChevronRight className="w-5 h-5 text-gray-400 flex-shrink-0 mt-1" />
+          </div>
+          
+          <div className="mt-2 space-y-1.5">
+            <div className="flex items-center text-sm text-gray-600">
+              <MapPin className="w-4 h-4 mr-1.5 text-gray-400" />
+              <span className="truncate">{job.location}</span>
+            </div>
+            <div className="flex items-center text-sm text-gray-600">
+              <Calendar className="w-4 h-4 mr-1.5 text-gray-400" />
+              <span>{new Date(job.created_at).toLocaleDateString()}</span>
+            </div>
+          </div>
+          
+          {status === 'pending' && (
+            <div className="mt-3 flex gap-2">
+              <JobActions 
+                jobId={job.id}
+                onUpdate={onJobUpdate}
+                showActions={true}
+              />
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>
@@ -75,7 +96,7 @@ const JobsManagementTable = ({ jobs, onJobUpdate, status, isLoading }: JobsManag
     <>
       <div className="bg-white/70 backdrop-blur-sm rounded-lg shadow-sm overflow-hidden border border-gray-200/50">
         <ScrollArea className="h-[calc(100vh-20rem)]">
-          <div className="md:hidden p-4">
+          <div className="md:hidden px-4 py-2">
             {jobs.map((job) => (
               <MobileJobCard key={job.id} job={job} />
             ))}
@@ -126,29 +147,29 @@ const JobsManagementTable = ({ jobs, onJobUpdate, status, isLoading }: JobsManag
       </div>
 
       <Dialog open={!!selectedJob} onOpenChange={(open) => !open && setSelectedJob(null)}>
-        <DialogContent className="sm:max-w-[600px] bg-white/90 backdrop-blur-sm">
-          <DialogHeader>
+        <DialogContent className="sm:max-w-[600px] p-0">
+          <DialogHeader className="p-6 pb-0">
             <DialogTitle className="text-xl font-semibold">{selectedJob?.title}</DialogTitle>
-            <DialogDescription>
+            <DialogDescription className="text-sm text-gray-500">
               Posted by {selectedJob?.company_name} on {selectedJob?.created_at && new Date(selectedJob.created_at).toLocaleDateString()}
             </DialogDescription>
           </DialogHeader>
-          <div className="space-y-4">
+          <div className="px-6 py-4 space-y-4">
             <div>
-              <h4 className="font-medium text-gray-900">Description</h4>
-              <p className="text-gray-700 mt-1">{selectedJob?.description}</p>
+              <h4 className="font-medium text-gray-900 mb-1">Description</h4>
+              <p className="text-gray-700">{selectedJob?.description}</p>
             </div>
             <div>
-              <h4 className="font-medium text-gray-900">Location</h4>
-              <p className="text-gray-700 mt-1">{selectedJob?.location}</p>
+              <h4 className="font-medium text-gray-900 mb-1">Location</h4>
+              <p className="text-gray-700">{selectedJob?.location}</p>
             </div>
             <div>
-              <h4 className="font-medium text-gray-900">Contact Information</h4>
-              <p className="text-gray-700 mt-1">Email: {selectedJob?.contact_info}</p>
+              <h4 className="font-medium text-gray-900 mb-1">Contact Information</h4>
+              <p className="text-gray-700">Email: {selectedJob?.contact_info}</p>
               <p className="text-gray-700">Phone: {selectedJob?.phone_number}</p>
             </div>
             {status === 'pending' && selectedJob && (
-              <div className="flex justify-end gap-2 pt-4">
+              <div className="flex justify-end gap-2 pt-4 border-t">
                 <JobActions 
                   jobId={selectedJob.id}
                   onUpdate={() => {
