@@ -10,6 +10,7 @@ import { DollarSign, Briefcase, Home, Package, FileText } from "lucide-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import FormSubmissionsManagement from "@/components/admin/FormSubmissionsManagement";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const queryClient = new QueryClient();
 
@@ -34,100 +35,102 @@ const Admin = () => {
     <QueryClientProvider client={queryClient}>
       <div className="min-h-screen bg-gray-50/50 backdrop-blur-sm">
         <Header />
-        <main className="container mx-auto py-4 sm:py-8 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8">
-            <div className="space-y-2">
-              <h1 className="text-3xl sm:text-4xl font-semibold text-gray-900">
-                Admin Dashboard
-              </h1>
-              <p className="text-base sm:text-lg text-gray-600">
-                Manage your platform's content and settings
-              </p>
-            </div>
-
-            <Tabs defaultValue="submissions" className="space-y-6 sm:space-y-8">
-              <div className="sticky top-0 z-30 -mx-4 px-4 py-3 bg-gray-50/80 backdrop-blur-sm border-b border-gray-200/50">
-                <TabsList className="w-full grid grid-cols-2 sm:grid-cols-5 gap-1 bg-white/70 backdrop-blur-sm p-1 rounded-xl shadow-sm border border-gray-200/50">
-                  <TabsTrigger 
-                    value="submissions" 
-                    className="data-[state=active]:bg-site-blue data-[state=active]:text-white"
-                  >
-                    <FileText className="w-4 h-4 sm:mr-2" />
-                    <span className="hidden sm:inline">Forms</span>
-                  </TabsTrigger>
-                  <TabsTrigger 
-                    value="exchange" 
-                    className="data-[state=active]:bg-site-blue data-[state=active]:text-white"
-                  >
-                    <DollarSign className="w-4 h-4 sm:mr-2" />
-                    <span className="hidden sm:inline">Exchange</span>
-                  </TabsTrigger>
-                  <TabsTrigger 
-                    value="jobs"
-                    className="data-[state=active]:bg-site-blue data-[state=active]:text-white"
-                  >
-                    <Briefcase className="w-4 h-4 sm:mr-2" />
-                    <span className="hidden sm:inline">Jobs</span>
-                  </TabsTrigger>
-                  <TabsTrigger 
-                    value="rentals"
-                    className="data-[state=active]:bg-site-blue data-[state=active]:text-white"
-                  >
-                    <Home className="w-4 h-4 sm:mr-2" />
-                    <span className="hidden sm:inline">Rentals</span>
-                  </TabsTrigger>
-                  <TabsTrigger 
-                    value="shipping"
-                    className="data-[state=active]:bg-site-blue data-[state=active]:text-white"
-                  >
-                    <Package className="w-4 h-4 sm:mr-2" />
-                    <span className="hidden sm:inline">Shipping</span>
-                  </TabsTrigger>
-                </TabsList>
+        <ScrollArea className="h-[calc(100vh-4rem)]">
+          <main className="container mx-auto py-4 px-4">
+            <div className="max-w-7xl mx-auto space-y-4 sm:space-y-8">
+              <div className="space-y-2">
+                <h1 className="text-2xl sm:text-4xl font-semibold text-gray-900">
+                  Admin Dashboard
+                </h1>
+                <p className="text-sm sm:text-base text-gray-600">
+                  Manage your platform's content and settings
+                </p>
               </div>
 
-              <TabsContent value="submissions" className="mt-6 space-y-6 animate-fade-in">
-                <Card className="bg-white/70 backdrop-blur-sm shadow-sm border-gray-200/50">
-                  <CardContent className="p-4 sm:p-6">
-                    <FormSubmissionsManagement />
-                  </CardContent>
-                </Card>
-              </TabsContent>
+              <Tabs defaultValue="submissions" className="space-y-4">
+                <div className={`sticky ${isMobile ? 'bottom-0' : 'top-0'} z-30 -mx-4 px-4 py-3 bg-white/80 backdrop-blur-sm border-t sm:border-b border-gray-200/50`}>
+                  <TabsList className="w-full grid grid-cols-5 gap-1 bg-gray-100/70 backdrop-blur-sm p-1 rounded-xl">
+                    <TabsTrigger 
+                      value="submissions" 
+                      className="flex flex-col items-center py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                    >
+                      <FileText className="w-5 h-5" />
+                      <span className="text-xs mt-1">Forms</span>
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="exchange" 
+                      className="flex flex-col items-center py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                    >
+                      <DollarSign className="w-5 h-5" />
+                      <span className="text-xs mt-1">Exchange</span>
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="jobs"
+                      className="flex flex-col items-center py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                    >
+                      <Briefcase className="w-5 h-5" />
+                      <span className="text-xs mt-1">Jobs</span>
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="rentals"
+                      className="flex flex-col items-center py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                    >
+                      <Home className="w-5 h-5" />
+                      <span className="text-xs mt-1">Rentals</span>
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="shipping"
+                      className="flex flex-col items-center py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                    >
+                      <Package className="w-5 h-5" />
+                      <span className="text-xs mt-1">Shipping</span>
+                    </TabsTrigger>
+                  </TabsList>
+                </div>
 
-              <TabsContent value="exchange" className="mt-6 space-y-6 animate-fade-in">
-                <Card className="bg-white/70 backdrop-blur-sm shadow-sm border-gray-200/50">
-                  <CardContent className="p-4 sm:p-6">
-                    <ExchangeRateManagement />
-                  </CardContent>
-                </Card>
-              </TabsContent>
+                <TabsContent value="submissions" className="mt-4 space-y-4 animate-fade-in pb-24">
+                  <Card className="bg-white shadow-sm border-gray-200/50">
+                    <CardContent className="p-4">
+                      <FormSubmissionsManagement />
+                    </CardContent>
+                  </Card>
+                </TabsContent>
 
-              <TabsContent value="jobs" className="mt-6 space-y-6 animate-fade-in">
-                <Card className="bg-white/70 backdrop-blur-sm shadow-sm border-gray-200/50">
-                  <CardContent className="p-4 sm:p-6">
-                    <JobsManagement />
-                  </CardContent>
-                </Card>
-              </TabsContent>
+                <TabsContent value="exchange" className="mt-4 space-y-4 animate-fade-in pb-24">
+                  <Card className="bg-white shadow-sm border-gray-200/50">
+                    <CardContent className="p-4">
+                      <ExchangeRateManagement />
+                    </CardContent>
+                  </Card>
+                </TabsContent>
 
-              <TabsContent value="rentals" className="mt-6 space-y-6 animate-fade-in">
-                <Card className="bg-white/70 backdrop-blur-sm shadow-sm border-gray-200/50">
-                  <CardContent className="p-4 sm:p-6">
-                    <RentalsManagement />
-                  </CardContent>
-                </Card>
-              </TabsContent>
+                <TabsContent value="jobs" className="mt-4 space-y-4 animate-fade-in pb-24">
+                  <Card className="bg-white shadow-sm border-gray-200/50">
+                    <CardContent className="p-4">
+                      <JobsManagement />
+                    </CardContent>
+                  </Card>
+                </TabsContent>
 
-              <TabsContent value="shipping" className="mt-6 space-y-6 animate-fade-in">
-                <Card className="bg-white/70 backdrop-blur-sm shadow-sm border-gray-200/50">
-                  <CardContent className="p-4 sm:p-6">
-                    <ShippingManagement />
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            </Tabs>
-          </div>
-        </main>
+                <TabsContent value="rentals" className="mt-4 space-y-4 animate-fade-in pb-24">
+                  <Card className="bg-white shadow-sm border-gray-200/50">
+                    <CardContent className="p-4">
+                      <RentalsManagement />
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+
+                <TabsContent value="shipping" className="mt-4 space-y-4 animate-fade-in pb-24">
+                  <Card className="bg-white shadow-sm border-gray-200/50">
+                    <CardContent className="p-4">
+                      <ShippingManagement />
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+              </Tabs>
+            </div>
+          </main>
+        </ScrollArea>
       </div>
     </QueryClientProvider>
   );
