@@ -21,16 +21,32 @@ const Header = () => {
 
   useEffect(() => {
     // Check initial auth state
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setIsLoggedIn(!!session);
-    });
+    const checkAuth = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        setIsLoggedIn(!!session);
 
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      setIsLoggedIn(!!session);
-    });
+        // Set up auth state change listener
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+          if (event === 'SIGNED_OUT') {
+            setIsLoggedIn(false);
+            // Clear any stored tokens
+            supabase.auth.signOut();
+          } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+            setIsLoggedIn(!!session);
+          }
+        });
 
-    return () => subscription.unsubscribe();
+        return () => {
+          subscription.unsubscribe();
+        };
+      } catch (error) {
+        console.error('Auth check error:', error);
+        setIsLoggedIn(false);
+      }
+    };
+
+    checkAuth();
   }, []);
 
   const handleLogout = async () => {
@@ -39,6 +55,7 @@ const Header = () => {
       toast.success("Logged out successfully");
       navigate("/");
     } catch (error) {
+      console.error('Logout error:', error);
       toast.error("Error logging out");
     }
   };
