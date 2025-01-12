@@ -1,15 +1,7 @@
 import React from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { format } from "date-fns";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Package, Calendar, DollarSign } from "lucide-react";
+import { Package, Calendar, DollarSign, Scale } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
@@ -52,27 +44,32 @@ const ShippingManagementTable = ({ shippingRequests, isLoading }: ShippingManage
 
   const MobileShippingCard = ({ request }: { request: ShippingDetails }) => (
     <Card className="mb-4 last:mb-0">
-      <CardContent className="p-4 space-y-4">
+      <CardContent className="p-4 space-y-3">
         <div>
-          <h3 className="font-medium text-gray-900">{request.customer_name}</h3>
-          <p className="text-sm text-gray-500">{request.phone}</p>
+          <h3 className="text-lg font-semibold text-gray-900">{request.customer_name}</h3>
+          <p className="text-sm text-gray-500 mt-0.5">{request.phone}</p>
         </div>
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <Package className="h-4 w-4 text-gray-500" />
-            <span>
+
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-1.5">
+            <Scale className="w-4 h-4 text-site-blue" />
+            <span className="text-sm font-medium">
               {request.weight} {request.weight_unit}
             </span>
           </div>
-          <div className="flex items-center gap-2">
-            <Calendar className="h-4 w-4 text-gray-500" />
-            <span>{format(new Date(request.shipping_date), "MMM d, yyyy")}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <DollarSign className="h-4 w-4 text-gray-500" />
-            <span>${request.cost}</span>
+          <div className="flex items-center gap-1.5">
+            <DollarSign className="w-4 h-4 text-site-blue" />
+            <span className="text-sm font-medium">${request.cost}</span>
           </div>
         </div>
+
+        <div className="flex items-center gap-1.5 text-gray-500">
+          <Calendar className="w-4 h-4" />
+          <span className="text-sm">
+            {new Date(request.shipping_date).toLocaleDateString()}
+          </span>
+        </div>
+
         <Badge
           variant="secondary"
           className={`${statusColors[request.status]} border-none w-full justify-center`}
@@ -122,7 +119,7 @@ const ShippingManagementTable = ({ shippingRequests, isLoading }: ShippingManage
                   <TableCell>
                     <div className="flex items-center gap-2">
                       <Calendar className="h-4 w-4 text-gray-500" />
-                      <span>{format(new Date(request.shipping_date), "MMM d, yyyy")}</span>
+                      <span>{new Date(request.shipping_date).toLocaleDateString()}</span>
                     </div>
                   </TableCell>
                   <TableCell>
