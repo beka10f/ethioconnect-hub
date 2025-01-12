@@ -36,8 +36,8 @@ const Admin = () => {
       <div className="min-h-screen bg-gray-50/50 backdrop-blur-sm">
         <Header />
         <ScrollArea className="h-[calc(100vh-4rem)]">
-          <main className="container mx-auto py-4 px-4">
-            <div className="max-w-7xl mx-auto space-y-4 sm:space-y-8">
+          <main className="container max-w-7xl mx-auto py-4 px-4">
+            <div className="space-y-4 sm:space-y-8 pb-24">
               <div className="space-y-2">
                 <h1 className="text-2xl sm:text-4xl font-semibold text-gray-900">
                   Admin Dashboard
@@ -88,7 +88,7 @@ const Admin = () => {
                   </TabsList>
                 </div>
 
-                <TabsContent value="submissions" className="mt-4 space-y-4 animate-fade-in pb-24">
+                <TabsContent value="submissions" className="mt-4 space-y-4 animate-fade-in">
                   <Card className="bg-white shadow-sm border-gray-200/50">
                     <CardContent className="p-4">
                       <FormSubmissionsManagement />
@@ -96,7 +96,7 @@ const Admin = () => {
                   </Card>
                 </TabsContent>
 
-                <TabsContent value="exchange" className="mt-4 space-y-4 animate-fade-in pb-24">
+                <TabsContent value="exchange" className="mt-4 space-y-4 animate-fade-in">
                   <Card className="bg-white shadow-sm border-gray-200/50">
                     <CardContent className="p-4">
                       <ExchangeRateManagement />
@@ -104,7 +104,7 @@ const Admin = () => {
                   </Card>
                 </TabsContent>
 
-                <TabsContent value="jobs" className="mt-4 space-y-4 animate-fade-in pb-24">
+                <TabsContent value="jobs" className="mt-4 space-y-4 animate-fade-in">
                   <Card className="bg-white shadow-sm border-gray-200/50">
                     <CardContent className="p-4">
                       <JobsManagement />
@@ -112,7 +112,7 @@ const Admin = () => {
                   </Card>
                 </TabsContent>
 
-                <TabsContent value="rentals" className="mt-4 space-y-4 animate-fade-in pb-24">
+                <TabsContent value="rentals" className="mt-4 space-y-4 animate-fade-in">
                   <Card className="bg-white shadow-sm border-gray-200/50">
                     <CardContent className="p-4">
                       <RentalsManagement />
@@ -120,7 +120,7 @@ const Admin = () => {
                   </Card>
                 </TabsContent>
 
-                <TabsContent value="shipping" className="mt-4 space-y-4 animate-fade-in pb-24">
+                <TabsContent value="shipping" className="mt-4 space-y-4 animate-fade-in">
                   <Card className="bg-white shadow-sm border-gray-200/50">
                     <CardContent className="p-4">
                       <ShippingManagement />

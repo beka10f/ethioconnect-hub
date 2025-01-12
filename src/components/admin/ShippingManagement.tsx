@@ -23,9 +23,9 @@ const ShippingManagement = () => {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div>
-        <h2 className="text-2xl font-semibold text-gray-900">
+        <h2 className="text-xl font-semibold text-gray-900">
           Shipping Requests
         </h2>
         <p className="text-sm text-gray-500 mt-1">
@@ -33,11 +33,11 @@ const ShippingManagement = () => {
         </p>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>All Requests</CardTitle>
+      <Card className="overflow-hidden">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-lg">All Requests</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="-mx-4 sm:mx-0">
           <ShippingManagementTable
             shippingRequests={shippingRequests || []}
             isLoading={isLoading}
