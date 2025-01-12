@@ -78,29 +78,31 @@ const ShippingCalculator = () => {
 
   return (
     <>
-      <div id="shipping-calculator" className="w-full mx-auto px-0">
+      <div id="shipping-calculator" className="w-full mx-auto px-4 sm:px-6">
         <Card className="w-full p-4 sm:p-6 bg-white shadow-lg">
           <div className="space-y-4 sm:space-y-6">
-            <div className="flex items-center gap-4">
-              <div className="rounded-xl bg-blue-50 p-3">
-                <Package className="w-6 h-6 text-site-blue" />
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-4 mb-4">
+                <div className="rounded-xl bg-blue-50 p-3">
+                  <Package className="w-6 h-6 text-site-blue" />
+                </div>
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Ship to Ethiopia</h2>
               </div>
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Ship to Ethiopia</h2>
+              <Collapsible className="w-full">
+                <CollapsibleTrigger className="flex items-center justify-center gap-2 text-sm sm:text-base text-primary hover:text-primary/80">
+                  <InfoIcon className="h-4 w-4" />
+                  <span>How it works</span>
+                </CollapsibleTrigger>
+                <CollapsibleContent className="mt-2 space-y-2 text-sm text-gray-600">
+                  <ol className="list-decimal list-inside space-y-1">
+                    <li>Enter package details for price</li>
+                    <li>Get receipt</li>
+                    <li>Drop off package</li>
+                    <li>Pickup in Ethiopia</li>
+                  </ol>
+                </CollapsibleContent>
+              </Collapsible>
             </div>
-            <Collapsible className="w-full">
-              <CollapsibleTrigger className="flex items-center gap-2 text-sm sm:text-base text-primary hover:text-primary/80">
-                <InfoIcon className="h-4 w-4" />
-                <span>How it works</span>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="mt-2 space-y-2 text-sm text-gray-600">
-                <ol className="list-decimal list-inside space-y-1">
-                  <li>Enter package details for price</li>
-                  <li>Get receipt</li>
-                  <li>Drop off package</li>
-                  <li>Pickup in Ethiopia</li>
-                </ol>
-              </CollapsibleContent>
-            </Collapsible>
 
             <ShippingForm onSubmit={handleSubmit} />
             <PricingGuide />

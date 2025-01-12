@@ -22,7 +22,17 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <Header />
       
-      <main className="w-full px-4 py-6 sm:px-6 lg:px-8 xl:px-10 max-w-[1440px] mx-auto">
+      <main className="w-full max-w-6xl mx-auto px-6 sm:px-8 py-8 sm:py-12">
+        {/* Hero Section */}
+        <div className="text-center mb-12">
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            Ethiopian DMV Hub
+          </h1>
+          <p className="text-lg text-gray-600">
+            Your one-stop platform for Ethiopian community services in the DMV area.
+          </p>
+        </div>
+        
         {/* Mobile Quick Actions */}
         {isMobile && (
           <motion.div 
@@ -52,7 +62,7 @@ const Index = () => {
           </motion.div>
         )}
 
-        <div className="space-y-6 lg:space-y-8">
+        <div className="space-y-8 lg:space-y-12">
           {/* Shipping Calculator - Full Width */}
           <motion.div 
             {...fadeInUp}
@@ -63,7 +73,7 @@ const Index = () => {
 
           {/* Desktop Layout */}
           {!isMobile && (
-            <div className="grid lg:grid-cols-2 gap-6">
+            <div className="grid lg:grid-cols-2 gap-8">
               <motion.div 
                 {...fadeInUp}
                 transition={{ duration: 0.4, delay: 0.2 }}
