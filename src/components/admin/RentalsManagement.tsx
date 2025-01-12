@@ -41,14 +41,14 @@ const RentalsManagement = () => {
       </CardHeader>
       <CardContent className="px-0">
         <Tabs defaultValue="pending" className="w-full">
-          <TabsList className="w-full sm:w-auto grid grid-cols-4 sm:inline-flex gap-1 bg-white border">
+          <TabsList className="w-full grid grid-cols-2 sm:grid-cols-4 gap-1 bg-white border rounded-lg p-1">
             <TabsTrigger 
               value="pending" 
               onClick={() => setSelectedStatus('pending')}
               className="flex items-center gap-2 data-[state=active]:bg-site-blue data-[state=active]:text-white"
             >
               <Clock className="w-4 h-4" />
-              Pending
+              <span className="whitespace-nowrap">Pending</span>
             </TabsTrigger>
             <TabsTrigger 
               value="approved" 
@@ -56,7 +56,7 @@ const RentalsManagement = () => {
               className="flex items-center gap-2 data-[state=active]:bg-site-blue data-[state=active]:text-white"
             >
               <CheckCircle className="w-4 h-4" />
-              Approved
+              <span className="whitespace-nowrap">Approved</span>
             </TabsTrigger>
             <TabsTrigger 
               value="rejected" 
@@ -64,14 +64,14 @@ const RentalsManagement = () => {
               className="flex items-center gap-2 data-[state=active]:bg-site-blue data-[state=active]:text-white"
             >
               <XCircle className="w-4 h-4" />
-              Rejected
+              <span className="whitespace-nowrap">Rejected</span>
             </TabsTrigger>
             <TabsTrigger 
               value="applications"
               className="flex items-center gap-2 data-[state=active]:bg-site-blue data-[state=active]:text-white"
             >
               <Users className="w-4 h-4" />
-              Applications
+              <span className="whitespace-nowrap">Applications</span>
             </TabsTrigger>
           </TabsList>
 
