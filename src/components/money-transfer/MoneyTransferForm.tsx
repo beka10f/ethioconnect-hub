@@ -27,7 +27,7 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
     watch,
   } = useForm<TransferFormData>();
 
-  const amountUSD = watch("amountUSD", 0);
+  const amountUSD = watch("amount_usd", 0);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -69,7 +69,7 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
         .from('money_transfers')
         .insert({
           ...data,
-          amount_etb: data.amountUSD * currentRate,
+          amount_etb: data.amount_usd * currentRate,
           exchange_rate: currentRate,
           payment_proof_url: fileName,
           digital_signature: signature?.getTrimmedCanvas().toDataURL(),

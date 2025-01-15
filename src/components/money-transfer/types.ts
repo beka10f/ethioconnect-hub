@@ -1,9 +1,9 @@
 export interface TransferFormData {
-  senderName: string;
-  senderPhone: string;
-  recipientName: string;
-  recipientPhone: string;
-  recipientBankName: string;
-  recipientBankNumber: string;
-  amountUSD: number;
+  sender_name: string;
+  sender_phone: string;
+  recipient_name: string;
+  recipient_phone: string;
+  recipient_bank_name: string;
+  recipient_bank_number: string;
+  amount_usd: number;
 }
