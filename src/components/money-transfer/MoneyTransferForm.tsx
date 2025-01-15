@@ -106,24 +106,6 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
         return;
       }
 
-      // Get the current user
-      const { data: { user }, error: userError } = await supabase.auth.getUser();
-      console.log("User data:", user);
-      
-      if (userError) {
-        console.error("User error:", userError);
-        throw userError;
-      }
-
-      if (!user) {
-        toast({
-          title: "Error",
-          description: "You must be logged in to make a transfer",
-          variant: "destructive",
-        });
-        return;
-      }
-
       const fileExt = paymentProof.name.split('.').pop();
       const fileName = `${Math.random()}.${fileExt}`;
       console.log("Uploading file:", fileName);
@@ -147,7 +129,6 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
           exchange_rate: currentRate,
           payment_proof_url: fileName,
           digital_signature: signature?.getTrimmedCanvas().toDataURL(),
-          created_by: user.id,
         });
 
       if (transferError) {
