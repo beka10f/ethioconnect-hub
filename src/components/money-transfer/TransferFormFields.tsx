@@ -1,5 +1,6 @@
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useFormContext } from "react-hook-form";
 import { TransferFormData } from "./types";
 
 interface TransferFormFieldsProps {
@@ -11,6 +12,7 @@ export const TransferFormFields = ({
   amountUSD,
   currentRate,
 }: TransferFormFieldsProps) => {
+  const form = useFormContext<TransferFormData>();
   const amountETB = amountUSD * currentRate;
 
   return (
@@ -137,11 +139,16 @@ export const TransferFormFields = ({
                 <FormLabel className="text-base font-medium">Amount (USD)</FormLabel>
                 <FormControl>
                   <Input 
-                    type="number" 
+                    type="number"
+                    min="0"
+                    step="0.01"
                     placeholder="Enter amount in USD" 
                     className="h-12 text-base"
-                    {...field}
-                    onChange={(e) => field.onChange(Number(e.target.value))}
+                    value={field.value || ''}
+                    onChange={(e) => {
+                      const value = e.target.value === '' ? 0 : parseFloat(e.target.value);
+                      field.onChange(value);
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
