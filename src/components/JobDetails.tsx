@@ -37,6 +37,7 @@ interface JobDetailsProps {
 
 const JobDetails = ({ id, onClose }: JobDetailsProps) => {
   const [job, setJob] = useState<any>(null);
+  const [showApplicationForm, setShowApplicationForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -114,81 +115,98 @@ const JobDetails = ({ id, onClose }: JobDetailsProps) => {
             <p className="mt-1 text-gray-700">{job.description}</p>
           </div>
 
-          <div className="border-t pt-6">
-            <h4 className="font-medium text-gray-900 mb-4">Apply for this position</h4>
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                <FormField
-                  control={form.control}
-                  name="full_name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-left">Full Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="John Doe" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-left">Email</FormLabel>
-                      <FormControl>
-                        <Input type="email" placeholder="john@example.com" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="phone"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-left">Phone Number</FormLabel>
-                      <FormControl>
-                        <Input placeholder="(555) 123-4567" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="cover_letter"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-left">Cover Letter (Optional)</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          placeholder="Tell us why you're interested in this position..."
-                          className="min-h-[100px]"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <div className="flex justify-end gap-2">
-                  <Button type="button" variant="outline" onClick={onClose}>
-                    Cancel
-                  </Button>
-                  <Button type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? "Submitting..." : "Submit Application"}
-                  </Button>
-                </div>
-              </form>
-            </Form>
+          <div>
+            <h4 className="font-medium text-gray-900">Contact Information</h4>
+            <p className="mt-1 text-gray-700">Email: {job.contact_info}</p>
+            <p className="text-gray-700">Phone: {job.phone_number}</p>
           </div>
+
+          {!showApplicationForm ? (
+            <div className="flex justify-end">
+              <Button 
+                onClick={() => setShowApplicationForm(true)}
+                className="bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                Apply Now
+              </Button>
+            </div>
+          ) : (
+            <div className="border-t pt-6">
+              <h4 className="font-medium text-gray-900 mb-4">Apply for this position</h4>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                  <FormField
+                    control={form.control}
+                    name="full_name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Full Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="John Doe" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input type="email" placeholder="john@example.com" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Phone Number</FormLabel>
+                        <FormControl>
+                          <Input placeholder="(555) 123-4567" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="cover_letter"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Cover Letter (Optional)</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            placeholder="Tell us why you're interested in this position..."
+                            className="min-h-[100px]"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <div className="flex justify-end gap-2">
+                    <Button type="button" variant="outline" onClick={() => setShowApplicationForm(false)}>
+                      Back
+                    </Button>
+                    <Button type="submit" disabled={isSubmitting}>
+                      {isSubmitting ? "Submitting..." : "Submit Application"}
+                    </Button>
+                  </div>
+                </form>
+              </Form>
+            </div>
+          )}
         </div>
       </DialogContent>
     </Dialog>
