@@ -18,7 +18,7 @@ export const TransferFormFields = ({
   const amountETB = amountUSD * currentRate;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <FormField
         label="Sender's Name"
         id="sender_name"
@@ -80,8 +80,8 @@ export const TransferFormFields = ({
       />
 
       <div className="flex flex-col space-y-2">
-        <label className="text-gray-900 font-medium">Amount (ETB)</label>
-        <div className="h-10 px-3 py-2 border rounded-md bg-gray-50">
+        <label className="text-sm font-medium text-gray-900">Amount (ETB)</label>
+        <div className="h-10 px-3 py-2 rounded-md border border-gray-200 bg-gray-50/50 text-gray-500">
           {amountETB.toFixed(2)} ETB
         </div>
       </div>

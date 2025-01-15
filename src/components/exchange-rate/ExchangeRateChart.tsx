@@ -10,7 +10,7 @@ interface ExchangeRateChartProps {
 
 export const ExchangeRateChart = ({ data }: ExchangeRateChartProps) => {
   return (
-    <div className="mt-6 bg-gray-50 rounded-xl p-4 sm:p-6">
+    <div className="mt-8 bg-gray-50/50 rounded-2xl p-6">
       <div className="h-[300px] w-full">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data} margin={{ top: 10, right: 10, bottom: 20, left: 10 }}>
@@ -33,7 +33,7 @@ export const ExchangeRateChart = ({ data }: ExchangeRateChartProps) => {
               contentStyle={{ 
                 backgroundColor: 'white',
                 border: '1px solid #E5E7EB',
-                borderRadius: '8px',
+                borderRadius: '12px',
                 boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
               }}
             />

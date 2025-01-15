@@ -16,9 +16,9 @@ export const ExchangeRateDisplay = ({
   const isMobile = useIsMobile();
 
   return (
-    <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6">
-      <div className="w-full sm:w-auto text-center sm:text-left">
-        <div className="text-4xl font-bold text-gray-900">
+    <div className="flex flex-col items-center gap-6 py-4">
+      <div className="text-center">
+        <div className="text-4xl sm:text-5xl font-bold tracking-tight">
           1 USD = {currentRate?.toFixed(2) || "..."} ETB
         </div>
         <p className="text-sm text-gray-500 mt-2">
@@ -27,7 +27,7 @@ export const ExchangeRateDisplay = ({
       </div>
       <Button 
         onClick={onTransferClick}
-        className="w-full sm:w-auto bg-site-blue hover:bg-blue-700 text-white font-semibold"
+        className="w-full sm:w-auto bg-site-blue hover:bg-blue-600 text-white font-semibold px-8"
         size={isMobile ? "lg" : "default"}
       >
         Send Money

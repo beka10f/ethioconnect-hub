@@ -11,9 +11,9 @@ export const TransferFormSignature = ({
   setSignature,
 }: TransferFormSignatureProps) => {
   return (
-    <div className="space-y-2">
-      <label className="block text-gray-900 font-medium">Digital Signature</label>
-      <div className="border rounded-md bg-white">
+    <div className="space-y-3">
+      <label className="block text-sm font-medium text-gray-900">Digital Signature</label>
+      <div className="border rounded-lg bg-white overflow-hidden">
         <SignaturePad
           ref={(ref) => setSignature(ref)}
           canvasProps={{
@@ -26,6 +26,7 @@ export const TransferFormSignature = ({
         variant="outline"
         size="sm"
         onClick={() => signature?.clear()}
+        className="text-sm"
       >
         Clear Signature
       </Button>

@@ -96,12 +96,12 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[600px]">
-        <DialogHeader>
-          <DialogTitle>Send Money to Ethiopia</DialogTitle>
+      <DialogContent className="sm:max-w-[600px] p-0">
+        <DialogHeader className="p-6 bg-gray-50/50 border-b">
+          <DialogTitle className="text-xl font-semibold text-gray-900">Send Money to Ethiopia</DialogTitle>
         </DialogHeader>
         
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-8">
           <TransferFormFields
             register={register}
             errors={errors}
@@ -109,13 +109,13 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
             currentRate={currentRate}
           />
 
-          <div className="space-y-2">
-            <label className="block text-gray-900 font-medium">Payment Proof</label>
+          <div className="space-y-3">
+            <label className="block text-sm font-medium text-gray-900">Payment Proof</label>
             <input
               type="file"
               accept="image/*"
               onChange={handleFileChange}
-              className="w-full"
+              className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-site-blue/10 file:text-site-blue hover:file:bg-site-blue/20"
             />
           </div>
 
@@ -124,11 +124,15 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
             setSignature={setSignature}
           />
 
-          <div className="flex justify-end space-x-4">
+          <div className="flex justify-end gap-4 pt-4 border-t">
             <Button type="button" variant="outline" onClick={onClose}>
               Cancel
             </Button>
-            <Button type="submit" disabled={isSubmitting}>
+            <Button 
+              type="submit" 
+              disabled={isSubmitting}
+              className="bg-site-blue hover:bg-blue-600"
+            >
               {isSubmitting ? "Submitting..." : "Submit Transfer"}
             </Button>
           </div>
