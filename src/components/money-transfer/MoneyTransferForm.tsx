@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { TransferFormFields } from "./TransferFormFields";
 import { TransferFormSignature } from "./TransferFormSignature";
 import { TransferFormData } from "./types";
+import { Form } from "@/components/ui/form";
 
 interface MoneyTransferFormProps {
   isOpen: boolean;
@@ -21,15 +22,9 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
   const [paymentProof, setPaymentProof] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    watch,
-    trigger,
-  } = useForm<TransferFormData>();
+  const form = useForm<TransferFormData>();
 
-  const amountUSD = watch("amount_usd", 0);
+  const amountUSD = form.watch("amount_usd", 0);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -38,7 +33,7 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
   };
 
   const handleContinue = async () => {
-    const isValid = await trigger();
+    const isValid = await form.trigger();
     if (isValid) {
       setShowVerification(true);
     }
@@ -105,69 +100,70 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[600px] p-0">
+      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
         <DialogHeader className="p-6 bg-gray-50/50 border-b">
           <DialogTitle className="text-xl font-semibold text-gray-900">
             Send Money to Ethiopia
           </DialogTitle>
         </DialogHeader>
         
-        <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-6">
-          {!showVerification ? (
-            <>
-              <TransferFormFields
-                register={register}
-                errors={errors}
-                amountUSD={amountUSD}
-                currentRate={currentRate}
-              />
-
-              <div className="flex justify-end pt-4 border-t">
-                <Button 
-                  type="button" 
-                  onClick={handleContinue}
-                  className="bg-site-blue hover:bg-blue-600"
-                >
-                  Continue to Verification
-                </Button>
-              </div>
-            </>
-          ) : (
-            <div className="space-y-6">
-              <div className="space-y-3">
-                <label className="block text-sm font-medium text-gray-900">Payment Proof</label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileChange}
-                  className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-site-blue/10 file:text-site-blue hover:file:bg-site-blue/20"
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 space-y-6">
+            {!showVerification ? (
+              <>
+                <TransferFormFields
+                  form={form}
+                  amountUSD={amountUSD}
+                  currentRate={currentRate}
                 />
-              </div>
 
-              <TransferFormSignature
-                signature={signature}
-                setSignature={setSignature}
-              />
+                <div className="flex justify-end pt-4 border-t">
+                  <Button 
+                    type="button" 
+                    onClick={handleContinue}
+                    className="bg-site-blue hover:bg-blue-600"
+                  >
+                    Continue to Verification
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <div className="space-y-6">
+                <div className="space-y-3">
+                  <label className="block text-sm font-medium text-gray-900">Payment Proof</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-site-blue/10 file:text-site-blue hover:file:bg-site-blue/20"
+                  />
+                </div>
 
-              <div className="flex justify-end gap-4 pt-4 border-t">
-                <Button 
-                  type="button" 
-                  variant="outline" 
-                  onClick={() => setShowVerification(false)}
-                >
-                  Back
-                </Button>
-                <Button 
-                  type="submit" 
-                  disabled={isSubmitting}
-                  className="bg-site-blue hover:bg-blue-600"
-                >
-                  {isSubmitting ? "Submitting..." : "Submit Transfer"}
-                </Button>
+                <TransferFormSignature
+                  signature={signature}
+                  setSignature={setSignature}
+                />
+
+                <div className="flex justify-end gap-4 pt-4 border-t">
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    onClick={() => setShowVerification(false)}
+                  >
+                    Back
+                  </Button>
+                  <Button 
+                    type="submit" 
+                    disabled={isSubmitting}
+                    className="bg-site-blue hover:bg-blue-600"
+                  >
+                    {isSubmitting ? "Submitting..." : "Submit Transfer"}
+                  </Button>
+                </div>
               </div>
-            </div>
-          )}
-        </form>
+            )}
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );
