@@ -7,3 +7,9 @@ export interface TransferFormData {
   recipient_bank_number: string;
   amount_usd: number;
 }
+
+export interface TransferFormFieldsProps {
+  amountUSD: number;
+  currentRate: number;
+  setAmountUSD: (amount: number) => void;
+}

@@ -1,4 +1,3 @@
-import { Input } from "@/components/ui/input";
 import { useFormContext } from "react-hook-form";
 import { TransferFormData } from "./types";
 import {
@@ -16,6 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 
 const ETHIOPIAN_BANKS = [
   "Commercial Bank of Ethiopia (CBE)",
@@ -40,16 +40,16 @@ const ETHIOPIAN_BANKS = [
 
 interface TransferFormFieldsProps {
   amountUSD: number;
-  exchangeRate: number;
+  currentRate: number;
   setAmountUSD: (amount: number) => void;
 }
 
 export const TransferFormFields = ({
   amountUSD,
-  exchangeRate,
+  currentRate,
   setAmountUSD,
 }: TransferFormFieldsProps) => {
-  const { register, formState: { errors }, control } = useFormContext<TransferFormData>();
+  const { control } = useFormContext<TransferFormData>();
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseFloat(e.target.value) || 0;
@@ -75,12 +75,12 @@ export const TransferFormFields = ({
 
         <FormField
           control={control}
-          name="sender_email"
+          name="sender_phone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-base font-medium">Sender's Email</FormLabel>
+              <FormLabel className="text-base font-medium">Sender's Phone</FormLabel>
               <FormControl>
-                <Input type="email" className="h-12 text-base bg-white" {...field} />
+                <Input className="h-12 text-base bg-white" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -147,7 +147,7 @@ export const TransferFormFields = ({
 
       <FormField
         control={control}
-        name="recipient_bank_account"
+        name="recipient_bank_number"
         render={({ field }) => (
           <FormItem>
             <FormLabel className="text-base font-medium">Bank Account Number</FormLabel>
@@ -181,24 +181,17 @@ export const TransferFormFields = ({
           )}
         />
 
-        <FormField
-          control={control}
-          name="amount_etb"
-          render={() => (
-            <FormItem>
-              <FormLabel className="text-base font-medium">Amount (ETB)</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  className="h-12 text-base bg-white"
-                  value={(amountUSD * exchangeRate).toFixed(2)}
-                  readOnly
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <FormItem>
+          <FormLabel className="text-base font-medium">Amount (ETB)</FormLabel>
+          <FormControl>
+            <Input
+              type="number"
+              className="h-12 text-base bg-white"
+              value={(amountUSD * currentRate).toFixed(2)}
+              readOnly
+            />
+          </FormControl>
+        </FormItem>
       </div>
     </div>
   );

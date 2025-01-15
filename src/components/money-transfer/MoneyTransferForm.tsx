@@ -33,6 +33,7 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
   const [signature, setSignature] = useState<any>(null);
   const [paymentProof, setPaymentProof] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [amountUSD, setAmountUSD] = useState(0);
 
   const form = useForm<TransferFormData>({
     resolver: zodResolver(formSchema),
@@ -46,8 +47,6 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
       amount_usd: 0,
     },
   });
-
-  const amountUSD = form.watch("amount_usd", 0);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -137,6 +136,7 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
                 <TransferFormFields
                   amountUSD={amountUSD}
                   currentRate={currentRate}
+                  setAmountUSD={setAmountUSD}
                 />
 
                 <div className="flex justify-end pt-4 border-t">
