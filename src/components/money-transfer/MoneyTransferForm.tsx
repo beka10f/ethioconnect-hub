@@ -10,12 +10,15 @@ import { TransferFormData } from "./types";
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { CopyIcon, CheckIcon } from "lucide-react";
 
 interface MoneyTransferFormProps {
   isOpen: boolean;
   onClose: () => void;
   currentRate: number;
 }
+
+const ZELLE_EMAIL = "myadotmarket@gmail.com";
 
 const formSchema = z.object({
   sender_name: z.string().min(1, "Sender's name is required"),
@@ -34,6 +37,7 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
   const [paymentProof, setPaymentProof] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [amountUSD, setAmountUSD] = useState(0);
+  const [copied, setCopied] = useState(false);
 
   const form = useForm<TransferFormData>({
     resolver: zodResolver(formSchema),
@@ -47,6 +51,24 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
       amount_usd: 0,
     },
   });
+
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(ZELLE_EMAIL);
+      setCopied(true);
+      toast({
+        title: "Email copied to clipboard",
+        description: "You can now paste it in your Zelle app",
+      });
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      toast({
+        title: "Failed to copy",
+        description: "Please copy the email manually",
+        variant: "destructive",
+      });
+    }
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -151,6 +173,32 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
               </>
             ) : (
               <div className="space-y-6">
+                <div className="bg-blue-50 p-4 rounded-lg space-y-3">
+                  <h3 className="font-medium text-blue-900">Payment Instructions</h3>
+                  <p className="text-sm text-blue-800">
+                    Please send the payment via Zelle to:
+                  </p>
+                  <div className="flex items-center gap-2 bg-white p-2 rounded border border-blue-200">
+                    <code className="flex-1 text-blue-700">{ZELLE_EMAIL}</code>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={handleCopyEmail}
+                      className="h-8 px-2 text-blue-700 hover:text-blue-800 hover:bg-blue-100"
+                    >
+                      {copied ? (
+                        <CheckIcon className="h-4 w-4" />
+                      ) : (
+                        <CopyIcon className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </div>
+                  <p className="text-sm text-blue-800">
+                    After sending the payment, please upload the payment proof below.
+                  </p>
+                </div>
+
                 <div className="space-y-3">
                   <label className="block text-sm font-medium text-gray-900">Payment Proof</label>
                   <input
