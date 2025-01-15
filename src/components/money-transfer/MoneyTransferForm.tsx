@@ -84,6 +84,7 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
   };
 
   const onSubmit = async (data: TransferFormData) => {
+    console.log("Starting form submission...");
     try {
       setIsSubmitting(true);
 
@@ -106,7 +107,14 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
       }
 
       // Get the current user
-      const { data: { user } } = await supabase.auth.getUser();
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      console.log("User data:", user);
+      
+      if (userError) {
+        console.error("User error:", userError);
+        throw userError;
+      }
+
       if (!user) {
         toast({
           title: "Error",
@@ -118,11 +126,18 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
 
       const fileExt = paymentProof.name.split('.').pop();
       const fileName = `${Math.random()}.${fileExt}`;
+      console.log("Uploading file:", fileName);
+
       const { error: uploadError } = await supabase.storage
         .from('payment_proofs')
         .upload(fileName, paymentProof);
 
-      if (uploadError) throw uploadError;
+      if (uploadError) {
+        console.error("Upload error:", uploadError);
+        throw uploadError;
+      }
+
+      console.log("File uploaded successfully");
 
       const { error: transferError } = await supabase
         .from('money_transfers')
@@ -135,7 +150,12 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
           created_by: user.id,
         });
 
-      if (transferError) throw transferError;
+      if (transferError) {
+        console.error("Transfer error:", transferError);
+        throw transferError;
+      }
+
+      console.log("Transfer submitted successfully");
 
       toast({
         title: "Success",
@@ -144,6 +164,7 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
       
       onClose();
     } catch (error: any) {
+      console.error("Submission error:", error);
       toast({
         title: "Error",
         description: error.message,
