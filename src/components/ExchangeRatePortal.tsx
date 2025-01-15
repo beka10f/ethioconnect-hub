@@ -64,20 +64,20 @@ const ExchangeRatePortal = () => {
 
   return (
     <Portal title="Exchange Rate">
-      <div className="space-y-6">
+      <div className="space-y-6 p-4 sm:p-6 bg-white rounded-xl shadow-sm border border-gray-100">
         {/* Rate Display and Send Money Button */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div className="flex flex-col">
-            <div className="text-3xl font-semibold text-gray-900">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6">
+          <div className="w-full sm:w-auto text-center sm:text-left">
+            <div className="text-4xl font-bold text-gray-900">
               1 USD = {currentRate?.toFixed(2) || "..."} ETB
             </div>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-gray-500 mt-2">
               Last updated: {lastUpdated || "Loading..."}
             </p>
           </div>
           <Button 
             onClick={() => setIsTransferFormOpen(true)}
-            className="bg-site-blue hover:bg-blue-700 text-white w-full sm:w-auto"
+            className="w-full sm:w-auto bg-site-blue hover:bg-blue-700 text-white font-semibold"
             size={isMobile ? "lg" : "default"}
           >
             Send Money
@@ -85,10 +85,10 @@ const ExchangeRatePortal = () => {
         </div>
 
         {/* Chart Section */}
-        <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-          <div className="h-[250px] w-full">
+        <div className="mt-6 bg-gray-50 rounded-xl p-4 sm:p-6">
+          <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={historicalRates} margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
+              <LineChart data={historicalRates} margin={{ top: 10, right: 10, bottom: 20, left: 10 }}>
                 <XAxis 
                   dataKey="date" 
                   fontSize={12}
