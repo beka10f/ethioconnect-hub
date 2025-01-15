@@ -146,6 +146,72 @@ export type Database = {
         }
         Relationships: []
       }
+      money_transfers: {
+        Row: {
+          admin_notes: string | null
+          amount_etb: number
+          amount_usd: number
+          approved_by: string | null
+          created_at: string
+          created_by: string | null
+          digital_signature: string | null
+          exchange_rate: number
+          id: string
+          payment_proof_url: string | null
+          recipient_bank_name: string
+          recipient_bank_number: string
+          recipient_name: string
+          recipient_phone: string
+          reference_number: string
+          sender_name: string
+          sender_phone: string
+          status: Database["public"]["Enums"]["transfer_status"] | null
+          updated_at: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          amount_etb: number
+          amount_usd: number
+          approved_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          digital_signature?: string | null
+          exchange_rate: number
+          id?: string
+          payment_proof_url?: string | null
+          recipient_bank_name: string
+          recipient_bank_number: string
+          recipient_name: string
+          recipient_phone: string
+          reference_number?: string
+          sender_name: string
+          sender_phone: string
+          status?: Database["public"]["Enums"]["transfer_status"] | null
+          updated_at?: string
+        }
+        Update: {
+          admin_notes?: string | null
+          amount_etb?: number
+          amount_usd?: number
+          approved_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          digital_signature?: string | null
+          exchange_rate?: number
+          id?: string
+          payment_proof_url?: string | null
+          recipient_bank_name?: string
+          recipient_bank_number?: string
+          recipient_name?: string
+          recipient_phone?: string
+          reference_number?: string
+          sender_name?: string
+          sender_phone?: string
+          status?: Database["public"]["Enums"]["transfer_status"] | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -325,6 +391,7 @@ export type Database = {
     }
     Enums: {
       shipping_status: "pending" | "in_progress" | "completed" | "cancelled"
+      transfer_status: "pending" | "completed" | "rejected"
       user_role: "admin" | "user"
     }
     CompositeTypes: {

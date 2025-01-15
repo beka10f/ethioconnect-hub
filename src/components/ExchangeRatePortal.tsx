@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import Portal from "./Portal";
 import { supabase } from "@/integrations/supabase/client";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { Button } from "./ui/button";
+import { MoneyTransferForm } from "./money-transfer/MoneyTransferForm";
 
 const ExchangeRatePortal = () => {
   const [currentRate, setCurrentRate] = useState<number | null>(null);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const [historicalRates, setHistoricalRates] = useState<any[]>([]);
+  const [isTransferFormOpen, setIsTransferFormOpen] = useState(false);
 
   useEffect(() => {
     const fetchLatestRate = async () => {
@@ -62,12 +65,23 @@ const ExchangeRatePortal = () => {
   return (
     <Portal title="Exchange Rate">
       <div className="space-y-4">
-        <div className="text-2xl font-medium text-gray-900 tracking-tight">
-          1 USD = {currentRate?.toFixed(2) || "..."} ETB
+        <div className="flex justify-between items-center">
+          <div>
+            <div className="text-2xl font-medium text-gray-900 tracking-tight">
+              1 USD = {currentRate?.toFixed(2) || "..."} ETB
+            </div>
+            <p className="text-sm text-gray-600">
+              Last updated: {lastUpdated || "Loading..."}
+            </p>
+          </div>
+          <Button 
+            onClick={() => setIsTransferFormOpen(true)}
+            className="bg-site-blue hover:bg-blue-700"
+          >
+            Send Money
+          </Button>
         </div>
-        <p className="text-sm text-gray-600">
-          Last updated: {lastUpdated || "Loading..."}
-        </p>
+
         <div className="h-[200px] w-full">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={historicalRates}>
@@ -94,6 +108,14 @@ const ExchangeRatePortal = () => {
             </LineChart>
           </ResponsiveContainer>
         </div>
+
+        {currentRate && (
+          <MoneyTransferForm
+            isOpen={isTransferFormOpen}
+            onClose={() => setIsTransferFormOpen(false)}
+            currentRate={currentRate}
+          />
+        )}
       </div>
     </Portal>
   );
