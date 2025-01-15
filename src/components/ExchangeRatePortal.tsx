@@ -4,12 +4,14 @@ import { supabase } from "@/integrations/supabase/client";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { Button } from "./ui/button";
 import { MoneyTransferForm } from "./money-transfer/MoneyTransferForm";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const ExchangeRatePortal = () => {
   const [currentRate, setCurrentRate] = useState<number | null>(null);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
   const [historicalRates, setHistoricalRates] = useState<any[]>([]);
   const [isTransferFormOpen, setIsTransferFormOpen] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const fetchLatestRate = async () => {
@@ -28,7 +30,6 @@ const ExchangeRatePortal = () => {
         setCurrentRate(data[0].rate);
         setLastUpdated(new Date(data[0].created_at).toLocaleDateString());
         
-        // Format historical data for the chart
         const formattedData = data.reverse().map(rate => ({
           date: new Date(rate.created_at).toLocaleDateString(),
           rate: rate.rate
@@ -39,7 +40,6 @@ const ExchangeRatePortal = () => {
 
     fetchLatestRate();
 
-    // Subscribe to changes
     const channel = supabase
       .channel('exchange_rates_changes')
       .on(
@@ -52,7 +52,7 @@ const ExchangeRatePortal = () => {
         (payload) => {
           setCurrentRate(payload.new.rate);
           setLastUpdated(new Date(payload.new.created_at).toLocaleDateString());
-          fetchLatestRate(); // Refresh historical data
+          fetchLatestRate();
         }
       )
       .subscribe();
@@ -64,51 +64,68 @@ const ExchangeRatePortal = () => {
 
   return (
     <Portal title="Exchange Rate">
-      <div className="space-y-4">
-        <div className="flex justify-between items-center">
-          <div>
-            <div className="text-2xl font-medium text-gray-900 tracking-tight">
+      <div className="space-y-6">
+        {/* Rate Display and Send Money Button */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div className="flex flex-col">
+            <div className="text-3xl font-semibold text-gray-900">
               1 USD = {currentRate?.toFixed(2) || "..."} ETB
             </div>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-500 mt-1">
               Last updated: {lastUpdated || "Loading..."}
             </p>
           </div>
           <Button 
             onClick={() => setIsTransferFormOpen(true)}
-            className="bg-site-blue hover:bg-blue-700"
+            className="bg-site-blue hover:bg-blue-700 text-white w-full sm:w-auto"
+            size={isMobile ? "lg" : "default"}
           >
             Send Money
           </Button>
         </div>
 
-        <div className="h-[200px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={historicalRates}>
-              <XAxis 
-                dataKey="date" 
-                fontSize={12}
-                tickLine={false}
-                axisLine={false}
-              />
-              <YAxis 
-                fontSize={12}
-                tickLine={false}
-                axisLine={false}
-                domain={['auto', 'auto']}
-              />
-              <Tooltip />
-              <Line
-                type="monotone"
-                dataKey="rate"
-                stroke="#2563eb"
-                strokeWidth={2}
-                dot={false}
-              />
-            </LineChart>
-          </ResponsiveContainer>
+        {/* Chart Section */}
+        <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+          <div className="h-[250px] w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={historicalRates} margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
+                <XAxis 
+                  dataKey="date" 
+                  fontSize={12}
+                  tickLine={false}
+                  axisLine={false}
+                  tick={{ fill: '#6B7280' }}
+                  dy={10}
+                />
+                <YAxis 
+                  fontSize={12}
+                  tickLine={false}
+                  axisLine={false}
+                  tick={{ fill: '#6B7280' }}
+                  dx={-10}
+                />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: 'white',
+                    border: '1px solid #E5E7EB',
+                    borderRadius: '8px',
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
+                  }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="rate"
+                  stroke="#2563eb"
+                  strokeWidth={2}
+                  dot={false}
+                  activeDot={{ r: 6, fill: '#2563eb' }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
         </div>
 
+        {/* Money Transfer Form Dialog */}
         {currentRate && (
           <MoneyTransferForm
             isOpen={isTransferFormOpen}
