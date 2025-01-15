@@ -144,15 +144,15 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
-        <DialogHeader className="p-6 bg-gray-50/50 border-b">
-          <DialogTitle className="text-xl font-semibold text-gray-900">
+      <DialogContent className="sm:max-w-[600px] w-[95vw] max-h-[90vh] overflow-y-auto">
+        <DialogHeader className="p-4 sm:p-6 bg-gray-50/50 border-b">
+          <DialogTitle className="text-lg sm:text-xl font-semibold text-gray-900">
             Send Money to Ethiopia
           </DialogTitle>
         </DialogHeader>
         
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="p-4 sm:p-6 space-y-4 sm:space-y-6">
             {!showVerification ? (
               <>
                 <TransferFormFields
@@ -165,27 +165,29 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
                   <Button 
                     type="button" 
                     onClick={handleContinue}
-                    className="bg-site-blue hover:bg-blue-600"
+                    className="w-full sm:w-auto bg-site-blue hover:bg-blue-600"
                   >
                     Continue to Verification
                   </Button>
                 </div>
               </>
             ) : (
-              <div className="space-y-6">
-                <div className="bg-blue-50 p-4 rounded-lg space-y-3">
+              <div className="space-y-4 sm:space-y-6">
+                <div className="bg-blue-50 p-3 sm:p-4 rounded-lg space-y-3">
                   <h3 className="font-medium text-blue-900">Payment Instructions</h3>
                   <p className="text-sm text-blue-800">
                     Please send the payment via Zelle to:
                   </p>
                   <div className="flex items-center gap-2 bg-white p-2 rounded border border-blue-200">
-                    <code className="flex-1 text-blue-700">{ZELLE_EMAIL}</code>
+                    <code className="flex-1 text-sm sm:text-base text-blue-700 break-all">
+                      {ZELLE_EMAIL}
+                    </code>
                     <Button
                       type="button"
                       variant="ghost"
                       size="sm"
                       onClick={handleCopyEmail}
-                      className="h-8 px-2 text-blue-700 hover:text-blue-800 hover:bg-blue-100"
+                      className="h-8 px-2 shrink-0 text-blue-700 hover:text-blue-800 hover:bg-blue-100"
                     >
                       {copied ? (
                         <CheckIcon className="h-4 w-4" />
@@ -200,7 +202,9 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
                 </div>
 
                 <div className="space-y-3">
-                  <label className="block text-sm font-medium text-gray-900">Payment Proof</label>
+                  <label className="block text-sm font-medium text-gray-900">
+                    Payment Proof
+                  </label>
                   <input
                     type="file"
                     accept="image/*"
@@ -214,18 +218,19 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
                   setSignature={setSignature}
                 />
 
-                <div className="flex justify-end gap-4 pt-4 border-t">
+                <div className="flex flex-col sm:flex-row justify-end gap-3 sm:gap-4 pt-4 border-t">
                   <Button 
                     type="button" 
                     variant="outline" 
                     onClick={() => setShowVerification(false)}
+                    className="w-full sm:w-auto order-2 sm:order-1"
                   >
                     Back
                   </Button>
                   <Button 
                     type="submit" 
                     disabled={isSubmitting}
-                    className="bg-site-blue hover:bg-blue-600"
+                    className="w-full sm:w-auto order-1 sm:order-2 bg-site-blue hover:bg-blue-600"
                   >
                     {isSubmitting ? "Submitting..." : "Submit Transfer"}
                   </Button>
