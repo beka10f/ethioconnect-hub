@@ -166,8 +166,9 @@ export const TransferFormFields = ({
                   type="number"
                   className="h-12 text-base bg-white"
                   {...field}
+                  value={field.value || ''}
                   onChange={(e) => {
-                    const value = parseFloat(e.target.value) || 0;
+                    const value = e.target.value === '' ? 0 : parseFloat(e.target.value);
                     field.onChange(value);
                     setAmountUSD(value);
                   }}
