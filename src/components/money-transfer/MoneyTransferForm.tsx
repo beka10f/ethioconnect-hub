@@ -105,6 +105,17 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
         return;
       }
 
+      // Get the current user
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        toast({
+          title: "Error",
+          description: "You must be logged in to make a transfer",
+          variant: "destructive",
+        });
+        return;
+      }
+
       const fileExt = paymentProof.name.split('.').pop();
       const fileName = `${Math.random()}.${fileExt}`;
       const { error: uploadError } = await supabase.storage
@@ -121,6 +132,7 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
           exchange_rate: currentRate,
           payment_proof_url: fileName,
           digital_signature: signature?.getTrimmedCanvas().toDataURL(),
+          created_by: user.id,
         });
 
       if (transferError) throw transferError;
@@ -145,14 +157,14 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[600px] w-[95vw] max-h-[90vh] overflow-y-auto">
-        <DialogHeader className="p-3 sm:p-4 bg-gray-50/50 border-b">
+        <DialogHeader className="p-2.5 sm:p-3 bg-gray-50/50 border-b">
           <DialogTitle className="text-lg sm:text-xl font-semibold text-gray-900">
             Send Money to Ethiopia
           </DialogTitle>
         </DialogHeader>
         
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="p-3 sm:p-4 space-y-3 sm:space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="p-2.5 sm:p-3 space-y-2.5 sm:space-y-3">
             {!showVerification ? (
               <>
                 <TransferFormFields
@@ -172,8 +184,8 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
                 </div>
               </>
             ) : (
-              <div className="space-y-3 sm:space-y-4">
-                <div className="bg-blue-50 p-2.5 sm:p-3 rounded-lg space-y-2">
+              <div className="space-y-2.5 sm:space-y-3">
+                <div className="bg-blue-50 p-2 sm:p-2.5 rounded-lg space-y-2">
                   <h3 className="font-medium text-blue-900">Payment Instructions</h3>
                   <p className="text-sm text-blue-800">
                     Please send the payment via Zelle to:
@@ -201,7 +213,7 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
                   </p>
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-1.5">
                   <label className="block text-sm font-medium text-gray-900">
                     Payment Proof
                   </label>
