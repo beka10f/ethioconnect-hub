@@ -1,6 +1,5 @@
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { UseFormReturn } from "react-hook-form";
 import { TransferFormData } from "./types";
 
 interface TransferFormFieldsProps {
@@ -15,17 +14,21 @@ export const TransferFormFields = ({
   const amountETB = amountUSD * currentRate;
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-4">
-        <h3 className="text-sm font-medium text-gray-900">Sender Information</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div className="space-y-8 px-1">
+      <div className="space-y-6">
+        <h3 className="text-xl font-semibold text-gray-900">Sender Information</h3>
+        <div className="grid grid-cols-1 gap-6">
           <FormField
             name="sender_name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Sender's Name</FormLabel>
+                <FormLabel className="text-base font-medium">Sender's Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter sender's name" {...field} />
+                  <Input 
+                    placeholder="Enter sender's name" 
+                    className="h-12 text-base" 
+                    {...field} 
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -36,9 +39,13 @@ export const TransferFormFields = ({
             name="sender_phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Sender's Phone</FormLabel>
+                <FormLabel className="text-base font-medium">Sender's Phone</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter sender's phone" {...field} />
+                  <Input 
+                    placeholder="Enter sender's phone" 
+                    className="h-12 text-base" 
+                    {...field} 
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -47,16 +54,20 @@ export const TransferFormFields = ({
         </div>
       </div>
 
-      <div className="space-y-4">
-        <h3 className="text-sm font-medium text-gray-900">Recipient Information</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="space-y-6">
+        <h3 className="text-xl font-semibold text-gray-900">Recipient Information</h3>
+        <div className="grid grid-cols-1 gap-6">
           <FormField
             name="recipient_name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Recipient's Name</FormLabel>
+                <FormLabel className="text-base font-medium">Recipient's Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter recipient's name" {...field} />
+                  <Input 
+                    placeholder="Enter recipient's name" 
+                    className="h-12 text-base" 
+                    {...field} 
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -67,9 +78,13 @@ export const TransferFormFields = ({
             name="recipient_phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Recipient's Phone</FormLabel>
+                <FormLabel className="text-base font-medium">Recipient's Phone</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter recipient's phone" {...field} />
+                  <Input 
+                    placeholder="Enter recipient's phone" 
+                    className="h-12 text-base" 
+                    {...field} 
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -80,9 +95,13 @@ export const TransferFormFields = ({
             name="recipient_bank_name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Recipient's Bank</FormLabel>
+                <FormLabel className="text-base font-medium">Recipient's Bank</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter bank name" {...field} />
+                  <Input 
+                    placeholder="Enter bank name" 
+                    className="h-12 text-base" 
+                    {...field} 
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -93,9 +112,13 @@ export const TransferFormFields = ({
             name="recipient_bank_number"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Bank Account Number</FormLabel>
+                <FormLabel className="text-base font-medium">Bank Account Number</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter account number" {...field} />
+                  <Input 
+                    placeholder="Enter account number" 
+                    className="h-12 text-base" 
+                    {...field} 
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -104,18 +127,19 @@ export const TransferFormFields = ({
         </div>
       </div>
 
-      <div className="space-y-4">
-        <h3 className="text-sm font-medium text-gray-900">Amount Information</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="space-y-6">
+        <h3 className="text-xl font-semibold text-gray-900">Amount Information</h3>
+        <div className="grid grid-cols-1 gap-6">
           <FormField
             name="amount_usd"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Amount (USD)</FormLabel>
+                <FormLabel className="text-base font-medium">Amount (USD)</FormLabel>
                 <FormControl>
                   <Input 
                     type="number" 
                     placeholder="Enter amount in USD" 
+                    className="h-12 text-base"
                     {...field}
                     onChange={(e) => field.onChange(Number(e.target.value))}
                   />
@@ -125,9 +149,9 @@ export const TransferFormFields = ({
             )}
           />
 
-          <div className="flex flex-col space-y-2">
-            <label className="text-sm font-medium text-gray-900">Amount (ETB)</label>
-            <div className="h-10 px-3 py-2 rounded-md border border-gray-200 bg-gray-50/50 text-gray-500">
+          <div className="space-y-2">
+            <label className="text-base font-medium text-gray-900">Amount (ETB)</label>
+            <div className="h-12 px-4 rounded-md border border-gray-200 bg-gray-50/50 text-gray-500 flex items-center">
               {amountETB.toFixed(2)} ETB
             </div>
           </div>
