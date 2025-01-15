@@ -1,17 +1,14 @@
-import { FormField } from "@/components/forms/FormField";
-import { UseFormRegister, FieldErrors } from "react-hook-form";
+import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { UseFormReturn } from "react-hook-form";
 import { TransferFormData } from "./types";
 
 interface TransferFormFieldsProps {
-  register: UseFormRegister<TransferFormData>;
-  errors: FieldErrors<TransferFormData>;
   amountUSD: number;
   currentRate: number;
 }
 
 export const TransferFormFields = ({
-  register,
-  errors,
   amountUSD,
   currentRate,
 }: TransferFormFieldsProps) => {
@@ -23,19 +20,29 @@ export const TransferFormFields = ({
         <h3 className="text-sm font-medium text-gray-900">Sender Information</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <FormField
-            label="Sender's Name"
-            id="sender_name"
-            placeholder="Enter sender's name"
-            registration={register("sender_name", { required: "Sender's name is required" })}
-            error={errors.sender_name?.message}
+            name="sender_name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Sender's Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter sender's name" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
           
           <FormField
-            label="Sender's Phone"
-            id="sender_phone"
-            placeholder="Enter sender's phone"
-            registration={register("sender_phone", { required: "Sender's phone is required" })}
-            error={errors.sender_phone?.message}
+            name="sender_phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Sender's Phone</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter sender's phone" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
         </div>
       </div>
@@ -44,35 +51,55 @@ export const TransferFormFields = ({
         <h3 className="text-sm font-medium text-gray-900">Recipient Information</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <FormField
-            label="Recipient's Name"
-            id="recipient_name"
-            placeholder="Enter recipient's name"
-            registration={register("recipient_name", { required: "Recipient's name is required" })}
-            error={errors.recipient_name?.message}
+            name="recipient_name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Recipient's Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter recipient's name" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
 
           <FormField
-            label="Recipient's Phone"
-            id="recipient_phone"
-            placeholder="Enter recipient's phone"
-            registration={register("recipient_phone", { required: "Recipient's phone is required" })}
-            error={errors.recipient_phone?.message}
+            name="recipient_phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Recipient's Phone</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter recipient's phone" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
 
           <FormField
-            label="Recipient's Bank"
-            id="recipient_bank_name"
-            placeholder="Enter bank name"
-            registration={register("recipient_bank_name", { required: "Bank name is required" })}
-            error={errors.recipient_bank_name?.message}
+            name="recipient_bank_name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Recipient's Bank</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter bank name" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
 
           <FormField
-            label="Bank Account Number"
-            id="recipient_bank_number"
-            placeholder="Enter account number"
-            registration={register("recipient_bank_number", { required: "Account number is required" })}
-            error={errors.recipient_bank_number?.message}
+            name="recipient_bank_number"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Bank Account Number</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter account number" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
         </div>
       </div>
@@ -81,15 +108,21 @@ export const TransferFormFields = ({
         <h3 className="text-sm font-medium text-gray-900">Amount Information</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <FormField
-            label="Amount (USD)"
-            id="amount_usd"
-            type="number"
-            placeholder="Enter amount in USD"
-            registration={register("amount_usd", { 
-              required: "Amount is required",
-              min: { value: 1, message: "Amount must be greater than 0" }
-            })}
-            error={errors.amount_usd?.message}
+            name="amount_usd"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Amount (USD)</FormLabel>
+                <FormControl>
+                  <Input 
+                    type="number" 
+                    placeholder="Enter amount in USD" 
+                    {...field}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
 
           <div className="flex flex-col space-y-2">

@@ -8,12 +8,24 @@ import { TransferFormFields } from "./TransferFormFields";
 import { TransferFormSignature } from "./TransferFormSignature";
 import { TransferFormData } from "./types";
 import { Form } from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 
 interface MoneyTransferFormProps {
   isOpen: boolean;
   onClose: () => void;
   currentRate: number;
 }
+
+const formSchema = z.object({
+  sender_name: z.string().min(1, "Sender's name is required"),
+  sender_phone: z.string().min(1, "Sender's phone is required"),
+  recipient_name: z.string().min(1, "Recipient's name is required"),
+  recipient_phone: z.string().min(1, "Recipient's phone is required"),
+  recipient_bank_name: z.string().min(1, "Bank name is required"),
+  recipient_bank_number: z.string().min(1, "Account number is required"),
+  amount_usd: z.number().min(1, "Amount must be greater than 0"),
+});
 
 export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransferFormProps) => {
   const { toast } = useToast();
@@ -22,7 +34,18 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
   const [paymentProof, setPaymentProof] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const form = useForm<TransferFormData>();
+  const form = useForm<TransferFormData>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      sender_name: "",
+      sender_phone: "",
+      recipient_name: "",
+      recipient_phone: "",
+      recipient_bank_name: "",
+      recipient_bank_number: "",
+      amount_usd: 0,
+    },
+  });
 
   const amountUSD = form.watch("amount_usd", 0);
 
@@ -112,7 +135,6 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
             {!showVerification ? (
               <>
                 <TransferFormFields
-                  form={form}
                   amountUSD={amountUSD}
                   currentRate={currentRate}
                 />
