@@ -49,11 +49,12 @@ export const TransferFormFields = ({
   currentRate,
   setAmountUSD,
 }: TransferFormFieldsProps) => {
-  const { control } = useFormContext<TransferFormData>();
+  const { control, setValue } = useFormContext<TransferFormData>();
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseFloat(e.target.value) || 0;
     setAmountUSD(value);
+    setValue('amount_usd', value); // Update form value
   };
 
   return (
@@ -163,15 +164,15 @@ export const TransferFormFields = ({
         <FormField
           control={control}
           name="amount_usd"
-          render={() => (
+          render={({ field }) => (
             <FormItem>
               <FormLabel className="text-base font-medium">Amount (USD)</FormLabel>
               <FormControl>
                 <Input
                   type="number"
                   className="h-12 text-base bg-white"
-                  value={amountUSD}
                   onChange={handleAmountChange}
+                  value={amountUSD}
                   min="0"
                   step="0.01"
                 />
