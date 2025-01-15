@@ -145,14 +145,14 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[600px] w-[95vw] max-h-[90vh] overflow-y-auto">
-        <DialogHeader className="p-4 sm:p-6 bg-gray-50/50 border-b">
+        <DialogHeader className="p-3 sm:p-4 bg-gray-50/50 border-b">
           <DialogTitle className="text-lg sm:text-xl font-semibold text-gray-900">
             Send Money to Ethiopia
           </DialogTitle>
         </DialogHeader>
         
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="p-3 sm:p-4 space-y-3 sm:space-y-4">
             {!showVerification ? (
               <>
                 <TransferFormFields
@@ -161,7 +161,7 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
                   setAmountUSD={setAmountUSD}
                 />
 
-                <div className="flex justify-end pt-4 border-t">
+                <div className="flex justify-end pt-3 border-t">
                   <Button 
                     type="button" 
                     onClick={handleContinue}
@@ -172,14 +172,14 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
                 </div>
               </>
             ) : (
-              <div className="space-y-4 sm:space-y-6">
-                <div className="bg-blue-50 p-3 sm:p-4 rounded-lg space-y-3">
+              <div className="space-y-3 sm:space-y-4">
+                <div className="bg-blue-50 p-2.5 sm:p-3 rounded-lg space-y-2">
                   <h3 className="font-medium text-blue-900">Payment Instructions</h3>
                   <p className="text-sm text-blue-800">
                     Please send the payment via Zelle to:
                   </p>
                   <div className="flex items-center gap-2 bg-white p-2 rounded border border-blue-200">
-                    <code className="flex-1 text-sm sm:text-base text-blue-700 break-all">
+                    <code className="flex-1 text-sm text-blue-700 break-all">
                       {ZELLE_EMAIL}
                     </code>
                     <Button
@@ -201,7 +201,7 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
                   </p>
                 </div>
 
-                <div className="space-y-3">
+                <div className="space-y-2">
                   <label className="block text-sm font-medium text-gray-900">
                     Payment Proof
                   </label>
@@ -209,7 +209,7 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
                     type="file"
                     accept="image/*"
                     onChange={handleFileChange}
-                    className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-site-blue/10 file:text-site-blue hover:file:bg-site-blue/20"
+                    className="w-full text-sm text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-site-blue/10 file:text-site-blue hover:file:bg-site-blue/20"
                   />
                 </div>
 
@@ -218,7 +218,7 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
                   setSignature={setSignature}
                 />
 
-                <div className="flex flex-col sm:flex-row justify-end gap-3 sm:gap-4 pt-4 border-t">
+                <div className="flex flex-col sm:flex-row justify-end gap-2 sm:gap-3 pt-3 border-t">
                   <Button 
                     type="button" 
                     variant="outline" 
