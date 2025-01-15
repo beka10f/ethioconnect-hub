@@ -3,10 +3,11 @@ import JobsManagement from "@/components/admin/JobsManagement";
 import RentalsManagement from "@/components/admin/RentalsManagement";
 import ExchangeRateManagement from "@/components/admin/ExchangeRateManagement";
 import ShippingManagement from "@/components/admin/ShippingManagement";
+import MoneyTransfersManagement from "@/components/admin/MoneyTransfersManagement";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { DollarSign, Briefcase, Home, Package, FileText } from "lucide-react";
+import { DollarSign, Briefcase, Home, Package, FileText, Banknote } from "lucide-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import FormSubmissionsManagement from "@/components/admin/FormSubmissionsManagement";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -49,7 +50,7 @@ const Admin = () => {
 
               <Tabs defaultValue="submissions" className="space-y-4">
                 <div className={`sticky ${isMobile ? 'bottom-0' : 'top-0'} z-30 -mx-4 px-4 py-3 bg-white/80 backdrop-blur-sm border-t sm:border-b border-gray-200/50`}>
-                  <TabsList className="w-full grid grid-cols-5 gap-1 bg-gray-100/70 backdrop-blur-sm p-1 rounded-xl">
+                  <TabsList className="w-full grid grid-cols-6 gap-1 bg-gray-100/70 backdrop-blur-sm p-1 rounded-xl">
                     <TabsTrigger 
                       value="submissions" 
                       className="flex flex-col items-center py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm"
@@ -63,6 +64,13 @@ const Admin = () => {
                     >
                       <DollarSign className="w-5 h-5" />
                       <span className="text-xs mt-1">Exchange</span>
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="transfers"
+                      className="flex flex-col items-center py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                    >
+                      <Banknote className="w-5 h-5" />
+                      <span className="text-xs mt-1">Transfers</span>
                     </TabsTrigger>
                     <TabsTrigger 
                       value="jobs"
@@ -100,6 +108,14 @@ const Admin = () => {
                   <Card className="bg-white shadow-sm border-gray-200/50">
                     <CardContent className="p-4">
                       <ExchangeRateManagement />
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+
+                <TabsContent value="transfers" className="mt-4 space-y-4 animate-fade-in">
+                  <Card className="bg-white shadow-sm border-gray-200/50">
+                    <CardContent className="p-4">
+                      <MoneyTransfersManagement />
                     </CardContent>
                   </Card>
                 </TabsContent>
