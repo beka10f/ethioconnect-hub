@@ -186,11 +186,14 @@ export const TransferFormFields = ({
           <FormControl>
             <Input
               type="number"
-              className="h-12 text-base bg-white"
+              className="h-12 text-base bg-gray-50 cursor-not-allowed"
               value={(amountUSD * currentRate).toFixed(2)}
               readOnly
+              disabled
+              title="This amount is automatically calculated based on the USD amount"
             />
           </FormControl>
+          <p className="text-sm text-muted-foreground mt-1">Automatically calculated based on current rate</p>
         </FormItem>
       </div>
     </div>
