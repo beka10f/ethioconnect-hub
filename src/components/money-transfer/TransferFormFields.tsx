@@ -2,6 +2,34 @@ import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/comp
 import { Input } from "@/components/ui/input";
 import { useFormContext } from "react-hook-form";
 import { TransferFormData } from "./types";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+const ETHIOPIAN_BANKS = [
+  "Commercial Bank of Ethiopia (CBE)",
+  "Dashen Bank",
+  "Awash Bank",
+  "Abyssinia Bank",
+  "United Bank (Hibret Bank)",
+  "Nib International Bank",
+  "Zemen Bank",
+  "Berhan Bank",
+  "Cooperative Bank of Oromia (CBO)",
+  "Lion International Bank",
+  "Bunna International Bank",
+  "Wegagen Bank",
+  "Abay Bank",
+  "Enat Bank",
+  "Debub Global Bank",
+  "Oromia International Bank",
+  "Addis International Bank",
+  "Hijra Bank",
+];
 
 interface TransferFormFieldsProps {
   amountUSD: number;
@@ -98,13 +126,20 @@ export const TransferFormFields = ({
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-base font-medium">Recipient's Bank</FormLabel>
-                <FormControl>
-                  <Input 
-                    placeholder="Enter bank name" 
-                    className="h-12 text-base" 
-                    {...field} 
-                  />
-                </FormControl>
+                <Select onValueChange={field.onChange} value={field.value}>
+                  <FormControl>
+                    <SelectTrigger className="h-12 text-base bg-white">
+                      <SelectValue placeholder="Select a bank" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent className="max-h-[300px]">
+                    {ETHIOPIAN_BANKS.map((bank) => (
+                      <SelectItem key={bank} value={bank}>
+                        {bank}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}
