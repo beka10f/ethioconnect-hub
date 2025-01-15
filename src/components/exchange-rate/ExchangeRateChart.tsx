@@ -10,8 +10,8 @@ interface ExchangeRateChartProps {
 
 export const ExchangeRateChart = ({ data }: ExchangeRateChartProps) => {
   return (
-    <div className="mt-8 bg-gray-50/50 rounded-2xl p-6">
-      <div className="h-[300px] w-full">
+    <div className="bg-gray-50/50 rounded-2xl p-4 sm:p-6">
+      <div className="h-[200px] sm:h-[300px] w-full">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data} margin={{ top: 10, right: 10, bottom: 20, left: 10 }}>
             <XAxis 

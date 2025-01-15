@@ -61,15 +61,17 @@ const ExchangeRatePortal = () => {
   }, []);
 
   return (
-    <Portal title="Exchange Rate">
-      <div className="space-y-6 p-4 sm:p-6 bg-white rounded-xl shadow-sm border border-gray-100">
+    <div className="w-full max-w-3xl mx-auto">
+      <div className="space-y-6 p-4 sm:p-6 bg-white rounded-xl shadow-sm">
         <ExchangeRateDisplay
           currentRate={currentRate}
           lastUpdated={lastUpdated}
           onTransferClick={() => setIsTransferFormOpen(true)}
         />
         
-        <ExchangeRateChart data={historicalRates} />
+        <div className="mt-8">
+          <ExchangeRateChart data={historicalRates} />
+        </div>
 
         {currentRate && (
           <MoneyTransferForm
@@ -79,7 +81,7 @@ const ExchangeRatePortal = () => {
           />
         )}
       </div>
-    </Portal>
+    </div>
   );
 };
 

@@ -17,11 +17,11 @@ export const ExchangeRateDisplay = ({
 
   return (
     <div className="flex flex-col items-center gap-6 py-4">
-      <div className="text-center">
-        <div className="text-4xl sm:text-5xl font-bold tracking-tight">
+      <div className="text-center space-y-2">
+        <div className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
           1 USD = {currentRate?.toFixed(2) || "..."} ETB
         </div>
-        <p className="text-sm text-gray-500 mt-2">
+        <p className="text-sm text-gray-500">
           Last updated: {lastUpdated || "Loading..."}
         </p>
       </div>
