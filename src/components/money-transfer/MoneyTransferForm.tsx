@@ -10,7 +10,9 @@ import { TransferFormData } from "./types";
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { CopyIcon, CheckIcon } from "lucide-react";
+import { CopyIcon, CheckIcon, AlertCircle } from "lucide-react";
+import { TransferSteps } from "./TransferSteps";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface MoneyTransferFormProps {
   isOpen: boolean;
@@ -57,13 +59,13 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
       await navigator.clipboard.writeText(ZELLE_EMAIL);
       setCopied(true);
       toast({
-        title: "Email copied to clipboard",
+        title: "Email copied",
         description: "You can now paste it in your Zelle app",
       });
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       toast({
-        title: "Failed to copy",
+        title: "Could not copy",
         description: "Please copy the email manually",
         variant: "destructive",
       });
@@ -84,14 +86,13 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
   };
 
   const onSubmit = async (data: TransferFormData) => {
-    console.log("Starting form submission...");
     try {
       setIsSubmitting(true);
 
       if (!signature?.getTrimmedCanvas().toDataURL()) {
         toast({
-          title: "Error",
-          description: "Please provide your digital signature",
+          title: "Signature missing",
+          description: "Please sign the form to continue",
           variant: "destructive",
         });
         return;
@@ -99,8 +100,8 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
 
       if (!paymentProof) {
         toast({
-          title: "Error",
-          description: "Please upload payment proof",
+          title: "Payment proof missing",
+          description: "Please upload your Zelle payment screenshot",
           variant: "destructive",
         });
         return;
@@ -108,18 +109,12 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
 
       const fileExt = paymentProof.name.split('.').pop();
       const fileName = `${Math.random()}.${fileExt}`;
-      console.log("Uploading file:", fileName);
 
       const { error: uploadError } = await supabase.storage
         .from('payment_proofs')
         .upload(fileName, paymentProof);
 
-      if (uploadError) {
-        console.error("Upload error:", uploadError);
-        throw uploadError;
-      }
-
-      console.log("File uploaded successfully");
+      if (uploadError) throw uploadError;
 
       const { error: transferError } = await supabase
         .from('money_transfers')
@@ -131,23 +126,17 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
           digital_signature: signature?.getTrimmedCanvas().toDataURL(),
         });
 
-      if (transferError) {
-        console.error("Transfer error:", transferError);
-        throw transferError;
-      }
-
-      console.log("Transfer submitted successfully");
+      if (transferError) throw transferError;
 
       toast({
-        title: "Success",
-        description: "Transfer request submitted successfully",
+        title: "Transfer submitted",
+        description: "We'll process your transfer and notify you once it's complete",
       });
       
       onClose();
     } catch (error: any) {
-      console.error("Submission error:", error);
       toast({
-        title: "Error",
+        title: "Error submitting transfer",
         description: error.message,
         variant: "destructive",
       });
@@ -165,94 +154,116 @@ export const MoneyTransferForm = ({ isOpen, onClose, currentRate }: MoneyTransfe
           </DialogTitle>
         </DialogHeader>
         
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="p-2.5 sm:p-3 space-y-2.5 sm:space-y-3">
-            {!showVerification ? (
-              <>
-                <TransferFormFields
-                  amountUSD={amountUSD}
-                  currentRate={currentRate}
-                  setAmountUSD={setAmountUSD}
-                />
+        <div className="p-2.5 sm:p-3">
+          <TransferSteps currentStep={showVerification ? 1 : 0} />
+          
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              {!showVerification ? (
+                <>
+                  <TransferFormFields
+                    amountUSD={amountUSD}
+                    currentRate={currentRate}
+                    setAmountUSD={setAmountUSD}
+                  />
 
-                <div className="flex justify-end pt-3 border-t">
-                  <Button 
-                    type="button" 
-                    onClick={handleContinue}
-                    className="w-full sm:w-auto bg-site-blue hover:bg-blue-600"
-                  >
-                    Continue to Verification
-                  </Button>
-                </div>
-              </>
-            ) : (
-              <div className="space-y-2.5 sm:space-y-3">
-                <div className="bg-blue-50 p-2 sm:p-2.5 rounded-lg space-y-2">
-                  <h3 className="font-medium text-blue-900">Payment Instructions</h3>
-                  <p className="text-sm text-blue-800">
-                    Please send the payment via Zelle to:
-                  </p>
-                  <div className="flex items-center gap-2 bg-white p-2 rounded border border-blue-200">
-                    <code className="flex-1 text-sm text-blue-700 break-all">
-                      {ZELLE_EMAIL}
-                    </code>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={handleCopyEmail}
-                      className="h-8 px-2 shrink-0 text-blue-700 hover:text-blue-800 hover:bg-blue-100"
+                  <div className="flex justify-end pt-3 border-t">
+                    <Button 
+                      type="button" 
+                      onClick={handleContinue}
+                      className="w-full sm:w-auto bg-site-blue hover:bg-blue-600"
+                      size="lg"
                     >
-                      {copied ? (
-                        <CheckIcon className="h-4 w-4" />
-                      ) : (
-                        <CopyIcon className="h-4 w-4" />
-                      )}
+                      Continue to Payment
                     </Button>
                   </div>
-                  <p className="text-sm text-blue-800">
-                    After sending the payment, please upload the payment proof below.
-                  </p>
-                </div>
+                </>
+              ) : (
+                <div className="space-y-6">
+                  <Alert>
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertDescription>
+                      Please complete the payment via Zelle and upload the screenshot below
+                    </AlertDescription>
+                  </Alert>
 
-                <div className="space-y-1.5">
-                  <label className="block text-sm font-medium text-gray-900">
-                    Payment Proof
-                  </label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    className="w-full text-sm text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-site-blue/10 file:text-site-blue hover:file:bg-site-blue/20"
+                  <div className="bg-blue-50 p-4 rounded-lg space-y-3">
+                    <h3 className="font-medium text-blue-900">Payment Instructions</h3>
+                    <div className="space-y-2">
+                      <p className="text-sm text-blue-800">
+                        1. Open your Zelle app
+                      </p>
+                      <p className="text-sm text-blue-800">
+                        2. Send ${amountUSD.toFixed(2)} to:
+                      </p>
+                      <div className="flex items-center gap-2 bg-white p-2 rounded border border-blue-200">
+                        <code className="flex-1 text-sm text-blue-700 break-all">
+                          {ZELLE_EMAIL}
+                        </code>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={handleCopyEmail}
+                          className="h-8 px-2 shrink-0 text-blue-700 hover:text-blue-800 hover:bg-blue-100"
+                        >
+                          {copied ? (
+                            <CheckIcon className="h-4 w-4" />
+                          ) : (
+                            <CopyIcon className="h-4 w-4" />
+                          )}
+                        </Button>
+                      </div>
+                      <p className="text-sm text-blue-800">
+                        3. Take a screenshot of the payment confirmation
+                      </p>
+                      <p className="text-sm text-blue-800">
+                        4. Upload the screenshot below and sign the form
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="block text-base font-medium text-gray-900">
+                      Upload Payment Proof
+                    </label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileChange}
+                      className="w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-site-blue/10 file:text-site-blue hover:file:bg-site-blue/20"
+                    />
+                  </div>
+
+                  <TransferFormSignature
+                    signature={signature}
+                    setSignature={setSignature}
                   />
-                </div>
 
-                <TransferFormSignature
-                  signature={signature}
-                  setSignature={setSignature}
-                />
-
-                <div className="flex flex-col sm:flex-row justify-end gap-2 sm:gap-3 pt-3 border-t">
-                  <Button 
-                    type="button" 
-                    variant="outline" 
-                    onClick={() => setShowVerification(false)}
-                    className="w-full sm:w-auto order-2 sm:order-1"
-                  >
-                    Back
-                  </Button>
-                  <Button 
-                    type="submit" 
-                    disabled={isSubmitting}
-                    className="w-full sm:w-auto order-1 sm:order-2 bg-site-blue hover:bg-blue-600"
-                  >
-                    {isSubmitting ? "Submitting..." : "Submit Transfer"}
-                  </Button>
+                  <div className="flex flex-col sm:flex-row justify-end gap-2 sm:gap-3 pt-3 border-t">
+                    <Button 
+                      type="button" 
+                      variant="outline" 
+                      onClick={() => setShowVerification(false)}
+                      className="w-full sm:w-auto order-2 sm:order-1"
+                      size="lg"
+                    >
+                      Back
+                    </Button>
+                    <Button 
+                      type="submit" 
+                      disabled={isSubmitting}
+                      className="w-full sm:w-auto order-1 sm:order-2 bg-site-blue hover:bg-blue-600"
+                      size="lg"
+                    >
+                      {isSubmitting ? "Submitting..." : "Complete Transfer"}
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            )}
-          </form>
-        </Form>
+              )}
+            </form>
+          </Form>
+        </div>
       </DialogContent>
     </Dialog>
   );
