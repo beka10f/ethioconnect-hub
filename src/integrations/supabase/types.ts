@@ -113,6 +113,7 @@ export type Database = {
           created_by: string | null
           description: string
           id: string
+          is_negotiable: boolean | null
           location: string
           phone_number: string
           status: string | null
@@ -126,6 +127,7 @@ export type Database = {
           created_by?: string | null
           description: string
           id?: string
+          is_negotiable?: boolean | null
           location: string
           phone_number: string
           status?: string | null
@@ -139,6 +141,7 @@ export type Database = {
           created_by?: string | null
           description?: string
           id?: string
+          is_negotiable?: boolean | null
           location?: string
           phone_number?: string
           status?: string | null
@@ -289,6 +292,7 @@ export type Database = {
           created_by: string | null
           description: string
           id: string
+          is_negotiable: boolean | null
           phone_number: string
           price: number
           status: string | null
@@ -302,6 +306,7 @@ export type Database = {
           created_by?: string | null
           description: string
           id?: string
+          is_negotiable?: boolean | null
           phone_number: string
           price: number
           status?: string | null
@@ -315,6 +320,7 @@ export type Database = {
           created_by?: string | null
           description?: string
           id?: string
+          is_negotiable?: boolean | null
           phone_number?: string
           price?: number
           status?: string | null
