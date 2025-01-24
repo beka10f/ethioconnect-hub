@@ -16,6 +16,8 @@ type ShippingDetails = {
   id: string;
   customer_name: string;
   phone: string;
+  receiver_name: string;
+  receiver_phone: string;
   weight: number;
   weight_unit: string;
   cost: number;
@@ -114,7 +116,8 @@ const ShippingManagementTable = ({ shippingRequests, isLoading }: ShippingManage
             <Table>
               <TableHeader className="bg-gray-50/50 backdrop-blur-sm sticky top-0 z-10">
                 <TableRow>
-                  <TableHead className="text-gray-900 font-medium">Customer</TableHead>
+                  <TableHead className="text-gray-900 font-medium">Sender</TableHead>
+                  <TableHead className="text-gray-900 font-medium">Receiver</TableHead>
                   <TableHead className="text-gray-900 font-medium">Package Details</TableHead>
                   <TableHead className="text-gray-900 font-medium">Shipping Date</TableHead>
                   <TableHead className="text-gray-900 font-medium">Status</TableHead>
@@ -132,6 +135,12 @@ const ShippingManagementTable = ({ shippingRequests, isLoading }: ShippingManage
                       <div className="space-y-1">
                         <p className="font-medium">{request.customer_name}</p>
                         <p className="text-sm text-gray-500">{request.phone}</p>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="space-y-1">
+                        <p className="font-medium">{request.receiver_name}</p>
+                        <p className="text-sm text-gray-500">{request.receiver_phone}</p>
                       </div>
                     </TableCell>
                     <TableCell>
@@ -180,9 +189,14 @@ const ShippingManagementTable = ({ shippingRequests, isLoading }: ShippingManage
           </DialogHeader>
           <div className="space-y-4">
             <div>
-              <h4 className="font-medium text-gray-900 mb-1">Customer Information</h4>
+              <h4 className="font-medium text-gray-900 mb-1">Sender Information</h4>
               <p className="text-gray-700">Name: {selectedRequest?.customer_name}</p>
               <p className="text-gray-700">Phone: {selectedRequest?.phone}</p>
+            </div>
+            <div>
+              <h4 className="font-medium text-gray-900 mb-1">Receiver Information</h4>
+              <p className="text-gray-700">Name: {selectedRequest?.receiver_name}</p>
+              <p className="text-gray-700">Phone: {selectedRequest?.receiver_phone}</p>
             </div>
             <div>
               <h4 className="font-medium text-gray-900 mb-1">Package Details</h4>

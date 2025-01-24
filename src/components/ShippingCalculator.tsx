@@ -41,7 +41,9 @@ const ShippingCalculator = () => {
         cost: calculateShippingCost(currentData),
         shipping_date: format(currentData.shippingDate, 'yyyy-MM-dd'),
         status: 'pending' as ShippingStatus,
-        created_by: null
+        created_by: null,
+        receiver_name: currentData.receiverName,
+        receiver_phone: currentData.receiverPhone
       };
 
       const { data: userData } = await supabase.auth.getUser();

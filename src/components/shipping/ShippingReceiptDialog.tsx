@@ -1,8 +1,9 @@
 import React from "react";
 import { format } from "date-fns";
-import { Receipt, Camera, MapPin } from "lucide-react";
+import { Receipt, Camera, MapPin, QrCode } from "lucide-react";
 import { ShippingFormData } from "./ShippingForm";
 import { calculateShippingCost } from "@/utils/shipping";
+import { QRCodeSVG } from "qrcode.react";
 import {
   Dialog,
   DialogContent,
@@ -34,6 +35,24 @@ const ShippingReceiptDialog = ({
   };
 
   if (!data) return null;
+
+  const qrData = JSON.stringify({
+    id: confirmationId,
+    sender: {
+      name: data.name,
+      phone: data.phoneNumber,
+    },
+    receiver: {
+      name: data.receiverName,
+      phone: data.receiverPhone,
+    },
+    package: {
+      weight: data.weight,
+      unit: data.unit,
+      cost: calculateShippingCost(data),
+      date: format(data.shippingDate, "yyyy-MM-dd"),
+    },
+  });
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -75,25 +94,46 @@ const ShippingReceiptDialog = ({
               <span className="text-gray-600">Confirmation ID:</span>
               <span className="font-medium text-gray-900 text-right">{confirmationId.slice(0, 8)}</span>
             </div>
-            <div className="grid grid-cols-2 text-sm">
-              <span className="text-gray-600">Customer:</span>
-              <span className="font-medium text-gray-900 text-right">{data.name}</span>
+            <div className="border-t border-gray-100 pt-2">
+              <h4 className="font-medium text-gray-900 mb-2">Sender Details:</h4>
+              <div className="grid grid-cols-2 text-sm gap-1">
+                <span className="text-gray-600">Name:</span>
+                <span className="font-medium text-gray-900 text-right">{data.name}</span>
+                <span className="text-gray-600">Phone:</span>
+                <span className="font-medium text-gray-900 text-right">{data.phoneNumber}</span>
+              </div>
             </div>
-            <div className="grid grid-cols-2 text-sm">
-              <span className="text-gray-600">Phone:</span>
-              <span className="font-medium text-gray-900 text-right">{data.phoneNumber}</span>
+            <div className="border-t border-gray-100 pt-2">
+              <h4 className="font-medium text-gray-900 mb-2">Receiver Details:</h4>
+              <div className="grid grid-cols-2 text-sm gap-1">
+                <span className="text-gray-600">Name:</span>
+                <span className="font-medium text-gray-900 text-right">{data.receiverName}</span>
+                <span className="text-gray-600">Phone:</span>
+                <span className="font-medium text-gray-900 text-right">{data.receiverPhone}</span>
+              </div>
             </div>
-            <div className="grid grid-cols-2 text-sm">
-              <span className="text-gray-600">Package Weight:</span>
-              <span className="font-medium text-gray-900 text-right">{data.weight} {data.unit}</span>
+            <div className="border-t border-gray-100 pt-2">
+              <h4 className="font-medium text-gray-900 mb-2">Package Details:</h4>
+              <div className="grid grid-cols-2 text-sm gap-1">
+                <span className="text-gray-600">Weight:</span>
+                <span className="font-medium text-gray-900 text-right">{data.weight} {data.unit}</span>
+                <span className="text-gray-600">Drop-off Date:</span>
+                <span className="font-medium text-gray-900 text-right">{format(data.shippingDate, "MMM do, yyyy")}</span>
+                <span className="font-semibold text-gray-900">Total Cost:</span>
+                <span className="font-bold text-site-blue text-right">${calculateShippingCost(data)}</span>
+              </div>
             </div>
-            <div className="grid grid-cols-2 text-sm">
-              <span className="text-gray-600">Drop-off Date:</span>
-              <span className="font-medium text-gray-900 text-right">{format(data.shippingDate, "MMM do, yyyy")}</span>
-            </div>
-            <div className="grid grid-cols-2 text-sm border-t border-gray-200 pt-3 mt-3">
-              <span className="font-semibold text-gray-900">Total Cost:</span>
-              <span className="font-bold text-site-blue text-right">${calculateShippingCost(data)}</span>
+          </div>
+
+          <div className="flex flex-col items-center gap-2 border-t border-gray-200 pt-4">
+            <QrCode className="w-5 h-5 text-gray-400" />
+            <div className="bg-white p-2 rounded-lg shadow-sm border">
+              <QRCodeSVG
+                value={qrData}
+                size={200}
+                level="H"
+                includeMargin
+              />
             </div>
           </div>
 

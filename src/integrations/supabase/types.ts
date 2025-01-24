@@ -337,6 +337,8 @@ export type Database = {
           id: string
           notes: string | null
           phone: string
+          receiver_name: string
+          receiver_phone: string
           shipping_date: string
           status: Database["public"]["Enums"]["shipping_status"] | null
           updated_at: string
@@ -351,6 +353,8 @@ export type Database = {
           id?: string
           notes?: string | null
           phone: string
+          receiver_name: string
+          receiver_phone: string
           shipping_date: string
           status?: Database["public"]["Enums"]["shipping_status"] | null
           updated_at?: string
@@ -365,6 +369,8 @@ export type Database = {
           id?: string
           notes?: string | null
           phone?: string
+          receiver_name?: string
+          receiver_phone?: string
           shipping_date?: string
           status?: Database["public"]["Enums"]["shipping_status"] | null
           updated_at?: string
