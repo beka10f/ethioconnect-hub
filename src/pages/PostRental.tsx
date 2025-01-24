@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import Header from "@/components/Header";
@@ -23,6 +24,8 @@ const formSchema = z.object({
   description: z.string().min(10, "Description must be at least 10 characters"),
   contactInfo: z.string().email("Invalid email address"),
   phoneNumber: z.string().min(10, "Phone number must be at least 10 digits"),
+  price: z.string().min(1, "Price is required"),
+  isNegotiable: z.boolean().default(false),
 });
 
 export default function PostRental() {
@@ -35,6 +38,8 @@ export default function PostRental() {
       description: "",
       contactInfo: "",
       phoneNumber: "",
+      price: "",
+      isNegotiable: false,
     },
   });
 
@@ -49,8 +54,8 @@ export default function PostRental() {
         contact_info: values.contactInfo,
         phone_number: values.phoneNumber,
         created_by: user?.id,
-        price: 0, // Adding default price value
-        is_negotiable: false // Adding default is_negotiable value
+        price: parseFloat(values.price),
+        is_negotiable: values.isNegotiable,
       });
 
       if (error) {
@@ -120,6 +125,44 @@ export default function PostRental() {
                 </FormItem>
               )}
             />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <FormField
+                control={form.control}
+                name="price"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Monthly Rent</FormLabel>
+                    <FormControl>
+                      <Input 
+                        type="number" 
+                        placeholder="e.g. 1500" 
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="isNegotiable"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md border p-4">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormLabel className="text-sm font-normal">
+                      Price is negotiable
+                    </FormLabel>
+                  </FormItem>
+                )}
+              />
+            </div>
             
             <FormField
               control={form.control}
