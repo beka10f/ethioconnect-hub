@@ -20,7 +20,11 @@ import { supabase } from "@/integrations/supabase/client";
 const formSchema = z.object({
   title: z.string().min(2, "Property title must be at least 2 characters"),
   address: z.string().min(5, "Address must be at least 5 characters"),
-  price: z.string().min(1, "Price is required"),
+  price: z.string()
+    .min(1, "Price is required")
+    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
+      message: "Price must be a valid number greater than 0",
+    }),
   description: z.string().min(10, "Description must be at least 10 characters"),
   contactInfo: z.string().email("Invalid email address"),
   phoneNumber: z.string().min(10, "Phone number must be at least 10 digits"),
@@ -41,25 +45,37 @@ const PostRental = () => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const { data: { user } } = await supabase.auth.getUser();
-    
-    const { error } = await supabase.from("rentals").insert({
-      title: values.title,
-      address: values.address,
-      price: parseFloat(values.price),
-      description: values.description,
-      contact_info: values.contactInfo,
-      phone_number: values.phoneNumber,
-      created_by: user?.id,
-    });
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      const numericPrice = Number(values.price);
+      if (isNaN(numericPrice)) {
+        toast.error("Invalid price value");
+        return;
+      }
 
-    if (error) {
-      toast.error("Failed to submit rental listing");
-      return;
+      const { error } = await supabase.from("rentals").insert({
+        title: values.title,
+        address: values.address,
+        price: numericPrice,
+        description: values.description,
+        contact_info: values.contactInfo,
+        phone_number: values.phoneNumber,
+        created_by: user?.id,
+      });
+
+      if (error) {
+        console.error("Error submitting rental:", error);
+        toast.error("Failed to submit rental listing");
+        return;
+      }
+
+      toast.success("Rental listing submitted for review!");
+      navigate("/rentals");
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("An unexpected error occurred");
     }
-
-    toast.success("Rental listing submitted for review!");
-    navigate("/rentals");
   }
 
   return (
@@ -105,7 +121,13 @@ const PostRental = () => {
                 <FormItem>
                   <FormLabel>Price (per month)</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g. 1500" {...field} />
+                    <Input 
+                      type="number" 
+                      min="0" 
+                      step="0.01"
+                      placeholder="e.g. 1500" 
+                      {...field} 
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
