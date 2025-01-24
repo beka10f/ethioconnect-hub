@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { TransferFormSection } from "./TransferFormSection";
-import { Bank, DollarSign, Phone, User } from "lucide-react";
+import { DollarSign, Phone, User } from "lucide-react";
 
 const ETHIOPIAN_BANKS = [
   "Commercial Bank of Ethiopia (CBE)",
@@ -130,7 +130,7 @@ export const TransferFormFields = ({
         </div>
       </TransferFormSection>
 
-      <TransferFormSection title="Bank Information" icon={<Bank />}>
+      <TransferFormSection title="Bank Information" icon={<DollarSign />}>
         <FormField
           control={control}
           name="recipient_bank_name"
