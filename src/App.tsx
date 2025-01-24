@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Index from "@/pages/Index";
 import Jobs from "@/pages/Jobs";
 import Rentals from "@/pages/Rentals";
@@ -23,6 +23,8 @@ function App() {
         <Route path="/admin" element={<Admin />} />
         <Route path="/post-job" element={<PostJob />} />
         <Route path="/post-rental" element={<PostRental />} />
+        {/* Catch all route - redirect to home */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
   );
