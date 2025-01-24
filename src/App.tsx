@@ -7,11 +7,13 @@ import Login from "@/pages/Login";
 import Admin from "@/pages/Admin";
 import PostJob from "@/pages/PostJob";
 import PostRental from "@/pages/PostRental";
+import { Toaster } from "@/components/ui/toaster";
 import "./App.css";
 
 function App() {
   return (
     <Router>
+      <Toaster />
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/jobs" element={<Jobs />} />
