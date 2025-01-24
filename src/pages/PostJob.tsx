@@ -28,7 +28,7 @@ const formSchema = z.object({
   isNegotiable: z.boolean().default(false),
 });
 
-const PostJob = () => {
+export default function PostJob() {
   const navigate = useNavigate();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -204,6 +204,4 @@ const PostJob = () => {
       </div>
     </div>
   );
-};
-
-export default PostJob;
+}
