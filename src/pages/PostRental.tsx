@@ -49,6 +49,8 @@ export default function PostRental() {
         contact_info: values.contactInfo,
         phone_number: values.phoneNumber,
         created_by: user?.id,
+        price: 0, // Adding default price value
+        is_negotiable: false // Adding default is_negotiable value
       });
 
       if (error) {
