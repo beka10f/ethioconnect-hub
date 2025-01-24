@@ -162,16 +162,18 @@ export default function PostJob() {
                 control={form.control}
                 name="isNegotiable"
                 render={({ field }) => (
-                  <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md border p-4">
+                  <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                     <FormControl>
                       <Checkbox
                         checked={field.value}
                         onCheckedChange={field.onChange}
                       />
                     </FormControl>
-                    <FormLabel className="text-sm font-normal">
-                      Salary is negotiable
-                    </FormLabel>
+                    <div className="space-y-1 leading-none">
+                      <FormLabel>
+                        Salary is negotiable
+                      </FormLabel>
+                    </div>
                   </FormItem>
                 )}
               />

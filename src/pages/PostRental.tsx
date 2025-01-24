@@ -76,7 +76,7 @@ export default function PostRental() {
     <div className="min-h-screen bg-ethiopian-cream">
       <Header />
       <div className="container mx-auto py-8 px-4 max-w-2xl">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Post a Rental</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-8 text-left">Post a Rental</h1>
         
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -84,7 +84,7 @@ export default function PostRental() {
               control={form.control}
               name="title"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="text-left">
                   <FormLabel>Property Title</FormLabel>
                   <FormControl>
                     <Input placeholder="e.g. Modern 2 Bedroom Apartment" {...field} />
@@ -98,7 +98,7 @@ export default function PostRental() {
               control={form.control}
               name="address"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="text-left">
                   <FormLabel>Address</FormLabel>
                   <FormControl>
                     <Input placeholder="e.g. 123 Main St, Silver Spring, MD" {...field} />
@@ -112,7 +112,7 @@ export default function PostRental() {
               control={form.control}
               name="description"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="text-left">
                   <FormLabel>Property Description</FormLabel>
                   <FormControl>
                     <Textarea 
@@ -131,7 +131,7 @@ export default function PostRental() {
                 control={form.control}
                 name="price"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="text-left">
                     <FormLabel>Monthly Rent</FormLabel>
                     <FormControl>
                       <Input 
@@ -170,7 +170,7 @@ export default function PostRental() {
               control={form.control}
               name="contactInfo"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="text-left">
                   <FormLabel>Contact Email</FormLabel>
                   <FormControl>
                     <Input type="email" placeholder="e.g. contact@email.com" {...field} />
@@ -184,7 +184,7 @@ export default function PostRental() {
               control={form.control}
               name="phoneNumber"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="text-left">
                   <FormLabel>Phone Number</FormLabel>
                   <FormControl>
                     <Input type="tel" placeholder="e.g. 301-555-0123" {...field} />
