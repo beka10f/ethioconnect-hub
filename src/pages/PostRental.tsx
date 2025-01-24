@@ -20,24 +20,18 @@ import { supabase } from "@/integrations/supabase/client";
 const formSchema = z.object({
   title: z.string().min(2, "Property title must be at least 2 characters"),
   address: z.string().min(5, "Address must be at least 5 characters"),
-  price: z.string()
-    .min(1, "Price is required")
-    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, {
-      message: "Price must be a valid number greater than 0",
-    }),
   description: z.string().min(10, "Description must be at least 10 characters"),
   contactInfo: z.string().email("Invalid email address"),
   phoneNumber: z.string().min(10, "Phone number must be at least 10 digits"),
 });
 
-const PostRental = () => {
+export default function PostRental() {
   const navigate = useNavigate();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
       address: "",
-      price: "",
       description: "",
       contactInfo: "",
       phoneNumber: "",
@@ -47,17 +41,10 @@ const PostRental = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      
-      const numericPrice = Number(values.price);
-      if (isNaN(numericPrice)) {
-        toast.error("Invalid price value");
-        return;
-      }
 
       const { error } = await supabase.from("rentals").insert({
         title: values.title,
         address: values.address,
-        price: numericPrice,
         description: values.description,
         contact_info: values.contactInfo,
         phone_number: values.phoneNumber,
@@ -108,26 +95,6 @@ const PostRental = () => {
                   <FormLabel>Address</FormLabel>
                   <FormControl>
                     <Input placeholder="e.g. 123 Main St, Silver Spring, MD" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            
-            <FormField
-              control={form.control}
-              name="price"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Price (per month)</FormLabel>
-                  <FormControl>
-                    <Input 
-                      type="number" 
-                      min="0" 
-                      step="0.01"
-                      placeholder="e.g. 1500" 
-                      {...field} 
-                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -200,6 +167,4 @@ const PostRental = () => {
       </div>
     </div>
   );
-};
-
-export default PostRental;
+}

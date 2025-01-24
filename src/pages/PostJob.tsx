@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import Header from "@/components/Header";
@@ -25,7 +24,6 @@ const formSchema = z.object({
   description: z.string().min(10, "Description must be at least 10 characters"),
   contactInfo: z.string().email("Invalid email address").optional(),
   phoneNumber: z.string().min(10, "Phone number must be at least 10 digits"),
-  isNegotiable: z.boolean().default(false),
 });
 
 export default function PostJob() {
@@ -39,7 +37,6 @@ export default function PostJob() {
       description: "",
       contactInfo: "",
       phoneNumber: "",
-      isNegotiable: false,
     },
   });
 
@@ -55,7 +52,6 @@ export default function PostJob() {
         contact_info: values.contactInfo || '',
         phone_number: values.phoneNumber,
         created_by: user?.id,
-        is_negotiable: values.isNegotiable,
       });
 
       if (error) throw error;
@@ -160,26 +156,6 @@ export default function PostJob() {
                     <Input type="tel" placeholder="e.g. 301-555-0123" {...field} />
                   </FormControl>
                   <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="isNegotiable"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                  <div className="space-y-1 leading-none">
-                    <FormLabel>
-                      Negotiable
-                    </FormLabel>
-                  </div>
                 </FormItem>
               )}
             />
