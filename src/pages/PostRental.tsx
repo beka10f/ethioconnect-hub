@@ -73,7 +73,7 @@ export default function PostRental() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-blue-50">
+    <div className="min-h-screen bg-ethiopian-cream">
       <Header />
       <div className="container mx-auto py-8 px-4 max-w-2xl">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Post a Rental</h1>
@@ -149,16 +149,18 @@ export default function PostRental() {
                 control={form.control}
                 name="isNegotiable"
                 render={({ field }) => (
-                  <FormItem className="flex flex-row items-center space-x-3 space-y-0 rounded-md border p-4">
+                  <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                     <FormControl>
                       <Checkbox
                         checked={field.value}
                         onCheckedChange={field.onChange}
                       />
                     </FormControl>
-                    <FormLabel className="text-sm font-normal">
-                      Price is negotiable
-                    </FormLabel>
+                    <div className="space-y-1 leading-none">
+                      <FormLabel>
+                        Price is negotiable
+                      </FormLabel>
+                    </div>
                   </FormItem>
                 )}
               />
@@ -195,7 +197,7 @@ export default function PostRental() {
             <div className="flex gap-4">
               <Button 
                 type="submit"
-                className="bg-blue-600 hover:bg-blue-700"
+                className="bg-ethiopian-coffee text-white hover:bg-ethiopian-coffee/90"
               >
                 Submit Rental Listing
               </Button>
