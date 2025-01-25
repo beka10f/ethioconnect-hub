@@ -77,24 +77,9 @@ const ShippingManagementTable = ({ shippingRequests, isLoading }: ShippingManage
     }
   };
 
-  // Generate QR code data for shipping details
-  const getQrData = (request: ShippingDetails) => {
-    return JSON.stringify({
-      id: request.id,
-      sender: {
-        name: request.customer_name,
-        phone: request.phone,
-      },
-      receiver: {
-        name: request.receiver_name,
-        phone: request.receiver_phone,
-      },
-      package: {
-        weight: request.weight,
-        unit: request.weight_unit,
-        date: request.shipping_date,
-      },
-    });
+  // Generate QR code URL for shipping details
+  const getQrUrl = (request: ShippingDetails) => {
+    return `${window.location.origin}/shipping/${request.id}`;
   };
 
   const MobileShippingCard = ({ request }: { request: ShippingDetails }) => (
@@ -278,13 +263,16 @@ const ShippingManagementTable = ({ shippingRequests, isLoading }: ShippingManage
               <div className="bg-white p-2 rounded-lg shadow-sm border">
                 {selectedRequest && (
                   <QRCodeSVG
-                    value={getQrData(selectedRequest)}
+                    value={getQrUrl(selectedRequest)}
                     size={200}
                     level="H"
                     includeMargin
                   />
                 )}
               </div>
+              <p className="text-xs text-gray-500 text-center">
+                Scan to view shipping details online
+              </p>
             </div>
           </div>
           <DialogFooter className="flex flex-col sm:flex-row gap-2 mt-4">

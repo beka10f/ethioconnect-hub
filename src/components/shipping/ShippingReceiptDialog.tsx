@@ -32,25 +32,8 @@ const ShippingReceiptDialog = ({
 
   if (!data) return null;
 
-  // Simplified QR code data with essential shipping information
-  const qrData = JSON.stringify({
-    id: confirmationId,
-    shipping: {
-      sender: {
-        name: data.name,
-        phone: data.phoneNumber,
-      },
-      receiver: {
-        name: data.receiverName,
-        phone: data.receiverPhone,
-      },
-      package: {
-        weight: `${data.weight} ${data.unit}`,
-        date: format(data.shippingDate, "MMM do, yyyy"),
-        cost: `$${calculateShippingCost(data)}`
-      }
-    }
-  });
+  // Generate a URL that will open the shipping details on the website
+  const qrUrl = `${window.location.origin}/shipping/${confirmationId}`;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -114,12 +97,15 @@ const ShippingReceiptDialog = ({
             <QrCode className="w-5 h-5 text-gray-400" />
             <div className="bg-white p-2 rounded-lg shadow-sm border">
               <QRCodeSVG
-                value={qrData}
+                value={qrUrl}
                 size={180}
                 level="H"
                 includeMargin
               />
             </div>
+            <p className="text-xs text-gray-500 text-center">
+              Scan to view shipping details online
+            </p>
           </div>
         </div>
 
