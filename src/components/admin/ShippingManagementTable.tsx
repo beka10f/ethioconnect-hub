@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Package, Calendar, DollarSign, Scale, ChevronRight } from "lucide-react";
+import { Package, Calendar, DollarSign, Scale, ChevronRight, Printer, QrCode } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
+import { QRCodeSVG } from "qrcode.react";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
+  DialogFooter,
 } from "@/components/ui/dialog";
 
 type ShippingDetails = {
@@ -41,6 +44,38 @@ const statusColors = {
 
 const ShippingManagementTable = ({ shippingRequests, isLoading }: ShippingManagementTableProps) => {
   const [selectedRequest, setSelectedRequest] = useState<ShippingDetails | null>(null);
+
+  const handlePrint = () => {
+    const printContent = document.getElementById('admin-receipt-content');
+    if (printContent) {
+      const printWindow = window.open('', '', 'width=600,height=800');
+      if (printWindow) {
+        printWindow.document.write(`
+          <html>
+            <head>
+              <title>Shipping Details</title>
+              <style>
+                body { font-family: Arial, sans-serif; padding: 20px; }
+                .header { text-align: center; margin-bottom: 20px; }
+                .section { margin: 15px 0; border-top: 1px solid #eee; padding-top: 15px; }
+                .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+                .label { color: #666; }
+                .value { font-weight: bold; }
+                .qr-code { text-align: center; margin: 20px 0; }
+              </style>
+            </head>
+            <body>
+              ${printContent.innerHTML}
+            </body>
+          </html>
+        `);
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.print();
+        printWindow.close();
+      }
+    }
+  };
 
   if (isLoading) {
     return (
@@ -102,6 +137,26 @@ const ShippingManagementTable = ({ shippingRequests, isLoading }: ShippingManage
       </CardContent>
     </Card>
   );
+
+  // Generate QR code data for the selected request
+  const getQrData = (request: ShippingDetails) => {
+    return JSON.stringify({
+      id: request.id,
+      sender: {
+        name: request.customer_name,
+        phone: request.phone,
+      },
+      receiver: {
+        name: request.receiver_name,
+        phone: request.receiver_phone,
+      },
+      package: {
+        weight: request.weight,
+        unit: request.weight_unit,
+        date: request.shipping_date,
+      },
+    });
+  };
 
   return (
     <>
@@ -187,7 +242,7 @@ const ShippingManagementTable = ({ shippingRequests, isLoading }: ShippingManage
               Created on {selectedRequest?.created_at && new Date(selectedRequest.created_at).toLocaleDateString()}
             </DialogDescription>
           </DialogHeader>
-          <div className="space-y-4">
+          <div id="admin-receipt-content" className="space-y-4">
             <div>
               <h4 className="font-medium text-gray-900 mb-1">Sender Information</h4>
               <p className="text-gray-700">Name: {selectedRequest?.customer_name}</p>
@@ -218,7 +273,29 @@ const ShippingManagementTable = ({ shippingRequests, isLoading }: ShippingManage
                 <p className="text-gray-700">{selectedRequest.notes}</p>
               </div>
             )}
+            <div className="flex flex-col items-center gap-2 border-t border-gray-200 pt-4">
+              <QrCode className="w-5 h-5 text-gray-400" />
+              <div className="bg-white p-2 rounded-lg shadow-sm border">
+                {selectedRequest && (
+                  <QRCodeSVG
+                    value={getQrData(selectedRequest)}
+                    size={200}
+                    level="H"
+                    includeMargin
+                  />
+                )}
+              </div>
+            </div>
           </div>
+          <DialogFooter className="flex flex-col sm:flex-row gap-2 mt-4">
+            <Button 
+              onClick={handlePrint}
+              className="w-full bg-gray-100 hover:bg-gray-200 text-gray-900 gap-2"
+            >
+              <Printer className="w-4 h-4" />
+              Print Details
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </>

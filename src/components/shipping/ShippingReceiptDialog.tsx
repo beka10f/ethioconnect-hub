@@ -1,6 +1,6 @@
 import React from "react";
 import { format } from "date-fns";
-import { Receipt, Camera, MapPin, QrCode } from "lucide-react";
+import { Receipt, Camera, MapPin, QrCode, Printer } from "lucide-react";
 import { ShippingFormData } from "./ShippingForm";
 import { calculateShippingCost } from "@/utils/shipping";
 import { QRCodeSVG } from "qrcode.react";
@@ -34,8 +34,41 @@ const ShippingReceiptDialog = ({
     );
   };
 
+  const handlePrint = () => {
+    const printContent = document.getElementById('receipt-content');
+    if (printContent) {
+      const printWindow = window.open('', '', 'width=600,height=800');
+      if (printWindow) {
+        printWindow.document.write(`
+          <html>
+            <head>
+              <title>Shipping Receipt</title>
+              <style>
+                body { font-family: Arial, sans-serif; padding: 20px; }
+                .header { text-align: center; margin-bottom: 20px; }
+                .section { margin: 15px 0; border-top: 1px solid #eee; padding-top: 15px; }
+                .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+                .label { color: #666; }
+                .value { font-weight: bold; }
+                .qr-code { text-align: center; margin: 20px 0; }
+              </style>
+            </head>
+            <body>
+              ${printContent.innerHTML}
+            </body>
+          </html>
+        `);
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.print();
+        printWindow.close();
+      }
+    }
+  };
+
   if (!data) return null;
 
+  // Simplified QR code data with only essential information
   const qrData = JSON.stringify({
     id: confirmationId,
     sender: {
@@ -49,7 +82,6 @@ const ShippingReceiptDialog = ({
     package: {
       weight: data.weight,
       unit: data.unit,
-      cost: calculateShippingCost(data),
       date: format(data.shippingDate, "yyyy-MM-dd"),
     },
   });
@@ -73,7 +105,8 @@ const ShippingReceiptDialog = ({
             </div>
           </DialogDescription>
         </DialogHeader>
-        <div className="space-y-4 bg-white rounded-lg border border-gray-200 p-4 sm:p-6">
+        
+        <div id="receipt-content" className="space-y-4 bg-white rounded-lg border border-gray-200 p-4 sm:p-6">
           <div className="text-center border-b border-gray-200 pb-4">
             <div 
               onClick={handleLocationClick}
@@ -142,10 +175,18 @@ const ShippingReceiptDialog = ({
             <p className="mt-1">For any questions, please contact us with your confirmation ID</p>
           </div>
         </div>
-        <DialogFooter>
+
+        <DialogFooter className="flex flex-col sm:flex-row gap-2 mt-4">
+          <Button 
+            onClick={handlePrint}
+            className="w-full bg-gray-100 hover:bg-gray-200 text-gray-900 gap-2"
+          >
+            <Printer className="w-4 h-4" />
+            Print Receipt
+          </Button>
           <Button 
             onClick={() => onOpenChange(false)}
-            className="w-full bg-site-blue hover:bg-site-blue/90 text-white py-4"
+            className="w-full bg-site-blue hover:bg-site-blue/90 text-white"
           >
             Done
           </Button>
