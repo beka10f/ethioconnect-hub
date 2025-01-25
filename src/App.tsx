@@ -7,6 +7,7 @@ import Login from "@/pages/Login";
 import Admin from "@/pages/Admin";
 import PostJob from "@/pages/PostJob";
 import PostRental from "@/pages/PostRental";
+import ShippingDetails from "@/pages/ShippingDetails";
 import { Toaster } from "@/components/ui/toaster";
 import "./App.css";
 
@@ -23,6 +24,7 @@ function App() {
         <Route path="/admin" element={<Admin />} />
         <Route path="/post-job" element={<PostJob />} />
         <Route path="/post-rental" element={<PostRental />} />
+        <Route path="/shipping/:id" element={<ShippingDetails />} />
         {/* Catch all route - redirect to home */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
