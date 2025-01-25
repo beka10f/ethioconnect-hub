@@ -94,13 +94,11 @@ const ShippingReceiptDialog = ({
             <Receipt className="w-5 h-5" />
             Shipping Receipt
           </DialogTitle>
-          <DialogDescription className="bg-site-blue/5 p-6 rounded-lg mt-4 border-2 border-site-blue/20">
+          <DialogDescription className="bg-site-blue/5 p-4 sm:p-6 rounded-lg mt-4 border-2 border-site-blue/20">
             <div className="flex flex-col items-center gap-4">
               <Camera className="w-8 h-8 text-site-blue animate-bounce" />
               <p className="text-site-blue font-semibold text-center text-base sm:text-lg">
-                Please take a screenshot
-                <br />
-                of this receipt
+                Please take a screenshot<br />of this receipt
               </p>
             </div>
           </DialogDescription>

@@ -77,25 +77,29 @@ const ShippingManagementTable = ({ shippingRequests, isLoading }: ShippingManage
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="bg-white/70 backdrop-blur-sm rounded-lg shadow-sm overflow-hidden border border-gray-200/50 p-4">
-        <p className="text-center text-gray-500">Loading shipping requests...</p>
-      </div>
-    );
-  }
-
-  if (!shippingRequests?.length) {
-    return (
-      <div className="bg-white/70 backdrop-blur-sm rounded-lg shadow-sm overflow-hidden border border-gray-200/50 p-8">
-        <p className="text-center text-gray-500">No shipping requests found</p>
-      </div>
-    );
-  }
+  // Generate QR code data for shipping details
+  const getQrData = (request: ShippingDetails) => {
+    return JSON.stringify({
+      id: request.id,
+      sender: {
+        name: request.customer_name,
+        phone: request.phone,
+      },
+      receiver: {
+        name: request.receiver_name,
+        phone: request.receiver_phone,
+      },
+      package: {
+        weight: request.weight,
+        unit: request.weight_unit,
+        date: request.shipping_date,
+      },
+    });
+  };
 
   const MobileShippingCard = ({ request }: { request: ShippingDetails }) => (
     <Card 
-      className="mb-3 last:mb-0 overflow-hidden border-0 shadow-sm"
+      className="mb-3 last:mb-0 overflow-hidden border-0 shadow-sm hover:bg-gray-50 transition-all cursor-pointer"
       onClick={() => setSelectedRequest(request)}
     >
       <CardContent className="p-0">
@@ -138,25 +142,21 @@ const ShippingManagementTable = ({ shippingRequests, isLoading }: ShippingManage
     </Card>
   );
 
-  // Generate QR code data for the selected request
-  const getQrData = (request: ShippingDetails) => {
-    return JSON.stringify({
-      id: request.id,
-      sender: {
-        name: request.customer_name,
-        phone: request.phone,
-      },
-      receiver: {
-        name: request.receiver_name,
-        phone: request.receiver_phone,
-      },
-      package: {
-        weight: request.weight,
-        unit: request.weight_unit,
-        date: request.shipping_date,
-      },
-    });
-  };
+  if (isLoading) {
+    return (
+      <div className="bg-white/70 backdrop-blur-sm rounded-lg shadow-sm overflow-hidden border border-gray-200/50 p-4">
+        <p className="text-center text-gray-500">Loading shipping requests...</p>
+      </div>
+    );
+  }
+
+  if (!shippingRequests?.length) {
+    return (
+      <div className="bg-white/70 backdrop-blur-sm rounded-lg shadow-sm overflow-hidden border border-gray-200/50 p-8">
+        <p className="text-center text-gray-500">No shipping requests found</p>
+      </div>
+    );
+  }
 
   return (
     <>
