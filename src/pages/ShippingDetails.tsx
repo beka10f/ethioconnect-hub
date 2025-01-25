@@ -25,6 +25,7 @@ const ShippingDetails = () => {
       if (!data) throw new Error("Shipping details not found");
       return data;
     },
+    retry: false,
   });
 
   if (isLoading) {
@@ -36,11 +37,6 @@ const ShippingDetails = () => {
   }
 
   if (error) {
-    toast({
-      title: "Error loading shipping details",
-      description: "Please try again later",
-      variant: "destructive",
-    });
     return (
       <div className="min-h-screen bg-gray-50 p-4">
         <Button
