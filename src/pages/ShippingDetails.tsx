@@ -15,6 +15,8 @@ const ShippingDetails = () => {
   const { data: shipping, isLoading, error } = useQuery({
     queryKey: ["shipping", id],
     queryFn: async () => {
+      if (!id) throw new Error("No shipping ID provided");
+      
       const { data, error } = await supabase
         .from("shipping_details")
         .select("*")
