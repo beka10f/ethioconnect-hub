@@ -13,7 +13,7 @@ const CalendarPortal = () => {
         <div className="text-sm text-gray-900">
           <p>Upcoming Holiday:</p>
           <p className="font-medium text-blue-600">Victory of Adwa - March 2</p>
-        </div>
+        </div> 
       </div>
     </Portal>
   );
